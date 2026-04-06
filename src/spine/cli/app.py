@@ -2,18 +2,40 @@
 
 from __future__ import annotations
 
+import os
+from pathlib import Path
+
 import typer
 from rich.console import Console
 
 console = Console()
 err_console = Console(stderr=True)
 
+
+def resolve_roots(cwd: Path | None = None) -> tuple[Path, Path]:
+    """
+    Resolve the git repository root and SPINE project root.
+
+    Git root is found by walking up from cwd using find_git_root().
+    SPINE root is determined by:
+    - SPINE_ROOT env var (for subdirectory SPINE governance), else
+    - git root (standard layout where .spine/ lives at repo root)
+
+    Returns (git_root, spine_root).
+    """
+    from spine.utils.paths import find_git_root
+    git_root = find_git_root(cwd or Path.cwd())
+    if os.environ.get("SPINE_ROOT"):
+        spine_root = Path(os.environ["SPINE_ROOT"]).resolve() / ".spine"
+        return git_root, spine_root
+    return git_root, git_root / ".spine"
+
 app = typer.Typer(
     name="spine",
     help=(
         "SPINE — local-first, repo-native mission governor.\n\n"
-        "Phase 1: repository initialization only.\n"
-        "Run [bold]spine init[/bold] to scaffold .spine/ governance state."
+        "Run [bold]spine init[/bold] to scaffold .spine/ governance state.\n"
+        "Run [bold]spine --help[/bold] to see all commands."
     ),
     rich_markup_mode="rich",
     no_args_is_help=True,

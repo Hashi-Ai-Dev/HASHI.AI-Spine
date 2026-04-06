@@ -20,18 +20,22 @@ env/
 
 # SPINE state
 .spine/state.db
+.spine/briefs/
+.spine/reviews/
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
 
-# IDE
+# IDE / OS
 .idea/
 .vscode/
 *.swp
 *.swo
-
-# OS
 .DS_Store
 Thumbs.db
+.claude/settings.local.json
+
+# Local test repos (external validation targets)
+Local Repo Tests/

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 SPINE_DIR = ".spine"
-SPINE_VERSION = 1
+SPINE_VERSION = "0.1"
 
 # --- YAML state files ---
 MISSION_FILE = "mission.yaml"
