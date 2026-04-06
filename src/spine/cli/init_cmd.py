@@ -54,6 +54,7 @@ def init_cmd(
         force=force,
         allow_no_git=allow_no_git,
         cwd=effective_cwd,
+        explicit_cwd=cwd is not None,
     )
 
     try:

@@ -40,10 +40,12 @@ class InitService:
         force: bool = False,
         allow_no_git: bool = False,
         cwd: Path | None = None,
+        explicit_cwd: bool = False,
     ) -> None:
         self.force = force
         self.allow_no_git = allow_no_git
         self.cwd = cwd or Path.cwd()
+        self._explicit_cwd = explicit_cwd
 
     # ------------------------------------------------------------------
     # Public entry point
@@ -52,7 +54,7 @@ class InitService:
     def run(self) -> InitResult:
         result = InitResult()
 
-        # Step 1: Resolve repo root
+        # Step 1: Resolve repo root (for git-awareness and conflict detection)
         try:
             repo_root = find_git_root(self.cwd)
         except GitRepoNotFoundError:
@@ -62,7 +64,13 @@ class InitService:
                 raise  # CLI maps to exit code 2
 
         result.repo_root = repo_root
-        spine = repo_root / C.SPINE_DIR
+
+        # Step 2: Use cwd as the SPINE root when explicitly provided.
+        # This lets `spine init --cwd <subdir>` initialize SPINE governance
+        # inside a subdirectory of a git repo (treats subdir as its own project root).
+        # When cwd is the same as Path.cwd() (no --cwd was passed), use repo_root.
+        spine_root = self.cwd if self._explicit_cwd else repo_root
+        spine = spine_root / C.SPINE_DIR
 
         # Step 2: Dry-run conflict detection (before touching anything).
         # Collect ALL conflicts first so the user sees the full list.
@@ -74,11 +82,11 @@ class InitService:
         # Step 3: Create .spine/ directory
         ensure_dir(spine)
 
-        # Step 4: YAML files
-        self._create_or_skip(result, spine / C.MISSION_FILE, MissionModel().to_yaml())
-        self._create_or_skip(result, spine / C.CONSTRAINTS_FILE, ConstraintsModel().to_yaml())
+        # Step 4: YAML files under .spine/
+        self._create_or_skip(result, spine / C.MISSION_FILE, MissionModel().to_yaml(), base=spine_root)
+        self._create_or_skip(result, spine / C.CONSTRAINTS_FILE, ConstraintsModel().to_yaml(), base=spine_root)
 
-        # Step 5: JSONL append logs
+        # Step 5: JSONL append logs under .spine/
         for fname in [
             C.OPPORTUNITIES_FILE,
             C.NOT_NOW_FILE,
@@ -90,32 +98,32 @@ class InitService:
             path = spine / fname
             created = ensure_jsonl(path, force=self.force)
             (result.created if created else result.skipped).append(
-                str(path.relative_to(repo_root))
+                path.relative_to(spine_root).as_posix()
             )
 
-        # Step 6: state.db placeholder (empty file, never written as SQLite)
+        # Step 6: state.db placeholder under .spine/ (empty file, never written as SQLite)
         db_path = spine / C.STATE_DB_FILE
         created = touch_file(db_path, force=self.force)
         (result.created if created else result.skipped).append(
-            str(db_path.relative_to(repo_root))
+            db_path.relative_to(spine_root).as_posix()
         )
 
-        # Step 7: Subdirectories
+        # Step 7: Subdirectories under .spine/
         for dname in [C.REVIEWS_DIR, C.BRIEFS_DIR, C.SKILLS_DIR, C.CHECKS_DIR]:
             d = spine / dname
             already_existed = d.exists()
             ensure_dir(d)
-            rel = str(d.relative_to(repo_root)) + "/"
+            rel = d.relative_to(spine_root).as_posix() + "/"
             (result.skipped if already_existed else result.created).append(rel)
 
-        # Step 8: Repo-root governance and tool config files
-        self._create_or_skip(result, repo_root / C.AGENTS_MD, _AGENTS_MD_CONTENT)
-        self._create_or_skip(result, repo_root / C.CLAUDE_MD, _CLAUDE_MD_CONTENT)
+        # Step 8: Repo-root governance and tool config files (always go to repo_root)
+        self._create_or_skip(result, repo_root / C.AGENTS_MD, _AGENTS_MD_CONTENT, base=repo_root)
+        self._create_or_skip(result, repo_root / C.CLAUDE_MD, _CLAUDE_MD_CONTENT, base=repo_root)
         self._create_or_skip(
-            result, repo_root / C.CLAUDE_SETTINGS_PATH, _CLAUDE_SETTINGS_CONTENT
+            result, repo_root / C.CLAUDE_SETTINGS_PATH, _CLAUDE_SETTINGS_CONTENT, base=repo_root
         )
         self._create_or_skip(
-            result, repo_root / C.CODEX_CONFIG_PATH, _CODEX_CONFIG_CONTENT
+            result, repo_root / C.CODEX_CONFIG_PATH, _CODEX_CONFIG_CONTENT, base=repo_root
         )
 
         return result
@@ -124,11 +132,14 @@ class InitService:
     # Private helpers
     # ------------------------------------------------------------------
 
-    def _create_or_skip(self, result: InitResult, path: Path, content: str) -> None:
-        repo_root = result.repo_root
+    def _create_or_skip(
+        self, result: InitResult, path: Path, content: str, *, base: Path | None = None
+    ) -> None:
+        """Write a file if it doesn't exist (or overwrite with --force)."""
+        repo_root = base or result.repo_root
         assert repo_root is not None
         created = write_file_safe(path, content, force=self.force)
-        rel = str(path.relative_to(repo_root))
+        rel = path.relative_to(repo_root).as_posix()
         (result.created if created else result.skipped).append(rel)
 
     def _detect_conflicts(self, repo_root: Path, spine: Path) -> list[str]:
@@ -148,7 +159,7 @@ class InitService:
             repo_root / C.CODEX_CONFIG_PATH,
         ]
         return [
-            str(p.relative_to(repo_root))
+            p.relative_to(repo_root).as_posix()
             for p in candidates
             if p.exists()
         ]

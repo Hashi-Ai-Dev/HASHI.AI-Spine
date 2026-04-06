@@ -18,10 +18,21 @@ def find_git_root(start: Path | None = None) -> Path:
     worktrees and .git files). Falls back to a pure-Python parent-walk for
     environments where git is not in PATH.
 
+    When start is provided, prefers start's own .git if it exists directly,
+    before walking up. This prevents a subdirectory's .git from being
+    shadowed by a parent repo's .git.
+
     Raises GitRepoNotFoundError if no git root is found.
     """
     if start is None:
         start = Path.cwd()
+
+    start_resolved = start.resolve()
+
+    # Fast path: if start is itself a git repo root (start/.git exists),
+    # return start immediately without walking up into a parent repo.
+    if (start_resolved / ".git").exists():
+        return start_resolved
 
     try:
         result = subprocess.run(
@@ -37,8 +48,9 @@ def find_git_root(start: Path | None = None) -> Path:
         pass  # git not in PATH; fall through to pure-Python walk
 
     # Pure-Python fallback: walk up looking for .git
-    current = start.resolve()
+    current = start_resolved
     while True:
+        # Stop if we hit a directory that is itself a git repo root
         if (current / ".git").exists():
             return current
         parent = current.parent
