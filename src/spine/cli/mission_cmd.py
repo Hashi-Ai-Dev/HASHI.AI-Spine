@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import typer
@@ -25,7 +26,13 @@ app.add_typer(mission_app, name="mission", help="Manage the active mission.")
 
 
 @mission_app.command("show", help="Display the current mission.")
-def mission_show() -> None:
+def mission_show(
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        help="Output mission as JSON (machine-readable).",
+    ),
+) -> None:
     """Display the current mission from .spine/mission.yaml."""
     try:
         repo_root, spine_root = resolve_roots()
@@ -41,6 +48,12 @@ def mission_show() -> None:
         raise typer.Exit(1)
 
     mission = result.mission
+
+    if json_output:
+        data = mission.model_dump(mode="python")
+        print(json.dumps(data, indent=2, default=str))
+        return
+
     table = Table(title="Mission", box=None, show_header=False)
     table.add_column("Field", style="bold cyan")
     table.add_column("Value")

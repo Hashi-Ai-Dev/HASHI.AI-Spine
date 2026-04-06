@@ -8,6 +8,7 @@ from rich.table import Table
 
 from spine.cli.app import app, resolve_roots
 from spine.services.doctor_service import DoctorService
+from spine.utils.paths import get_current_branch
 
 console = Console()
 
@@ -30,6 +31,9 @@ def doctor_cmd() -> None:
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)
+
+    branch = get_current_branch(repo_root)
+    console.print(f"[dim]repo:[/dim] {repo_root}  [dim]branch:[/dim] {branch}")
 
     service = DoctorService(repo_root, spine_root=spine_root)
     result = service.check()

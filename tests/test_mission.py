@@ -25,11 +25,11 @@ def run_init(tmp_path: Path, *extra_args: str) -> tuple[int, str, str]:
     return result.exit_code, result.output, ""
 
 
-def run_mission_show(tmp_path: Path) -> tuple[int, str, str]:
+def run_mission_show(tmp_path: Path, *extra_args: str) -> tuple[int, str, str]:
     original = os.getcwd()
     try:
         os.chdir(tmp_path)
-        result = runner.invoke(app, ["mission", "show"])
+        result = runner.invoke(app, ["mission", "show", *extra_args])
     finally:
         os.chdir(original)
     return result.exit_code, result.output, ""
@@ -178,6 +178,25 @@ def test_mission_set_forbid_accepts_comma_separated_items(tmp_path: Path) -> Non
 # ---------------------------------------------------------------------------
 # Tests: updated_at refresh
 # ---------------------------------------------------------------------------
+
+def test_mission_show_json_output(tmp_path: Path) -> None:
+    """mission show --json outputs valid JSON with expected fields."""
+    import json as json_module
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    exit_code, stdout, _ = run_mission_show(tmp_path, "--json")
+    assert exit_code == 0, stdout
+
+    data = json_module.loads(stdout)
+    assert data["id"] == "mission-0001"
+    assert data["title"] == "Define active mission"
+    assert data["status"] == "active"
+    assert "allowed_scope" in data
+    assert "forbidden_expansions" in data
+    assert "created_at" in data
+    assert "updated_at" in data
+
 
 def test_mission_set_refreshes_updated_at(tmp_path: Path) -> None:
     """mission-set updates the updated_at timestamp."""
