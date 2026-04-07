@@ -21,13 +21,19 @@ def resolve_roots(cwd: Path | None = None) -> tuple[Path, Path]:
     - SPINE_ROOT env var (for subdirectory SPINE governance), else
     - git root (standard layout where .spine/ lives at repo root)
 
+    When SPINE_ROOT is set, it is treated as the authoritative target repo
+    root — both git operations and .spine/ state point to the same repo.
+
     Returns (git_root, spine_root).
     """
     from spine.utils.paths import find_git_root
-    git_root = find_git_root(cwd or Path.cwd())
     if os.environ.get("SPINE_ROOT"):
-        spine_root = Path(os.environ["SPINE_ROOT"]).resolve() / ".spine"
-        return git_root, spine_root
+        # SPINE_ROOT is the authoritative repo root for both git and state.
+        # Use it directly as git_root (no walking up from cwd).
+        repo_root = Path(os.environ["SPINE_ROOT"]).resolve()
+        return repo_root, repo_root / ".spine"
+    # Normal case: walk up from cwd to find git root, .spine/ lives at it.
+    git_root = find_git_root(cwd or Path.cwd())
     return git_root, git_root / ".spine"
 
 app = typer.Typer(

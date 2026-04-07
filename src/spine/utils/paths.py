@@ -66,3 +66,35 @@ def find_git_root(start: Path | None = None) -> Path:
 def spine_dir(repo_root: Path) -> Path:
     from spine.constants import SPINE_DIR
     return repo_root / SPINE_DIR
+
+
+def get_current_branch(repo_root: Path) -> str:
+    """
+    Return the current git branch name for the given repo root.
+
+    Returns the branch name, or a descriptive string if HEAD is detached
+    or git is unavailable.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "symbolic-ref", "--short", "HEAD"],
+            capture_output=True,
+            text=True,
+            cwd=str(repo_root),
+            timeout=5,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+        # Detached HEAD: return the short SHA
+        result2 = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True,
+            text=True,
+            cwd=str(repo_root),
+            timeout=5,
+        )
+        if result2.returncode == 0:
+            return f"(detached:{result2.stdout.strip()})"
+        return "(unknown)"
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return "(git unavailable)"

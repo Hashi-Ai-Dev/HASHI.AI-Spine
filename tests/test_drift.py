@@ -344,3 +344,114 @@ def test_drift_scan_untracked_file_not_drift(tmp_path: Path) -> None:
     assert exit_code == 0
     # No HIGH forbidden_expansion for untracked should appear in the output
     assert "forbidden_expansion" not in stdout.lower()
+
+
+# ---------------------------------------------------------------------------
+# SPINE_ROOT external targeting tests
+# ---------------------------------------------------------------------------
+
+
+def test_drift_scan_spiner_root_targets_external_repo(tmp_path: Path) -> None:
+    """
+    When SPINE_ROOT is set, drift scan targets the external repo's git,
+    not the current working directory's git.
+
+    This is the core external targeting hardening test: SPINE_ROOT must
+    bind both canonical state AND git-native repo operations to the same
+    external repo.
+    """
+    # Set up external repo B (a real git repo with a commit)
+    external_repo = tmp_path / "external_repo"
+    external_repo.mkdir()
+    subprocess.run(["git", "init", "--initial-branch=main"], cwd=external_repo, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test.com"], cwd=external_repo, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test User"], cwd=external_repo, capture_output=True)
+    (external_repo / "README.md").write_text("# External\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=external_repo, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "Initial commit"], cwd=external_repo, capture_output=True)
+
+    # Create .spine/ in external repo
+    (external_repo / ".spine").mkdir()
+    (external_repo / ".spine" / "mission.yaml").write_text(
+        "id: test-external\ntitle: External Mission\nstatus: active\n"
+        "updated_at: '2026-01-01T00:00:00Z'\ncreated_at: '2026-01-01T00:00:00Z'\n"
+        "target_user: ''\nuser_problem: ''\none_sentence_promise: ''\n"
+        "allowed_scope: []\nforbidden_expansions: []\nproof_requirements: []\n"
+        "kill_conditions: []\nsuccess_metric:\n  type: milestone\n  value: ''\n",
+        encoding="utf-8",
+    )
+    (external_repo / ".spine" / "drift.jsonl").write_text("", encoding="utf-8")
+
+    # Create a committed forbidden file on a feature branch (not on main)
+    # This creates actual branch drift that Mode B should detect
+    subprocess.run(["git", "checkout", "-b", "feature/ui-add"], cwd=external_repo, capture_output=True)
+    (external_repo / "ui").mkdir()
+    (external_repo / "ui" / "dashboard.py").write_text(
+        "from flask import render_template\n",
+        encoding="utf-8",
+    )
+    subprocess.run(["git", "add", "."], cwd=external_repo, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "Add ui/dashboard"], cwd=external_repo, capture_output=True)
+
+    # Set up repo A (SPINE working directory) — a separate git repo
+    spine_repo = tmp_path / "spine_repo"
+    spine_repo.mkdir()
+    subprocess.run(["git", "init", "--initial-branch=main"], cwd=spine_repo, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test.com"], cwd=spine_repo, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test User"], cwd=spine_repo, capture_output=True)
+    (spine_repo / "README.md").write_text("# SPINE\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=spine_repo, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "Initial"], cwd=spine_repo, capture_output=True)
+
+    # Run drift scan from spine_repo using SPINE_ROOT pointing to external_repo
+    original = os.getcwd()
+    try:
+        os.chdir(spine_repo)
+        os.environ["SPINE_ROOT"] = str(external_repo)
+        try:
+            result = runner.invoke(app, ["drift", "scan"])
+        finally:
+            os.environ.pop("SPINE_ROOT", None)
+    finally:
+        os.chdir(original)
+
+    assert result.exit_code == 0, result.output
+    # The drift must come from external_repo's ui/dashboard.py, not from spine_repo
+    assert "forbidden_expansion" in result.output.lower() or "HIGH" in result.output
+    # Ensure NO spine_repo files appear in drift output
+    assert "spine_repo" not in result.output
+
+
+def test_resolve_roots_without_spiner_root_uses_cwd_repo(tmp_path: Path) -> None:
+    """
+    Without SPINE_ROOT set, resolve_roots() uses the cwd git repo normally.
+    """
+    # Set up a real git repo
+    subprocess.run(["git", "init", "--initial-branch=main"], cwd=tmp_path, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test.com"], cwd=tmp_path, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test User"], cwd=tmp_path, capture_output=True)
+    (tmp_path / "README.md").write_text("# Test\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=tmp_path, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "Initial"], cwd=tmp_path, capture_output=True)
+
+    (tmp_path / ".spine").mkdir()
+    (tmp_path / ".spine" / "mission.yaml").write_text(
+        "id: test-local\ntitle: Local Mission\nstatus: active\n"
+        "updated_at: '2026-01-01T00:00:00Z'\ncreated_at: '2026-01-01T00:00:00Z'\n"
+        "target_user: ''\nuser_problem: ''\none_sentence_promise: ''\n"
+        "allowed_scope: []\nforbidden_expansions: []\nproof_requirements: []\n"
+        "kill_conditions: []\nsuccess_metric:\n  type: milestone\n  value: ''\n",
+        encoding="utf-8",
+    )
+
+    # Run mission show from the repo with SPINE_ROOT unset
+    original = os.getcwd()
+    os.environ.pop("SPINE_ROOT", None)
+    try:
+        os.chdir(tmp_path)
+        result = runner.invoke(app, ["mission", "show"])
+    finally:
+        os.chdir(original)
+
+    assert result.exit_code == 0, result.output
+    assert "Local Mission" in result.output

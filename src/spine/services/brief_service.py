@@ -22,8 +22,14 @@ class BriefService:
         self._spine_root = spine_root or repo_root / C.SPINE_DIR
         self.briefs_dir = self._spine_root / C.BRIEFS_DIR
 
-    def generate_claude(self, mission: MissionModel) -> Path:
-        """Generate markdown brief for Claude context."""
+    def generate_claude(self, mission: MissionModel) -> tuple[Path, Path]:
+        """
+        Generate markdown brief for Claude context.
+
+        Returns (canonical_path, latest_path).
+        canonical_path is a timestamped file (history preserved).
+        latest_path is .../claude/latest.md (always updated).
+        """
         target_dir = self.briefs_dir / "claude"
         target_dir.mkdir(parents=True, exist_ok=True)
         filename = f"{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.md"
@@ -32,14 +38,20 @@ class BriefService:
         content = self._build_claude_brief(mission)
         write_file_safe(path, content, force=False)
 
-        # Also write as latest.md
+        # Always update latest.md alias
         latest = target_dir / "latest.md"
         write_file_safe(latest, content, force=True)
 
-        return path
+        return path, latest
 
-    def generate_codex(self, mission: MissionModel) -> Path:
-        """Generate markdown brief for Codex context."""
+    def generate_codex(self, mission: MissionModel) -> tuple[Path, Path]:
+        """
+        Generate markdown brief for Codex context.
+
+        Returns (canonical_path, latest_path).
+        canonical_path is a timestamped file (history preserved).
+        latest_path is .../codex/latest.md (always updated).
+        """
         target_dir = self.briefs_dir / "codex"
         target_dir.mkdir(parents=True, exist_ok=True)
         filename = f"{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.md"
@@ -48,11 +60,11 @@ class BriefService:
         content = self._build_codex_brief(mission)
         write_file_safe(path, content, force=False)
 
-        # Also write as latest.md
+        # Always update latest.md alias
         latest = target_dir / "latest.md"
         write_file_safe(latest, content, force=True)
 
-        return path
+        return path, latest
 
     def _build_claude_brief(self, mission: MissionModel) -> str:
         """Build the Claude-specific brief markdown."""
