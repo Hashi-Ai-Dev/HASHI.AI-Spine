@@ -35,30 +35,31 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 
 ## Current Milestone
 
-**`v0.1.2 — Stabilization** (in progress — 2/4 done)
+**`v0.1.2 — Stabilization** (in progress — 4/5 done)
 
 | # | Item | Status |
 |---|------|--------|
 | 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
 | 2 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
-| 3 | Add minimal CI pipeline | ✅ Done (branch `claude/stabilize-v0.1.2-ci-816Ev`) |
-| 4 | Clarify onboarding docs | 🔄 Pending |
+| 3 | Add minimal CI pipeline | ✅ Done (PR #12 merged — ruff + pytest) |
+| 4 | ~~Create org-level ruleset~~ | ❌ Not a SPINE issue — removed |
+| 5 | Clarify onboarding docs | 🔄 Pending — Issue #9 |
 
-Tests now at **136** (up from 123).
+Tests now at **136+** (CI runs on every push/PR).
 
 ---
 
 ## Current Blockers
 
-None currently blocking v0.1.2 release.
+None.
 
 ---
 
-## Next 3 Moves
+## Next Move
 
-1. ~~**Write CI pipeline**~~ — ✅ Done (`ci.yml` with ruff lint + pytest on push/PR)
-2. **Update README quickstart** — note `--cwd` support; clarify external-repo flow
-3. **Tag v0.1.2 and publish release**
+**README / onboarding polish** (Issue #9) — the last remaining v0.1.2 item.
+
+Once done: close #9, tag `v0.1.2`, publish release.
 
 ---
 
@@ -67,11 +68,11 @@ None currently blocking v0.1.2 release.
 | | |
 |---|---|
 | **Default branch** | `main` (protected) |
-| **Branch protection** | PR required + force-push blocked + delete blocked |
+| **Branch protection** | PR required + CI status checks + force-push blocked + delete blocked |
 | **Open PRs** | None |
 | **Open branches** | `main` only |
 | **Releases** | `v0.1.1-alpha` (published) |
-| **Last merge** | PR #11 — `--cwd` support added to all Phase 2 commands |
+| **CI pipeline** | ✅ Active — `ci.yml` (ruff + pytest on push/PR) |
 
 ---
 
@@ -89,11 +90,11 @@ See GitHub issue #10 for the Phase 3A planning tracking issue.
 
 | Check | Status |
 |-------|--------|
-| README | ✅ Public-alpha appropriate |
+| README | ✅ Clean, public-alpha appropriate |
 | LICENSE | ✅ MIT |
 | SECURITY.md | ✅ Contact + policy |
-| Branch protection | ✅ `main` protected |
-| CI pipeline | ✅ `.github/workflows/ci.yml` (ruff + pytest) |
+| Branch protection | ✅ `main` protected + CI required |
+| CI pipeline | ✅ Active (ruff + pytest) |
 | Dependabot alerts | ✅ Enabled |
 | Secret scanning | ✅ Enabled |
 
