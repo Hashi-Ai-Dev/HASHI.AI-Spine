@@ -98,3 +98,71 @@ def get_current_branch(repo_root: Path) -> str:
         return "(unknown)"
     except (FileNotFoundError, subprocess.TimeoutExpired):
         return "(git unavailable)"
+
+
+def get_default_branch(repo_root: Path) -> str | None:
+    """
+    Detect the repository's default branch name.
+
+    Tries in order:
+    1. git symbolic-ref refs/remotes/origin/HEAD (remote origin default)
+    2. git rev-parse --verify main (if main branch exists locally)
+    3. git rev-parse --verify master (if master branch exists locally)
+
+    Returns None if no default branch can be determined safely.
+    """
+    # First try remote origin HEAD (only works if origin exists)
+    try:
+        result = subprocess.run(
+            ["git", "symbolic-ref", "refs/remotes/origin/HEAD"],
+            capture_output=True,
+            text=True,
+            cwd=str(repo_root),
+            timeout=10,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            branch = result.stdout.strip()
+            if branch.startswith("refs/remotes/origin/"):
+                branch = branch[len("refs/remotes/origin/"):]
+            return branch
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+
+    # Fallback to common local branch names — verify they actually exist
+    for name in ["main", "master"]:
+        try:
+            result = subprocess.run(
+                ["git", "rev-parse", "--verify", name],
+                capture_output=True,
+                text=True,
+                cwd=str(repo_root),
+                timeout=10,
+            )
+            if result.returncode == 0:
+                return name
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            pass
+
+    return None
+
+
+def format_context_line(
+    repo_root: Path,
+    branch: str,
+    default_branch: str | None,
+    compare_target: str | None = None,
+) -> str:
+    """
+    Format a one-line context summary for display.
+
+    compare_target: if set, shown as 'compare' instead of 'default'
+                    (used when an explicit branch was provided to drift scan).
+    """
+    parts = [f"repo: {repo_root}", f"branch: {branch}"]
+    if compare_target is not None:
+        parts.append(f"compare: {compare_target}")
+    elif default_branch is not None:
+        parts.append(f"default: {default_branch}")
+    else:
+        parts.append("default: (unresolved)")
+    return "  ".join(parts)

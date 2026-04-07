@@ -10,6 +10,7 @@ from rich.console import Console
 
 from spine.cli.app import app, resolve_roots
 from spine.services.review_service import ReviewService
+from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
 
@@ -73,6 +74,10 @@ def review_weekly(
             console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)
 
+    branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root)
+    context_line = format_context_line(repo_root, branch, default_branch)
+
     service = ReviewService(repo_root, spine_root=spine_root)
     result = service.generate_weekly(
         days=days,
@@ -96,5 +101,6 @@ def review_weekly(
         print(json.dumps(data, indent=2))
         return
 
+    console.print(f"[dim]{context_line}[/dim]")
     console.print(f"[bold green]Weekly review generated:[/bold green] {result.canonical}")
     console.print(f"[dim]Latest alias updated:[/dim]   {result.latest}")

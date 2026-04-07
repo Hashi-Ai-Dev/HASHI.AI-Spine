@@ -10,6 +10,7 @@ from rich.console import Console
 from spine.cli.app import app, resolve_roots
 from spine.services.brief_service import BriefService
 from spine.services.mission_service import MissionService, MissionNotFoundError
+from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
 
@@ -51,6 +52,11 @@ def brief_cmd(
     except MissionNotFoundError as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)
+
+    branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root)
+    context_line = format_context_line(repo_root, branch, default_branch)
+    console.print(f"[dim]{context_line}[/dim]")
 
     brief_service = BriefService(repo_root, spine_root=spine_root)
     if target == "claude":

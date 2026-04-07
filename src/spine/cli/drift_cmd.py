@@ -10,6 +10,7 @@ from rich.table import Table
 
 from spine.cli.app import app, resolve_roots
 from spine.services.drift_service import DriftService
+from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
 err_console = Console(stderr=True)
@@ -51,6 +52,18 @@ def drift_scan(
     except Exception as exc:
         err_console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)
+
+    branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root) if against_branch is None else None
+    context_line = format_context_line(
+        repo_root, branch, default_branch, compare_target=against_branch
+    )
+    console.print(f"[dim]{context_line}[/dim]")
+    if against_branch is None and default_branch is None:
+        console.print(
+            "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
+            "no remote origin/HEAD, no main/master found; scanning working tree only[/dim]"
+        )
 
     service = DriftService(repo_root, spine_root=spine_root)
     result = service.scan(against_branch=against_branch)

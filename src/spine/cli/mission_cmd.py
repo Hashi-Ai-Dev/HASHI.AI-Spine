@@ -15,6 +15,7 @@ from spine.services.mission_service import (
     MissionValidationError,
     MissionNotFoundError,
 )
+from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
 
@@ -58,6 +59,11 @@ def mission_show(
         data = mission.model_dump(mode="python")
         print(json.dumps(data, indent=2, default=str))
         return
+
+    branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root)
+    context_line = format_context_line(repo_root, branch, default_branch)
+    console.print(f"[dim]{context_line}[/dim]")
 
     table = Table(title="Mission", box=None, show_header=False)
     table.add_column("Field", style="bold cyan")

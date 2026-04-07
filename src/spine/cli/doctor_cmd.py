@@ -12,7 +12,7 @@ from rich.table import Table
 
 from spine.cli.app import app, resolve_roots
 from spine.services.doctor_service import DoctorService
-from spine.utils.paths import get_current_branch
+from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
 
@@ -51,6 +51,7 @@ def doctor_cmd(
         raise typer.Exit(1)
 
     branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root)
     service = DoctorService(repo_root, spine_root=spine_root)
     result = service.check()
 
@@ -59,6 +60,7 @@ def doctor_cmd(
             "passed": result.passed,
             "repo": str(repo_root),
             "branch": branch,
+            "default_branch": default_branch,
             "checked_at": datetime.now(timezone.utc).isoformat(),
             "error_count": sum(1 for i in result.issues if i.severity == "error"),
             "warning_count": sum(1 for i in result.issues if i.severity == "warning"),
@@ -73,7 +75,13 @@ def doctor_cmd(
         return
 
     # Human-readable output
-    console.print(f"[dim]repo:[/dim] {repo_root}  [dim]branch:[/dim] {branch}")
+    context_line = format_context_line(repo_root, branch, default_branch)
+    console.print(f"[dim]{context_line}[/dim]")
+    if default_branch is None:
+        console.print(
+            "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
+            "no remote origin/HEAD, no main/master found[/dim]"
+        )
 
     if result.passed and not result.issues:
         console.print("[bold green]All checks passed.[/bold green]")

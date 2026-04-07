@@ -10,6 +10,7 @@ from pathlib import Path
 from spine import constants as C
 from spine.models import DriftEventModel, DRIFT_SEVERITY
 from spine.utils.jsonl import append_jsonl, read_jsonl
+from spine.utils.paths import get_default_branch
 
 
 @dataclass
@@ -73,7 +74,7 @@ class DriftService:
             changed_files.update(files)
         else:
             # Auto-detect default branch and run both detection modes
-            default_branch = self._get_default_branch()
+            default_branch = get_default_branch(self.repo_root)
 
             # Mode A: working tree / uncommitted changes
             wt_files = self._get_working_tree_files()
@@ -121,51 +122,6 @@ class DriftService:
             summary[event.severity] += 1
 
         return DriftScanResult(events=unique_events, severity_summary=summary)
-
-    def _get_default_branch(self) -> str | None:
-        """
-        Detect the repository's default branch name.
-
-        Tries in order:
-        1. git symbolic-ref refs/remotes/origin/HEAD (remote origin default)
-        2. git rev-parse --verify main (if main branch exists locally)
-        3. git rev-parse --verify master (if master branch exists locally)
-
-        Returns None if no default branch can be determined safely.
-        """
-        # First try remote origin HEAD (only works if origin exists)
-        try:
-            result = subprocess.run(
-                ["git", "symbolic-ref", "refs/remotes/origin/HEAD"],
-                capture_output=True,
-                text=True,
-                cwd=str(self.repo_root),
-                timeout=10,
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                branch = result.stdout.strip()
-                if branch.startswith("refs/remotes/origin/"):
-                    branch = branch[len("refs/remotes/origin/"):]
-                return branch
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            pass
-
-        # Fallback to common local branch names — verify they actually exist
-        for name in ["main", "master"]:
-            try:
-                result = subprocess.run(
-                    ["git", "rev-parse", "--verify", name],
-                    capture_output=True,
-                    text=True,
-                    cwd=str(self.repo_root),
-                    timeout=10,
-                )
-                if result.returncode == 0:
-                    return name
-            except (FileNotFoundError, subprocess.TimeoutExpired):
-                break
-
-        return None
 
     def _get_branch_files(self, default_branch: str) -> list[str]:
         """

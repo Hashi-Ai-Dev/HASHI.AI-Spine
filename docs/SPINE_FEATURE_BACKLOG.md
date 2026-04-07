@@ -43,10 +43,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Why it matters:** Ambiguous targeting causes operators to accidentally govern the wrong repo.
 **Status:** DONE — implemented in PR #19 (2026-04-07)
 
-### 📋 [Phase 3A.2] Repo/branch context visibility (#16)
+### ✅ [Phase 3A.2] Repo/branch context visibility (#16)
 **Description:** Standard context reporting: repo path, HEAD branch/detached state, resolved default branch. Clear warning path for unresolved states.
 **Why it matters:** Operators need to always know which context SPINE is operating in.
-**Status:** APPROVED — implementation queue #16
+**Status:** DONE — implemented on branch `claude/issue16-context-visibility-QKMkH` (2026-04-07)
 
 ### 📋 [Phase 3A.3] Operator/CI output modes + stable exit codes (#17)
 **Description:** `--json` flag on key commands, reduced-noise mode, documented stable exit codes (0=success, 1=validation fail, 2=context fail).

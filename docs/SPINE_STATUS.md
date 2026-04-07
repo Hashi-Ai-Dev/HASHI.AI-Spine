@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07
+**Last updated:** 2026-04-07 (Issue #16 implemented)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
@@ -23,7 +23,7 @@
 Full governance command suite implemented:
 - `spine init` · `spine mission` · `spine brief` · `spine evidence` · `spine decision` · `spine opportunity` · `spine drift` · `spine review` · `spine doctor` · `spine mcp serve`
 
-Tests: **136+** passing.
+Tests: **165** passing.
 
 ---
 
@@ -42,7 +42,7 @@ Implementation may now begin. The implementation queue is live on GitHub (issues
 | # | Issue | Phase | Status |
 |---|---|---|---|
 | #15 | Explicit repo targeting + `--cwd` contract normalization | 3A.2 | ✅ Done (PR #19 merged) |
-| #16 | Repo/branch context visibility + deterministic defaults | 3A.2 | 🔄 Next |
+| #16 | Repo/branch context visibility + deterministic defaults | 3A.2 | ✅ Done (branch: phase3a/issue16-context-visibility) |
 | #17 | Operator/CI output modes + stable exit codes | 3A.3 | 📋 Planned |
 | #18 | Bootstrap polish + discipline-tax ergonomics | 3A | 📋 Planned |
 
