@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07
+**Last updated:** 2026-04-07 (normalized by RPmanager)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
@@ -11,8 +11,8 @@
 | | |
 |---|---|
 | **Version** | `v0.1.2` |
-| **Status** | Published |
-| **Target** | `v0.2.0-beta` (Alpha Exit) |
+| **Status** | Published (2026-04-07) |
+| **Target** | `v0.2.0-beta` (Alpha Exit — in progress) |
 
 ---
 
@@ -38,15 +38,15 @@
 | #16 | Repo/branch context visibility | ✅ Done |
 | #17 | Stable exit codes + JSON output | ✅ Done |
 | #18 | Bootstrap polish + discipline-tax ergonomics | ✅ Done (PR #26 merged) |
-| #22 | Artifact ergonomics contract | 📋 Planned |
-| #23 | External-repo onboarding docs | 📋 Planned |
-| #24 | Alpha-exit validation gate matrix | 📋 Planned |
+| #23 | Artifact ergonomics contract | 📋 In Queue |
+| #24 | External-repo onboarding docs | 📋 In Queue |
+| #25 | Alpha-exit validation gate matrix | 📋 In Queue |
 
 ---
 
 ## Next Active Priority
 
-**Issue #22** — Artifact ergonomics contract. First of the alpha-exit items. Next in queue after #18.
+**Issue #23** — Artifact ergonomics contract. First of the alpha-exit items. #23 → #24 → #25 → alpha-exit validation.
 
 ---
 
