@@ -9,7 +9,7 @@ from typing import Literal
 
 from spine import constants as C
 from spine.models import MissionModel
-from spine.utils.io import write_file_safe
+from spine.utils.io import update_artifact_manifest, write_file_safe
 from spine.utils.jsonl import read_jsonl
 
 
@@ -86,6 +86,18 @@ class ReviewService:
         # Always update latest.md alias
         latest = self.reviews_dir / "latest.md"
         write_file_safe(latest, content, force=True)
+
+        # Update artifact manifest
+        manifest_path = self._spine_root / C.ARTIFACT_MANIFEST_FILE
+        update_artifact_manifest(
+            manifest_path,
+            section="reviews",
+            key="weekly",
+            entry={
+                "latest": str(latest.relative_to(self.repo_root)),
+                "last_generated_at": generated_at,
+            },
+        )
 
         return ReviewResult(
             canonical=path,

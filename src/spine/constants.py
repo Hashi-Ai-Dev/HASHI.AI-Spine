@@ -26,6 +26,9 @@ BRIEFS_DIR = "briefs"
 SKILLS_DIR = "skills"
 CHECKS_DIR = "checks"
 
+# --- Artifact manifest ---
+ARTIFACT_MANIFEST_FILE = "artifact_manifest.json"
+
 # --- Repo-root files ---
 AGENTS_MD = "AGENTS.md"
 CLAUDE_MD = "CLAUDE.md"

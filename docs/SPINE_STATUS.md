@@ -38,7 +38,7 @@
 | #16 | Repo/branch context visibility | ✅ Done |
 | #17 | Stable exit codes + JSON output | ✅ Done |
 | #18 | Bootstrap polish + discipline-tax ergonomics | ✅ Done (PR #26 merged) |
-| #23 | Artifact ergonomics contract | 📋 In Queue |
+| #23 | Artifact ergonomics contract | ✅ Done |
 | #24 | External-repo onboarding docs | 📋 In Queue |
 | #25 | Alpha-exit validation gate matrix | 📋 In Queue |
 
@@ -46,7 +46,7 @@
 
 ## Next Active Priority
 
-**Issue #23** — Artifact ergonomics contract. First of the alpha-exit items. #23 → #24 → #25 → alpha-exit validation.
+**Issue #24** — External-repo onboarding docs. #24 → #25 → alpha-exit validation.
 
 ---
 

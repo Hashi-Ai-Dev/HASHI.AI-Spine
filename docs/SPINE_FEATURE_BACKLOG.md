@@ -41,9 +41,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Next-steps panel, `spine doctor` verification, git commit guidance. Bug fixes: doctor absolute-path bug.
 **Status:** DONE — merged in PR #26 (2026-04-07)
 
-### 📋 Artifact ergonomics contract (#23)
-**Description:** Formalize canonical artifact aliases (`latest/`), deterministic file naming, machine-readable manifest.
-**Status:** IN QUEUE — Alpha Exit
+### ✅ Artifact ergonomics contract (#23)
+**Description:** Formalize canonical artifact aliases (`latest.md`), deterministic file naming (YYYYMMDD_HHMMSS for briefs, YYYY-MM-DD for reviews), machine-readable `.spine/artifact_manifest.json`.
+**Status:** DONE — merged in PR (2026-04-07)
 
 ### 📋 External-repo onboarding docs (#24)
 **Description:** Practical guide for using SPINE in an arbitrary external repo.

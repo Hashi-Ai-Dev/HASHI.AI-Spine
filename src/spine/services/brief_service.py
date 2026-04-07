@@ -7,7 +7,7 @@ from pathlib import Path
 
 from spine import constants as C
 from spine.models import MissionModel
-from spine.utils.io import write_file_safe
+from spine.utils.io import update_artifact_manifest, write_file_safe
 
 
 def _now_iso() -> str:
@@ -32,8 +32,10 @@ class BriefService:
         """
         target_dir = self.briefs_dir / "claude"
         target_dir.mkdir(parents=True, exist_ok=True)
-        filename = f"{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.md"
+        ts = datetime.now(timezone.utc)
+        filename = f"{ts.strftime('%Y%m%d_%H%M%S')}.md"
         path = target_dir / filename
+        generated_at = ts.isoformat()
 
         content = self._build_claude_brief(mission)
         write_file_safe(path, content, force=False)
@@ -41,6 +43,18 @@ class BriefService:
         # Always update latest.md alias
         latest = target_dir / "latest.md"
         write_file_safe(latest, content, force=True)
+
+        # Update artifact manifest
+        manifest_path = self._spine_root / C.ARTIFACT_MANIFEST_FILE
+        update_artifact_manifest(
+            manifest_path,
+            section="briefs",
+            key="claude",
+            entry={
+                "latest": str(latest.relative_to(self.repo_root)),
+                "last_generated_at": generated_at,
+            },
+        )
 
         return path, latest
 
@@ -54,8 +68,10 @@ class BriefService:
         """
         target_dir = self.briefs_dir / "codex"
         target_dir.mkdir(parents=True, exist_ok=True)
-        filename = f"{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.md"
+        ts = datetime.now(timezone.utc)
+        filename = f"{ts.strftime('%Y%m%d_%H%M%S')}.md"
         path = target_dir / filename
+        generated_at = ts.isoformat()
 
         content = self._build_codex_brief(mission)
         write_file_safe(path, content, force=False)
@@ -63,6 +79,18 @@ class BriefService:
         # Always update latest.md alias
         latest = target_dir / "latest.md"
         write_file_safe(latest, content, force=True)
+
+        # Update artifact manifest
+        manifest_path = self._spine_root / C.ARTIFACT_MANIFEST_FILE
+        update_artifact_manifest(
+            manifest_path,
+            section="briefs",
+            key="codex",
+            entry={
+                "latest": str(latest.relative_to(self.repo_root)),
+                "last_generated_at": generated_at,
+            },
+        )
 
         return path, latest
 
