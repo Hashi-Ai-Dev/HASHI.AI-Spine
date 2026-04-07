@@ -35,14 +35,17 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 
 ## Current Milestone
 
-**`v0.1.2 — Stabilization** (planned, not started)
+**`v0.1.2 — Stabilization** (in progress — 1/5 done)
 
-Top items:
-1. Enable Dependabot alerts + secret scanning push protection (human: GitHub settings page)
-2. Add `--cwd` to Phase 2 commands
-3. Add minimal CI pipeline
-4. Create org-level ruleset for `Hashi-Ai-Dev`
-5. Clarify onboarding docs
+| # | Item | Status |
+|---|------|--------|
+| 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
+| 2 | Add minimal CI pipeline | 🔄 Pending |
+| 3 | Create org-level ruleset for `Hashi-Ai-Dev` | 🔄 Pending |
+| 4 | Enable Dependabot alerts + secret scanning | ⚠️ Human action required |
+| 5 | Clarify onboarding docs | 🔄 Pending |
+
+Tests now at **136** (up from 123).
 
 ---
 
@@ -57,11 +60,11 @@ Top items:
 
 ## Next 3 Moves
 
-1. **Add `--cwd` support to Phase 2 commands** — small scoped fix, unblocks external-repo usage
-2. **Write CI pipeline** — `ci.yml` with lint + test on push/PR; enables status checks
-3. **Update README quickstart** — clarify external-repo path; reduce onboarding friction
+1. **Write CI pipeline** — `ci.yml` with lint + test on push/PR; enables status checks and removes the "always-passing" gap in branch protection
+2. **Create org-level ruleset** — enforce `main` protection across all `Hashi-Ai-Dev` repos
+3. **Update README quickstart** — note `--cwd` support; clarify external-repo flow
 
-*(After those: tag v0.1.2, publish release)*
+*(After those: close remaining v0.1.2 issues, tag `v0.1.2`, publish release)*
 
 ---
 
@@ -74,6 +77,7 @@ Top items:
 | **Open PRs** | None |
 | **Open branches** | `main` only |
 | **Releases** | `v0.1.1-alpha` (published) |
+| **Last merge** | PR #11 — `--cwd` support added to all Phase 2 commands |
 
 ---
 
