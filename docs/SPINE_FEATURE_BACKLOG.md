@@ -26,10 +26,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Why it matters:** ~~Future repos spawned in the org will be unprotected without this.~~
 **Status:** REJECTED — org-level concern, not a SPINE product issue. Close #8.
 
-### 🔄 Clarify onboarding / quickstart docs
-**Description:** README is clean but onboarding path for external users could be sharper — specifically around external-repo usage and first `spine brief` run.
+### ✅ Clarify onboarding / quickstart docs
+**Description:** Added Installation section, rewrote Quickstart to show external-repo `--cwd` flow as primary pattern, promoted `--cwd` over `SPINE_ROOT` for all commands, removed stale Known Limitations and What's Next items, fixed Python badge and test count.
 **Why it matters:** Public alpha with confusing onboarding loses users before they experience value.
-**Status:** NOW
+**Status:** DONE — Issue #9, merged in this pass (2026-04-07)
 
 ---
 

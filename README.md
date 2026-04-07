@@ -6,7 +6,7 @@
 
 *Define your mission. Bound your scope. Catch drift before it ships.*
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![uv](https://img.shields.io/badge/built%20with-uv-blueviolet)](https://github.com/astral-sh/uv)
 [![alpha](https://img.shields.io/badge/status-alpha-orange.svg)]()
 
@@ -29,30 +29,43 @@ Solo developers and small teams building with AI coding agents (Claude Code, Cod
 
 SPINE is strongest today with **Claude Code** and **Codex** — it generates briefing files those tools can load automatically.
 
-## Quickstart
+## Installation
 
-Requires [uv](https://github.com/astral-sh/uv).
+Requires Python 3.12+ and [uv](https://github.com/astral-sh/uv).
 
 ```bash
-cd /your/project
-git init          # SPINE requires a git repo
-uv run spine init
+git clone https://github.com/Hashi-Ai-Dev/SPINE
+cd SPINE
+uv sync
+```
 
-# Define your mission
-uv run spine mission set \
+That's it. All `spine` commands are now available via `uv run spine`.
+
+## Quickstart — Use SPINE on any repo
+
+SPINE governs a **target repo** that you point it at. You don't need to `cd` into the target repo.
+
+```bash
+# (From the SPINE directory)
+
+# 1. Initialize .spine/ governance state in your project
+uv run spine init --cwd /path/to/your-project
+
+# 2. Define your mission
+uv run spine mission set --cwd /path/to/your-project \
   --title "My Project" \
   --status active \
   --scope "backend,api" \
   --forbid "ui,billing"
 
-# Generate a mission brief for Claude
-uv run spine brief --target claude
+# 3. Generate a mission brief for Claude
+uv run spine brief --cwd /path/to/your-project --target claude
 
-# Run the governance health check
-uv run spine doctor
+# 4. Run the governance health check
+uv run spine doctor --cwd /path/to/your-project
 ```
 
-That's it. `.spine/` is now your governance contract, version-controlled with the rest of your code.
+`.spine/` is version-controlled inside your target repo alongside your code.
 
 ## Current Alpha Capabilities
 
@@ -92,39 +105,47 @@ AGENTS.md               ← Guidance for AI agents in this repo
 CLAUDE.md               ← Claude-specific governance rules
 ```
 
-## Governing an External Repo
+## Using SPINE on any repo
 
-SPINE can govern a repo other than the one it's installed in. This is useful when running SPINE as a sidecar governance tool for a separate project.
+Every SPINE command accepts `--cwd` to target a repo other than the current directory. This is the recommended pattern when running SPINE from its own directory to govern another project.
 
 ```bash
-# Initialize .spine/ in an external repo
-uv run spine init --cwd /path/to/other-repo
-
-# Target all subsequent commands at that repo
-SPINE_ROOT=/path/to/other-repo uv run spine doctor
-SPINE_ROOT=/path/to/other-repo uv run spine mission show
-SPINE_ROOT=/path/to/other-repo uv run spine drift scan
+# All commands support --cwd
+uv run spine doctor         --cwd /path/to/other-repo
+uv run spine mission show   --cwd /path/to/other-repo
+uv run spine drift scan     --cwd /path/to/other-repo
+uv run spine evidence add   --cwd /path/to/other-repo --kind commit --description "..."
+uv run spine decision add   --cwd /path/to/other-repo --title "..." --why "..." --decision "..."
 ```
 
-`SPINE_ROOT` binds both the canonical state directory and git operations to the same target repo.
+**Alternative: `SPINE_ROOT` env var**
+
+If you prefer not to pass `--cwd` on every command, set `SPINE_ROOT` for your shell session:
+
+```bash
+export SPINE_ROOT=/path/to/other-repo
+uv run spine doctor
+uv run spine mission show
+```
+
+`SPINE_ROOT` is process-global — unset it when switching repos.
 
 ## Validation
 
 This alpha was validated against two repos before release:
 
-- **Self-governance:** Full governance loop on SPINE's own repo — mission set, evidence logged, decisions recorded, drift scanned, weekly review and agent briefs generated. Test suite: **123 passed, 0 failed**.
-- **External repo (gsn-connector):** `SPINE_ROOT` targeting verified end-to-end across all commands. Drift scan correctly read the external repo's git history. No state pollution between repos.
+- **Self-governance:** Full governance loop on SPINE's own repo — mission set, evidence logged, decisions recorded, drift scanned, weekly review and agent briefs generated. Test suite: **136+ passed, 0 failed**.
+- **External repo (gsn-connector):** `--cwd` and `SPINE_ROOT` targeting verified end-to-end across all commands. Drift scan correctly read the external repo's git history. No state pollution between repos.
 
 ## Known Limitations
 
 This is alpha software. Known rough edges:
 
-1. `--cwd` works only with `spine init` — all other commands use `SPINE_ROOT` for external targeting.
-2. `SPINE_ROOT` is process-global — if set in a shell profile, all commands are affected.
-3. No migration tooling yet — this is the first public release.
-4. JSONL logs are append-only — no undo or rollback.
-5. Single git repo per `.spine/` — cannot govern multiple repos from one state directory.
-6. `spine mcp serve` is a local stdio server only — no remote MCP support.
+1. `SPINE_ROOT` is process-global — if set in a shell profile, all commands are affected. Prefer `--cwd` per-command.
+2. No migration tooling yet — this is the first public release.
+3. JSONL logs are append-only — no undo or rollback.
+4. Single git repo per `.spine/` — cannot govern multiple repos from one state directory.
+5. `spine mcp serve` is a local stdio server only — no remote MCP support.
 
 ## Exit Codes
 
@@ -151,7 +172,6 @@ See [`docs/README.md`](docs/README.md) for the full documentation index.
 
 Near-term direction:
 
-- `--cwd` support on all commands (not just `spine init`)
 - Richer drift detection beyond git-native diff
 - Improved weekly review output
 - Migration tooling for `.spine/` state upgrades

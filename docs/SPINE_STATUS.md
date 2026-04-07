@@ -35,7 +35,7 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 
 ## Current Milestone
 
-**`v0.1.2 — Stabilization** (in progress — 4/5 done)
+**`v0.1.2 — Stabilization** (complete — 5/5 done)
 
 | # | Item | Status |
 |---|------|--------|
@@ -43,7 +43,7 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 | 2 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
 | 3 | Add minimal CI pipeline | ✅ Done (PR #12 merged — ruff + pytest) |
 | 4 | ~~Create org-level ruleset~~ | ❌ Not a SPINE issue — removed |
-| 5 | Clarify onboarding docs | 🔄 Pending — Issue #9 |
+| 5 | Clarify onboarding docs | ✅ Done — Issue #9 |
 
 Tests now at **136+** (CI runs on every push/PR).
 
@@ -57,9 +57,9 @@ None.
 
 ## Next Move
 
-**README / onboarding polish** (Issue #9) — the last remaining v0.1.2 item.
+**v0.1.2 stabilization complete.** All 5 items done.
 
-Once done: close #9, tag `v0.1.2`, publish release.
+Next: close Issue #9, tag `v0.1.2`, publish release.
 
 ---
 
