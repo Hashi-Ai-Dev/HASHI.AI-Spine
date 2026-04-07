@@ -51,9 +51,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Practical guide for using SPINE in an arbitrary external repo.
 **Status:** IN QUEUE — Alpha Exit
 
-### 📋 Alpha-exit validation gate matrix (#25)
-**Description:** Structured gate pass before declaring v0.2.0-beta.
-**Status:** IN QUEUE — Alpha Exit
+### ✅ Alpha-exit validation gate matrix (#25)
+**Description:** Structured gate pass before declaring v0.2.0-beta. Validation report at `docs/SPINE_ALPHA_EXIT_VALIDATION_REPORT.md`.
+**Status:** DONE — 20/21 gates pass, 1 non-blocking partial (`--json` absent on append commands). Alpha exit validated.
 
 ---
 

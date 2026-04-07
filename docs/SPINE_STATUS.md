@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07 (normalized by RPmanager)
+**Last updated:** 2026-04-07 (alpha-exit validation pass — issue #25)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
@@ -12,7 +12,7 @@
 |---|---|
 | **Version** | `v0.1.2` |
 | **Status** | Published (2026-04-07) |
-| **Target** | `v0.2.0-beta` (Alpha Exit — in progress) |
+| **Target** | `v0.2.0-beta` (Alpha Exit — validated, ready to declare) |
 
 ---
 
@@ -22,7 +22,7 @@
 |---|---|
 | Phase 1 + 2 | ✅ Complete |
 | v0.2 / Phase 3A | 🔄 In Progress — Alpha Exit milestone |
-| Alpha Exit → v0.2.0-beta | 🔄 In Progress |
+| Alpha Exit → v0.2.0-beta | ✅ Validated — ready to declare |
 | Beta | 📋 Planned |
 | v1.0.0 | 📋 Planned |
 
@@ -40,13 +40,14 @@
 | #18 | Bootstrap polish + discipline-tax ergonomics | ✅ Done (PR #26 merged) |
 | #23 | Artifact ergonomics contract | ✅ Done (PR #27 merged) |
 | #24 | External-repo onboarding docs | ✅ Done (PR #28 merged) |
-| #25 | Alpha-exit validation gate matrix | 📋 In Queue |
+| #25 | Alpha-exit validation gate matrix | ✅ Done (PR on branch `claude/issue25-gate-matrix-validation-G5bmE`) |
 
 ---
 
 ## Next Active Priority
 
-**Issue #25** — Alpha-exit validation gate matrix. Last alpha-exit item. #25 → then alpha-exit review.
+**Alpha Exit complete.** All Phase 3A items (#15–#18, #23, #24, #25) validated and done.
+Next: declare v0.2.0-beta and open Beta milestone.
 
 ---
 
@@ -75,4 +76,4 @@
 
 ---
 
-*Next status review: after alpha-exit validation gates pass*
+*Next status review: after v0.2.0-beta is declared and Beta milestone opens*
