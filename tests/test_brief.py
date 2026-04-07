@@ -192,18 +192,18 @@ def test_brief_invalid_target_rejected(tmp_path: Path) -> None:
 
 
 def test_brief_requires_init(tmp_path: Path) -> None:
-    """spine brief exits with error when .spine/ is not initialized."""
+    """spine brief exits 2 (context failure) when .spine/ is not initialized."""
     make_git_repo(tmp_path)
     # No spine init
 
     exit_code, stdout, _ = run_brief(tmp_path, "--target", "claude")
 
-    assert exit_code == 1
+    assert exit_code == 2, f"Expected exit 2 (context failure), got {exit_code}"
     assert "mission" in stdout.lower() or "error" in stdout.lower() or "not found" in stdout.lower()
 
 
 def test_brief_requires_git_repo(tmp_path: Path) -> None:
-    """spine brief exits with error when not in a git repo."""
+    """spine brief exits 2 (context failure) when not in a git repo."""
     import os
     original = os.getcwd()
     try:
@@ -211,7 +211,7 @@ def test_brief_requires_git_repo(tmp_path: Path) -> None:
         result = runner.invoke(app, ["brief", "--target", "claude"])
     finally:
         os.chdir(original)
-    assert result.exit_code == 1
+    assert result.exit_code == 2, f"Expected exit 2 (context failure), got {result.exit_code}"
 
 
 def test_brief_multiple_runs_create_timestamped_files(tmp_path: Path) -> None:

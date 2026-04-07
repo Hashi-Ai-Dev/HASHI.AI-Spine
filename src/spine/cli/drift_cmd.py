@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import typer
 from rich.console import Console
 from rich.table import Table
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_CONTEXT
 from spine.services.drift_service import DriftService
 from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
@@ -35,6 +37,17 @@ def drift_scan(
         "-b",
         help="Branch to diff against (default: uncommitted changes)",
     ),
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        help="Output results as JSON (machine-readable). Exit codes still apply.",
+    ),
+    quiet: bool = typer.Option(
+        False,
+        "--quiet",
+        "-q",
+        help="Suppress context line and clean-pass message. Prints nothing on no drift.",
+    ),
 ) -> None:
     """
     Scan for git-native scope drift.
@@ -46,30 +59,62 @@ def drift_scan(
     - Service additions without tests
 
     Appends detected drift events to .spine/drift.jsonl.
+
+    Exit codes:
+      0  Scan complete (drift may or may not be present — check output)
+      2  Context failure — repo not found or git unavailable
     """
     try:
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
-        err_console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            err_console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
 
     branch = get_current_branch(repo_root)
     default_branch = get_default_branch(repo_root) if against_branch is None else None
-    context_line = format_context_line(
-        repo_root, branch, default_branch, compare_target=against_branch
-    )
-    console.print(f"[dim]{context_line}[/dim]")
-    if against_branch is None and default_branch is None:
-        console.print(
-            "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
-            "no remote origin/HEAD, no main/master found; scanning working tree only[/dim]"
-        )
 
     service = DriftService(repo_root, spine_root=spine_root)
     result = service.scan(against_branch=against_branch)
 
+    if json_output:
+        data = {
+            "clean": not result.events,
+            "repo": str(repo_root),
+            "branch": branch,
+            "default_branch": default_branch,
+            "scanned_at": datetime.now(timezone.utc).isoformat(),
+            "event_count": len(result.events),
+            "severity_summary": result.severity_summary,
+            "events": [
+                {
+                    "severity": e.severity,
+                    "category": e.category,
+                    "description": e.description,
+                    "file_path": e.file_path,
+                }
+                for e in result.events
+            ],
+        }
+        print(json.dumps(data, indent=2))
+        return
+
+    if not quiet:
+        context_line = format_context_line(
+            repo_root, branch, default_branch, compare_target=against_branch
+        )
+        console.print(f"[dim]{context_line}[/dim]")
+        if against_branch is None and default_branch is None:
+            console.print(
+                "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
+                "no remote origin/HEAD, no main/master found; scanning working tree only[/dim]"
+            )
+
     if not result.events:
-        console.print("[bold green]No drift detected.[/bold green]")
+        if not quiet:
+            console.print("[bold green]No drift detected.[/bold green]")
         return
 
     summary = result.severity_summary

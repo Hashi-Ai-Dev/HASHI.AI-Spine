@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_VALIDATION, EXIT_CONTEXT
 from spine.services.mission_service import (
     MissionService,
     MissionValidationError,
@@ -36,22 +36,34 @@ def mission_show(
     json_output: bool = typer.Option(
         False,
         "--json",
-        help="Output mission as JSON (machine-readable).",
+        help="Output mission as JSON (machine-readable). Exit codes still apply.",
     ),
 ) -> None:
-    """Display the current mission from .spine/mission.yaml."""
+    """
+    Display the current mission from .spine/mission.yaml.
+
+    Exit codes:
+      0  Success
+      2  Context failure — repo not found or mission.yaml missing
+    """
     try:
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
-        console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
 
     service = MissionService(repo_root, spine_root=spine_root)
     try:
         result = service.show()
     except MissionNotFoundError as exc:
-        console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
 
     mission = result.mission
 
@@ -113,12 +125,17 @@ def mission_set(
 
     All options are optional. Only provided fields are updated.
     The updated_at timestamp is always refreshed.
+
+    Exit codes:
+      0  Success
+      1  Validation failure — invalid field value (e.g. bad --status)
+      2  Context failure   — repo not found or mission.yaml missing
     """
     try:
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
 
     def parse_list(s: str | None) -> list[str] | None:
         if s is None:
@@ -145,7 +162,7 @@ def mission_set(
         console.print(f"Updated at: {mission.updated_at}")
     except MissionNotFoundError as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
     except MissionValidationError as exc:
         console.print(f"[bold red]Validation error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_VALIDATION)

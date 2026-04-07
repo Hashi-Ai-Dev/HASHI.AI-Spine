@@ -10,7 +10,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_VALIDATION, EXIT_CONTEXT
 from spine.services.doctor_service import DoctorService
 from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
@@ -27,7 +27,13 @@ def doctor_cmd(
     json_output: bool = typer.Option(
         False,
         "--json",
-        help="Output results as JSON (machine-readable).",
+        help="Output results as JSON (machine-readable). Exit codes still apply.",
+    ),
+    quiet: bool = typer.Option(
+        False,
+        "--quiet",
+        "-q",
+        help="Suppress healthy-path output. On pass: no output. On fail: errors only.",
     ),
 ) -> None:
     """
@@ -40,15 +46,20 @@ def doctor_cmd(
     - constraints.yaml parses and conforms
     - JSONL files parse cleanly
     - Required subdirectories exist
+
+    Exit codes:
+      0  All checks passed
+      1  Validation failure — one or more checks failed
+      2  Context failure   — cannot resolve repo or .spine/ root
     """
     try:
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         if json_output:
-            print(json.dumps({"error": str(exc)}, indent=2))
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
         else:
             console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
 
     branch = get_current_branch(repo_root)
     default_branch = get_default_branch(repo_root)
@@ -71,21 +82,23 @@ def doctor_cmd(
         }
         print(json.dumps(data, indent=2))
         if not result.passed:
-            raise typer.Exit(1)
+            raise typer.Exit(EXIT_VALIDATION)
         return
 
-    # Human-readable output
-    context_line = format_context_line(repo_root, branch, default_branch)
-    console.print(f"[dim]{context_line}[/dim]")
-    if default_branch is None:
-        console.print(
-            "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
-            "no remote origin/HEAD, no main/master found[/dim]"
-        )
+    # Human-readable output — suppress context line and success chatter in quiet mode
+    if not quiet:
+        context_line = format_context_line(repo_root, branch, default_branch)
+        console.print(f"[dim]{context_line}[/dim]")
+        if default_branch is None:
+            console.print(
+                "[bold yellow]Warning:[/bold yellow] [dim]default branch unresolved — "
+                "no remote origin/HEAD, no main/master found[/dim]"
+            )
 
     if result.passed and not result.issues:
-        console.print("[bold green]All checks passed.[/bold green]")
-        console.print("SPINE state is valid and compliant.")
+        if not quiet:
+            console.print("[bold green]All checks passed.[/bold green]")
+            console.print("SPINE state is valid and compliant.")
         return
 
     if result.issues:
@@ -106,6 +119,7 @@ def doctor_cmd(
     if not result.passed:
         console.print("\n[bold red]Doctor check FAILED.[/bold red]")
         console.print("Fix the errors above before continuing.")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_VALIDATION)
     else:
-        console.print("\n[bold yellow]Doctor check passed with warnings.[/bold yellow]")
+        if not quiet:
+            console.print("\n[bold yellow]Doctor check passed with warnings.[/bold yellow]")

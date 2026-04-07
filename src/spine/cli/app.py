@@ -11,6 +11,13 @@ from rich.console import Console
 console = Console()
 err_console = Console(stderr=True)
 
+# ---------------------------------------------------------------------------
+# Stable exit codes — contract for all SPINE commands
+# ---------------------------------------------------------------------------
+EXIT_OK = 0          # Success
+EXIT_VALIDATION = 1  # Validation failure: invalid input, bad enum, malformed state
+EXIT_CONTEXT = 2     # Context failure: no git repo, missing .spine/, missing state
+
 
 def resolve_roots(cwd: Path | None = None) -> tuple[Path, Path]:
     """
