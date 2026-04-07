@@ -23,7 +23,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-## Alpha Exit — v0.2.0-beta (RELEASED 2026-04-07)
+## Alpha Exit — v0.2.0-beta (Released 2026-04-07)
 
 ### ✅ Explicit repo targeting contract (#15)
 **Description:** Fixed `--cwd` precedence over `SPINE_ROOT`. Targeting contract standardized.
@@ -57,9 +57,29 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-## Phase 3B / Beta Candidates
+## Beta — v0.2.0-beta Active Issues
 
-> Preserved inputs from product review session 2026-04-07. Not active work. Phase 3B begins after alpha exit is validated.
+> Beta milestone — Phase 3B. Issues execute in order: #31 first, then #32–#34.
+
+### 📋 `spine check before-pr` — preflight checkpoint (#31)
+**Description:** Bounded preflight checkpoint command before PRs. Exit 0=pass, exit 1=review recommended. Local, explicit, operator-controlled.
+**Why it matters:** Makes governance part of the natural PR workflow without daemon behavior.
+**Status:** ACTIVE — first Beta implementation slice
+
+### 📋 Handoff/PR-prep summary primitive (#32)
+**Description:** `spine brief handoff` — generates human-readable governance summary for PR context.
+**Why it matters:** Next operator or reviewer can understand governance state without reading raw JSONL.
+**Status:** QUEUED — after #31
+
+### 📋 Draftable governance records (#33)
+**Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
+**Why it matters:** Reduces governance friction — provisional entries without silently mutating truth.
+**Status:** QUEUED — after #32
+
+### 📋 Local optional hook/checkpoint integration (#34)
+**Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
+**Why it matters:** Operators who want enforcement can opt in without daemon or cloud dependency.
+**Status:** QUEUED — after #33
 
 ### 🟡 Draftable governance records
 **Description:** Draft evidence, draft decisions, draft PR/handoff summaries.
