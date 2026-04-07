@@ -39,9 +39,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 > Spec approved 2026-04-07. Implementation queue live — issues #15–#18.
 
 ### ✅ [Phase 3A.2] Explicit repo targeting contract (#15)
-**Description:** Standardized targeting contract across all commands. `resolve_roots()` now honours `--cwd > SPINE_ROOT > cwd` precedence. SPINE_ROOT path-existence validated. Error messages state the resolved target, its source, and corrective action. `--cwd` help text updated on all 10 commands. 11 new targeting tests added.
+**Description:** Fixed `resolve_roots()` so `--cwd` takes precedence over `SPINE_ROOT`. Targeting contract standardized.
 **Why it matters:** Ambiguous targeting causes operators to accidentally govern the wrong repo.
-**Status:** DONE — implemented 2026-04-07
+**Status:** DONE — implemented in PR #19 (2026-04-07)
 
 ### 📋 [Phase 3A.2] Repo/branch context visibility (#16)
 **Description:** Standard context reporting: repo path, HEAD branch/detached state, resolved default branch. Clear warning path for unresolved states.
@@ -118,4 +118,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-07 — Phase 3A Issue #15 complete.*
+*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
