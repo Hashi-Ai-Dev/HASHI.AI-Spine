@@ -35,15 +35,14 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 
 ## Current Milestone
 
-**`v0.1.2 — Stabilization** (in progress — 1/5 done)
+**`v0.1.2 — Stabilization** (in progress — 2/4 done)
 
 | # | Item | Status |
 |---|------|--------|
 | 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
-| 2 | Add minimal CI pipeline | 🔄 Pending |
-| 3 | Create org-level ruleset for `Hashi-Ai-Dev` | 🔄 Pending |
-| 4 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
-| 5 | Clarify onboarding docs | 🔄 Pending |
+| 2 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
+| 3 | Add minimal CI pipeline | 🔄 Pending |
+| 4 | Clarify onboarding docs | 🔄 Pending |
 
 Tests now at **136** (up from 123).
 
@@ -51,20 +50,15 @@ Tests now at **136** (up from 123).
 
 ## Current Blockers
 
-| Blocker | Severity | Resolution |
-|---------|----------|------------|
-| GitHub secret scanning / Dependabot not enabled | ~~High~~ → ✅ Resolved | Owner confirmed via settings page. |
-| GitHub org ruleset not created | Medium | Human or token: create org-level ruleset |
+None currently blocking v0.1.2 release.
 
 ---
 
 ## Next 3 Moves
 
 1. **Write CI pipeline** — `ci.yml` with lint + test on push/PR; enables status checks and removes the "always-passing" gap in branch protection
-2. **Create org-level ruleset** — enforce `main` protection across all `Hashi-Ai-Dev` repos
-3. **Update README quickstart** — note `--cwd` support; clarify external-repo flow
-
-*(After those: close remaining v0.1.2 issues, tag `v0.1.2`, publish release)*
+2. **Update README quickstart** — note `--cwd` support; clarify external-repo flow
+3. **Tag v0.1.2 and publish release**
 
 ---
 
@@ -99,7 +93,6 @@ See GitHub issue #10 for the Phase 3A planning tracking issue.
 | LICENSE | ✅ MIT |
 | SECURITY.md | ✅ Contact + policy |
 | Branch protection | ✅ `main` protected |
-| Org ruleset | ❌ Not created |
 | CI pipeline | ❌ Not created |
 | Dependabot alerts | ✅ Enabled |
 | Secret scanning | ✅ Enabled |
