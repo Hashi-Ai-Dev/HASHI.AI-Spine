@@ -41,15 +41,15 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Next-steps panel, `spine doctor` verification, git commit guidance. Bug fixes: doctor absolute-path bug.
 **Status:** DONE — merged in PR #26 (2026-04-07)
 
-### 📋 Artifact ergonomics contract (#22)
+### 📋 Artifact ergonomics contract (#23)
 **Description:** Formalize canonical artifact aliases (`latest/`), deterministic file naming, machine-readable manifest.
 **Status:** IN QUEUE — Alpha Exit
 
-### 📋 External-repo onboarding docs (#23)
+### 📋 External-repo onboarding docs (#24)
 **Description:** Practical guide for using SPINE in an arbitrary external repo.
 **Status:** IN QUEUE — Alpha Exit
 
-### 📋 Alpha-exit validation gate matrix (#24)
+### 📋 Alpha-exit validation gate matrix (#25)
 **Description:** Structured gate pass before declaring v0.2.0-beta.
 **Status:** IN QUEUE — Alpha Exit
 
