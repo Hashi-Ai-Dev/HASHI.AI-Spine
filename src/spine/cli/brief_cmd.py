@@ -47,8 +47,9 @@ def brief_cmd(
 
     brief_service = BriefService(repo_root, spine_root=spine_root)
     if target == "claude":
-        path = brief_service.generate_claude(mission_result.mission)
+        canonical, latest = brief_service.generate_claude(mission_result.mission)
     else:
-        path = brief_service.generate_codex(mission_result.mission)
+        canonical, latest = brief_service.generate_codex(mission_result.mission)
 
-    console.print(f"[bold green]Brief generated:[/bold green] {path}")
+    console.print(f"[bold green]Brief generated:[/bold green] {canonical}")
+    console.print(f"[dim]Latest alias updated:[/dim]  {latest}")

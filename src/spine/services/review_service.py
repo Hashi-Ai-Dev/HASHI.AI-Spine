@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Literal
@@ -13,6 +14,21 @@ from spine.utils.jsonl import read_jsonl
 
 
 RECOMMENDATION = Literal["continue", "narrow", "pivot", "kill", "ship_as_is"]
+
+
+@dataclass
+class ReviewResult:
+    """Structured result for review generation — carries paths and period stats."""
+    canonical: Path
+    latest: Path
+    recommendation: str
+    period_days: int
+    mission_title: str
+    mission_status: str
+    evidence_count: int
+    decisions_count: int
+    drift_count: int
+    generated_at: str
 
 
 class ReviewService:
@@ -32,22 +48,30 @@ class ReviewService:
         days: int = 7,
         recommendation: RECOMMENDATION = "continue",
         notes: str = "",
-    ) -> Path:
+    ) -> ReviewResult:
         """
         Aggregate last `days` of evidence, decisions, drift, and mission state.
-        Write markdown review to .spine/reviews/YYYY-MM-DD.md.
+        Write markdown review to .spine/reviews/YYYY-MM-DD.md and update latest.md.
+
+        Returns a ReviewResult with paths and period stats.
+        Same-day regeneration always overwrites the dated file so it stays fresh.
         """
         self.reviews_dir.mkdir(parents=True, exist_ok=True)
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        generated_at = datetime.now(timezone.utc).isoformat()
         filename = f"{today}.md"
         path = self.reviews_dir / filename
 
         # Read mission
         mission = None
+        mission_title = "(no mission)"
+        mission_status = "(none)"
         if self.mission_path.exists():
             raw = self.mission_path.read_text(encoding="utf-8")
             import yaml
             mission = MissionModel.from_yaml(raw)
+            mission_title = mission.title
+            mission_status = mission.status
 
         # Read and filter evidence (last `days` days)
         evidence = self._filter_recent(read_jsonl(self.evidence_path), days)
@@ -57,13 +81,25 @@ class ReviewService:
         drift = self._filter_recent(read_jsonl(self.drift_path), days)
 
         content = self._build_review(mission, evidence, decisions, drift, recommendation, notes, today, days)
-        write_file_safe(path, content, force=False)
+        # force=True: same-day re-runs always refresh the dated file to match latest.md
+        write_file_safe(path, content, force=True)
 
-        # Also write as latest.md
+        # Always update latest.md alias
         latest = self.reviews_dir / "latest.md"
         write_file_safe(latest, content, force=True)
 
-        return path
+        return ReviewResult(
+            canonical=path,
+            latest=latest,
+            recommendation=recommendation,
+            period_days=days,
+            mission_title=mission_title,
+            mission_status=mission_status,
+            evidence_count=len(evidence),
+            decisions_count=len(decisions),
+            drift_count=len(drift),
+            generated_at=generated_at,
+        )
 
     def _filter_recent(self, records: list[dict], days: int) -> list[dict]:
         """Filter records to those created within the last `days` days."""

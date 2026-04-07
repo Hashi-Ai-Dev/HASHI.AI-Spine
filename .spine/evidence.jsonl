@@ -1,0 +1,4 @@
+{"kind": "commit", "description": "Integrated approved Phase3A polish slices onto prep/v0.1.1-alpha branch", "evidence_url": "", "created_at": "2026-04-06T23:22:37.360829+00:00"}
+{"kind": "test_pass", "description": "All 122 tests pass on prep/v0.1.1-alpha after integration", "evidence_url": "", "created_at": "2026-04-06T23:22:38.817879+00:00"}
+{"kind": "pr", "description": "Draft PR created from prep/v0.1.1-alpha to main for v0.1.1-alpha public alpha release. README cleaned up for public-facing alpha audience; branch cleanup report produced.", "evidence_url": "", "created_at": "2026-04-07T11:41:57.511517+00:00"}
+{"kind": "commit", "description": "Final public-surface cleanup: README rewritten for professional public-alpha look, docs/README.md created as documentation index, branch cleanup report updated.", "evidence_url": "", "created_at": "2026-04-07T12:42:54.418760+00:00"}
