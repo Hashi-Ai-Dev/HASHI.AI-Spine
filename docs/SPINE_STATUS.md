@@ -12,53 +12,52 @@
 |---|---|
 | **Version** | `v0.1.2` |
 | **Status** | Published |
-| **Previous** | `v0.1.1-alpha` (2026-04-07) |
+| **Target** | `v0.2.0-beta` (Alpha Exit) |
 
 ---
 
-## Current Phase
+## Phase Map
 
-**Phase 1 + 2 Complete.**
-
-Full governance command suite implemented:
-- `spine init` · `spine mission` · `spine brief` · `spine evidence` · `spine decision` · `spine opportunity` · `spine drift` · `spine review` · `spine doctor` · `spine mcp serve`
-
-Tests: **136+** passing.
-
----
-
-## Active Phase: v0.2 / Phase 3A — In Progress ✅
-
-Phase 3A spec (`docs/SPINE_PHASE3A_v0.2_SPEC.md`) has been **reviewed and approved by human**.
-
-**Phase 3A focus: Portability + Operator Polish**
-
-Implementation queue is live on GitHub (issues #15–#18).
-
----
-
-## v0.2 / Phase 3A Implementation Queue
-
-| # | Issue | Phase | Status |
-|---|---|---|---|
-| #15 | Explicit repo targeting + `--cwd` contract normalization | 3A.2 | ✅ Done (PR #19 merged) |
-| #16 | Repo/branch context visibility + deterministic defaults | 3A.2 | ✅ Done (PR #20 merged) |
-| #17 | Operator/CI output modes + stable exit codes | 3A.3 | ✅ Done (PR #21 merged) |
-| #18 | Bootstrap polish + discipline-tax ergonomics | 3A | 🔄 Next |
-
-Full spec: `docs/SPINE_PHASE3A_v0.2_SPEC.md`
-
----
-
-## Branch / Release State
-
-| | |
+| Phase | Status |
 |---|---|
-| **Default branch** | `main` (protected) |
-| **Branch protection** | PR required + CI status checks + force-push blocked + delete blocked |
-| **Open PRs** | None |
-| **Open branches** | `main` only |
-| **Releases** | `v0.1.1-alpha` · `v0.1.2` |
+| Phase 1 + 2 | ✅ Complete |
+| v0.2 / Phase 3A | 🔄 In Progress — Alpha Exit milestone |
+| Alpha Exit → v0.2.0-beta | 🔄 In Progress |
+| Beta | 📋 Planned |
+| v1.0.0 | 📋 Planned |
+
+---
+
+## Current Milestone
+
+**`Alpha Exit — v0.2.0-beta`**
+
+| # | Issue | Status |
+|---|------|--------|
+| #15 | Explicit repo targeting + `--cwd` contract | ✅ Done |
+| #16 | Repo/branch context visibility | ✅ Done |
+| #17 | Stable exit codes + JSON output | ✅ Done |
+| #18 | Bootstrap polish + discipline-tax ergonomics | 🔄 In Progress |
+| #22 | Artifact ergonomics contract | 📋 Planned |
+| #23 | External-repo onboarding docs | 📋 Planned |
+| #24 | Alpha-exit validation gate matrix | 📋 Planned |
+
+---
+
+## Next Active Priority
+
+**Issue #18** — Bootstrap polish + discipline-tax ergonomics. Last Phase 3A item before alpha-exit validation.
+
+---
+
+## Milestones
+
+| Milestone | Scope | Status |
+|---|---|---|
+| `v0.1.2` | Stabilization | ✅ Released |
+| `Alpha Exit — v0.2.0-beta` | Phase 3A complete + validation gates | 🔄 In Progress |
+| `Beta` | Repeated-use proof, handoff primitives, preflight commands | 📋 Planned |
+| `v1.0.0` | Stable contracts, authority boundaries, automation surfaces | 📋 Planned |
 
 ---
 
@@ -66,7 +65,7 @@ Full spec: `docs/SPINE_PHASE3A_v0.2_SPEC.md`
 
 | Check | Status |
 |-------|--------|
-| README | ✅ Clean, public-alpha appropriate |
+| README | ✅ Clean |
 | LICENSE | ✅ MIT |
 | SECURITY.md | ✅ Contact + policy |
 | Branch protection | ✅ Protected + CI required |
@@ -76,4 +75,4 @@ Full spec: `docs/SPINE_PHASE3A_v0.2_SPEC.md`
 
 ---
 
-*Next status review: after v0.2 release*
+*Next status review: after alpha-exit validation gates pass*
