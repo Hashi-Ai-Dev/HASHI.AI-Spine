@@ -6,10 +6,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ## v0.1.2 — Stabilization
 
-### 🔄 Add `--cwd` support to Phase 2 commands
-**Description:** Currently only `spine init` accepts `--cwd`. Phase 2 commands (brief, doctor, mission, proof, decision, drift) only run in the current working directory.
+### ✅ Add `--cwd` support to Phase 2 commands
+**Description:** Added `--cwd PATH` to all 9 Phase 2 commands: mission show/set, evidence add, decision add, opportunity score, drift scan, brief, doctor, mcp serve. Also unhidden on `review weekly`.
 **Why it matters:** Blocks external-repo workflows — users must cd into the repo before running any SPINE command. Pain point confirmed in external validation.
-**Status:** NOW
+**Status:** DONE — merged in PR #11 (2026-04-07)
 
 ### 🔄 Add minimal CI pipeline (lint + tests on push/PR)
 **Description:** A `ci.yml` GitHub Actions workflow that runs lint + test suite on every push and PR.
