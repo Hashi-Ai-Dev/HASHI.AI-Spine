@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 from rich.console import Console
 
@@ -20,6 +22,11 @@ app.add_typer(evidence_app, name="evidence", help="Manage evidence records.")
 
 @evidence_app.command("add", help="Add an evidence record to .spine/evidence.jsonl.")
 def evidence_add(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     kind: EVIDENCE_KINDS = typer.Option(..., "--kind", "-k", help="Evidence kind"),
     description: str = typer.Option("", "--description", "-d", help="Description of the evidence"),
     url: str = typer.Option("", "--url", help="URL or reference for the evidence"),
@@ -31,7 +38,7 @@ def evidence_add(
                    demo, user_feedback, payment, kill, narrow
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)

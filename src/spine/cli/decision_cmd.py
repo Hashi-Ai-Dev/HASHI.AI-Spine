@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 from rich.console import Console
 
@@ -19,6 +21,11 @@ app.add_typer(decision_app, name="decision", help="Manage decision records.")
 
 @decision_app.command("add", help="Add a decision record to .spine/decisions.jsonl.")
 def decision_add(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     title: str = typer.Option(..., "--title", "-t", help="Decision title (required)"),
     why: str = typer.Option(..., "--why", "-w", help="Why this decision was made (required)"),
     decision: str = typer.Option(..., "--decision", "-d", help="What was decided (required)"),
@@ -31,7 +38,7 @@ def decision_add(
     Optional: alternatives (comma-separated list).
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)

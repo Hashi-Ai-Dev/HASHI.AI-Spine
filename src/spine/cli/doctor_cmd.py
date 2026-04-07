@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from datetime import datetime, timezone
 
 import typer
@@ -18,6 +19,11 @@ console = Console()
 
 @app.command("doctor")
 def doctor_cmd(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     json_output: bool = typer.Option(
         False,
         "--json",
@@ -36,7 +42,7 @@ def doctor_cmd(
     - Required subdirectories exist
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         if json_output:
             print(json.dumps({"error": str(exc)}, indent=2))

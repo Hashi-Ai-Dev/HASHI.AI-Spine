@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -21,6 +23,11 @@ app.add_typer(drift_app, name="drift", help="Detect and log scope drift.")
 
 @drift_app.command("scan", help="Scan for git-native scope drift.")
 def drift_scan(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     against_branch: str | None = typer.Option(
         None,
         "--against",
@@ -40,7 +47,7 @@ def drift_scan(
     Appends detected drift events to .spine/drift.jsonl.
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         err_console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)

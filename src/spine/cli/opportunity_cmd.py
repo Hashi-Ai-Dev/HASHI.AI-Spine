@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 from rich.console import Console
 
@@ -20,6 +22,11 @@ app.add_typer(opportunity_app, name="opportunity", help="Score and log opportuni
 @opportunity_app.command("score", help="Score an opportunity using deterministic weighted factors.")
 def opportunity_score(
     title: str = typer.Argument(..., help="Opportunity title"),
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     description: str = typer.Option("", "--description", "-d", help="Description of the opportunity"),
     pain: int = typer.Option(3, "--pain", help="Pain score 1-5"),
     founder_fit: int = typer.Option(3, "--founder-fit", help="Founder fit score 1-5"),
@@ -36,7 +43,7 @@ def opportunity_score(
     No model call is made — all scoring is deterministic.
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)

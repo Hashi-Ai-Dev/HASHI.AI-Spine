@@ -27,7 +27,13 @@ def _get_mcp_modules():
 
 
 @mcp_app.command("serve", help="Start the SPINE MCP server (blocking stdio mode).")
-def mcp_serve() -> None:
+def mcp_serve(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
+) -> None:
     """
     Start the SPINE MCP server (blocking stdio mode).
 
@@ -42,7 +48,7 @@ def mcp_serve() -> None:
     McpServer = _mcp_modules[0]
 
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         raise typer.Exit(1)

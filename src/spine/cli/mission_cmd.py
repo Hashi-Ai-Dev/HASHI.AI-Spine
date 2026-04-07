@@ -27,6 +27,11 @@ app.add_typer(mission_app, name="mission", help="Manage the active mission.")
 
 @mission_app.command("show", help="Display the current mission.")
 def mission_show(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     json_output: bool = typer.Option(
         False,
         "--json",
@@ -35,7 +40,7 @@ def mission_show(
 ) -> None:
     """Display the current mission from .spine/mission.yaml."""
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)
@@ -80,6 +85,11 @@ def mission_show(
 
 @mission_app.command("set", help="Update mission fields in .spine/mission.yaml.")
 def mission_set(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+    ),
     title: str | None = typer.Option(None, "--title", help="Mission title"),
     status: str | None = typer.Option(None, "--status", help="Status: active/paused/complete/killed"),
     target_user: str | None = typer.Option(None, "--target-user", help="Target user description"),
@@ -99,7 +109,7 @@ def mission_set(
     The updated_at timestamp is always refreshed.
     """
     try:
-        repo_root, spine_root = resolve_roots()
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
         raise typer.Exit(1)

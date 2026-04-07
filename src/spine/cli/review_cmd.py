@@ -24,11 +24,10 @@ app.add_typer(review_app, name="review", help="Generate review documents.")
 
 @review_app.command("weekly", help="Generate a weekly review document.")
 def review_weekly(
-    cwd: Path = typer.Option(
+    cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Override working directory (for testing).",
-        hidden=True,
+        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
     ),
     days: int = typer.Option(7, "--days", "-d", help="Number of days to aggregate"),
     recommendation: str = typer.Option(
@@ -65,9 +64,8 @@ def review_weekly(
             )
         raise typer.Exit(1)
 
-    effective_cwd = cwd or Path.cwd()
     try:
-        repo_root, spine_root = resolve_roots(effective_cwd)
+        repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         if json_output:
             print(json.dumps({"error": str(exc)}))
