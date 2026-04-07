@@ -16,24 +16,59 @@ def resolve_roots(cwd: Path | None = None) -> tuple[Path, Path]:
     """
     Resolve the git repository root and SPINE project root.
 
-    Git root is found by walking up from cwd using find_git_root().
-    SPINE root is determined by:
-    - SPINE_ROOT env var (for subdirectory SPINE governance), else
-    - git root (standard layout where .spine/ lives at repo root)
+    Target resolution precedence (highest to lowest):
+    1. ``--cwd <path>``  — if explicitly provided, overrides SPINE_ROOT
+    2. ``SPINE_ROOT``    — environment variable, if set
+    3. current working directory — fallback default
 
-    When SPINE_ROOT is set, it is treated as the authoritative target repo
-    root — both git operations and .spine/ state point to the same repo.
+    Commands that require a git repo fail fast with a clear message when the
+    resolved target is not a git repository.  Errors always state:
+    - the resolved target path
+    - which source produced it (--cwd, SPINE_ROOT, or cwd)
+    - what the operator should do to fix it
 
     Returns (git_root, spine_root).
     """
-    from spine.utils.paths import find_git_root
-    if os.environ.get("SPINE_ROOT"):
+    from spine.utils.paths import find_git_root, GitRepoNotFoundError
+
+    if cwd is not None:
+        # --cwd explicitly provided: highest precedence, overrides SPINE_ROOT.
+        target = cwd.resolve()
+        source = f"--cwd {cwd}"
+        try:
+            git_root = find_git_root(target)
+        except GitRepoNotFoundError:
+            raise GitRepoNotFoundError(
+                f"No git repository found at or above: {target}\n"
+                f"  Target source: {source}\n"
+                f"  Point --cwd at a valid git repository, or run 'git init' first."
+            ) from None
+        return git_root, git_root / ".spine"
+
+    spine_root_env = os.environ.get("SPINE_ROOT")
+    if spine_root_env:
         # SPINE_ROOT is the authoritative repo root for both git and state.
-        # Use it directly as git_root (no walking up from cwd).
-        repo_root = Path(os.environ["SPINE_ROOT"]).resolve()
+        # No --cwd was supplied, so SPINE_ROOT governs.
+        repo_root = Path(spine_root_env).resolve()
+        if not repo_root.exists():
+            raise FileNotFoundError(
+                f"SPINE_ROOT path does not exist: {repo_root}\n"
+                f"  SPINE_ROOT={spine_root_env}\n"
+                f"  Update SPINE_ROOT to point to a valid repository path."
+            )
         return repo_root, repo_root / ".spine"
-    # Normal case: walk up from cwd to find git root, .spine/ lives at it.
-    git_root = find_git_root(cwd or Path.cwd())
+
+    # Default: walk up from the current working directory.
+    cwd_resolved = Path.cwd()
+    try:
+        git_root = find_git_root(cwd_resolved)
+    except GitRepoNotFoundError:
+        raise GitRepoNotFoundError(
+            f"No git repository found at or above: {cwd_resolved}\n"
+            f"  Target source: current working directory\n"
+            f"  Use '--cwd <path>' to target a specific repo, or set SPINE_ROOT, "
+            f"or run 'git init'."
+        ) from None
     return git_root, git_root / ".spine"
 
 app = typer.Typer(

@@ -24,7 +24,7 @@ def decision_add(
     cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
     ),
     title: str = typer.Option(..., "--title", "-t", help="Decision title (required)"),
     why: str = typer.Option(..., "--why", "-w", help="Why this decision was made (required)"),

@@ -38,10 +38,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 > Phase 3A focus: make SPINE portable and ergonomic across arbitrary repos. Reduce discipline tax. No new product surface.
 > Spec approved 2026-04-07. Implementation queue live — issues #15–#18.
 
-### 📋 [Phase 3A.2] Explicit repo targeting contract (#15)
-**Description:** Standardize `--cwd` semantics across all commands. Always resolve and display the target path. Fail fast on invalid/non-repo targets.
+### ✅ [Phase 3A.2] Explicit repo targeting contract (#15)
+**Description:** Standardized targeting contract across all commands. `resolve_roots()` now honours `--cwd > SPINE_ROOT > cwd` precedence. SPINE_ROOT path-existence validated. Error messages state the resolved target, its source, and corrective action. `--cwd` help text updated on all 10 commands. 11 new targeting tests added.
 **Why it matters:** Ambiguous targeting causes operators to accidentally govern the wrong repo.
-**Status:** APPROVED — implementation queue #15
+**Status:** DONE — implemented 2026-04-07
 
 ### 📋 [Phase 3A.2] Repo/branch context visibility (#16)
 **Description:** Standard context reporting: repo path, HEAD branch/detached state, resolved default branch. Clear warning path for unresolved states.
@@ -118,4 +118,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
+*Last updated: 2026-04-07 — Phase 3A Issue #15 complete.*

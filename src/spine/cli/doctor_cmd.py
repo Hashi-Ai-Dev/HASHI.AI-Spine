@@ -22,7 +22,7 @@ def doctor_cmd(
     cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
     ),
     json_output: bool = typer.Option(
         False,
