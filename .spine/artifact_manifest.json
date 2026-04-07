@@ -1,0 +1,9 @@
+{
+  "contract_version": "1",
+  "reviews": {
+    "weekly": {
+      "latest": ".spine/reviews/latest.md",
+      "last_generated_at": "2026-04-07T22:03:58.120596+00:00"
+    }
+  }
+}

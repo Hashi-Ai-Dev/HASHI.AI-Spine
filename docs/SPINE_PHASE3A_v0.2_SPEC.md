@@ -2,9 +2,9 @@
 
 ## Portability + Operator Polish
 
-**Status:** In progress. Implementation queue: issues #15–#18.  
-**Implementation state:** Issues #15, #16, #17, and #18 (bootstrap polish + discipline-tax ergonomics) **complete** (2026-04-07). Alpha-exit items #22, #23, #24 are next.  
-**Next required step:** Alpha-exit items #22 (artifact ergonomics), #23 (external-repo docs), #24 (validation gate matrix).
+**Status:** In progress. Implementation queue: issues #15–#18, #23–#25.  
+**Implementation state:** Issues #15, #16, #17, #18, and #23 (artifact ergonomics contract) **complete** (2026-04-07). Alpha-exit items #24, #25 are next.  
+**Next required step:** Alpha-exit items #24 (external-repo docs), #25 (validation gate matrix).
 
 ---
 
