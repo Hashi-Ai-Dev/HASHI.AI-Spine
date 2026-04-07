@@ -13,6 +13,7 @@ These are the primary reference documents for users of SPINE.
 | [`SPINE_OFFICIAL_SPEC_v0.1.md`](SPINE_OFFICIAL_SPEC_v0.1.md) | Authoritative design specification — what SPINE is, what each command does, non-goals, and design constraints |
 | [`SPINE_PUBLIC_ALPHA_RELEASE_NOTES_DRAFT.md`](SPINE_PUBLIC_ALPHA_RELEASE_NOTES_DRAFT.md) | Full release notes for v0.1.1-alpha — what's implemented, what's validated, known rough edges |
 | [`SPINE_ORIGIN_AND_PRODUCT_THESIS_v0.1.md`](SPINE_ORIGIN_AND_PRODUCT_THESIS_v0.1.md) | Product motivation, thesis, and design philosophy |
+| [`ROADMAP.md`](ROADMAP.md) | Public product roadmap — alpha exit criteria, beta direction, and v1.0.0 goals |
 | [`SPINE_STATUS.md`](SPINE_STATUS.md) | Current implementation status — command surface, test coverage, known issues |
 
 ---
@@ -34,6 +35,7 @@ These documents are dev-facing operational notes from the build process. They ar
 
 | Document | Description |
 |----------|-------------|
+| [`SPINE_INTERNAL_ROADMAP.md`](SPINE_INTERNAL_ROADMAP.md) | Internal release-gating roadmap — operational gates, contract stability policy, and beta/v1 acceptance criteria |
 | [`SPINE_v0.1.1_SELF_DOGFOOD_CLEANUP.md`](SPINE_v0.1.1_SELF_DOGFOOD_CLEANUP.md) | Self-governance loop report — SPINE governing its own repo during development |
 | [`SPINE_ALPHA_PR_BODY_DRAFT.md`](SPINE_ALPHA_PR_BODY_DRAFT.md) | Draft PR body for the v0.1.1-alpha release PR |
 | [`SPINE_BRANCH_CLEANUP_REPORT.md`](SPINE_BRANCH_CLEANUP_REPORT.md) | Branch audit — keep/delete recommendations for all known branches |
