@@ -25,7 +25,7 @@ def opportunity_score(
     cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
     ),
     description: str = typer.Option("", "--description", "-d", help="Description of the opportunity"),
     pain: int = typer.Option(3, "--pain", help="Pain score 1-5"),

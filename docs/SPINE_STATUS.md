@@ -23,7 +23,7 @@
 Full governance command suite implemented:
 - `spine init` · `spine mission` · `spine brief` · `spine evidence` · `spine decision` · `spine opportunity` · `spine drift` · `spine review` · `spine doctor` · `spine mcp serve`
 
-Tests: **136+** passing.
+Tests: **147** passing.
 
 ---
 
@@ -41,8 +41,8 @@ Implementation may now begin. The implementation queue is live on GitHub (issues
 
 | # | Issue | Phase 3A Milestone | Status |
 |---|---|---|---|
-| #15 | Explicit repo targeting + `--cwd` contract normalization | Phase 3A.2 | 🔄 Next |
-| #16 | Repo/branch context visibility + deterministic defaults | Phase 3A.2 | 📋 Planned |
+| #15 | Explicit repo targeting + `--cwd` contract normalization | Phase 3A.2 | ✅ Done |
+| #16 | Repo/branch context visibility + deterministic defaults | Phase 3A.2 | 🔄 Next |
 | #17 | Operator/CI output modes + stable exit codes | Phase 3A.3 | 📋 Planned |
 | #18 | Bootstrap polish + discipline-tax ergonomics | Phase 3A | 📋 Planned |
 
@@ -75,4 +75,4 @@ Full spec: `docs/SPINE_PHASE3A_v0.2_SPEC.md`
 
 ---
 
-*Next status review: after Phase 3A implementation begins*
+*Last updated: 2026-04-07 — Phase 3A Issue #15 complete.*

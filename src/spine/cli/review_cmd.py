@@ -27,7 +27,7 @@ def review_weekly(
     cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
     ),
     days: int = typer.Option(7, "--days", "-d", help="Number of days to aggregate"),
     recommendation: str = typer.Option(

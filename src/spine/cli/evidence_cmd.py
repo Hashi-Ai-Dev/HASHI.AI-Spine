@@ -25,7 +25,7 @@ def evidence_add(
     cwd: Path | None = typer.Option(
         None,
         "--cwd",
-        help="Target repository path (for external-repo usage without cd or SPINE_ROOT).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
     ),
     kind: EVIDENCE_KINDS = typer.Option(..., "--kind", "-k", help="Evidence kind"),
     description: str = typer.Option("", "--description", "-d", help="Description of the evidence"),

@@ -36,7 +36,7 @@ def init_cmd(
     cwd: Path = typer.Option(
         None,
         "--cwd",
-        help="Override working directory (for testing).",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
         hidden=True,
     ),
 ) -> None:

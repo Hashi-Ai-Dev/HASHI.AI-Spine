@@ -2,9 +2,9 @@
 
 ## Portability + Operator Polish
 
-**Status:** Approved for implementation (2026-04-07). Implementation queue: issues #15–#18.  
-**Implementation state:** Approved for implementation. Implementation queue: issues #15–#18 on GitHub.  
-**Next required step:** None — Phase 3A is approved. Implementation may proceed issue by issue.
+**Status:** In progress. Implementation queue: issues #15–#18.  
+**Implementation state:** Issue #15 (explicit repo targeting contract) **complete** (2026-04-07). Issue #16 is next.  
+**Next required step:** Implement Issue #16 — repo/branch context visibility.
 
 ---
 
@@ -82,6 +82,11 @@ Operators and CI need to intentionally direct SPINE at a specific repository pat
 - Introduce and standardize explicit repo-targeting semantics (e.g., canonical path flag behavior) across Phase 3A-touched commands.
 - Normalize and display resolved target path during execution.
 - Fail fast with clear errors for invalid or non-repo targets when command requires git context.
+
+**Standardized contract (implemented in Issue #15)**  
+Target resolution precedence: `--cwd` > `SPINE_ROOT` > current working directory.  
+Errors state the resolved target, its source, and the corrective action.  
+`--cwd` help text on all commands now documents the precedence explicitly.
 
 **Deferred**  
 - Repo discovery “magic” across arbitrary parent directories.
