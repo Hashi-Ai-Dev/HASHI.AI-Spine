@@ -118,4 +118,45 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
+## Phase 3B / Beta Candidates
+
+> Preserved inputs from product review session 2026-04-07. Not active work. Phase 3B begins after alpha exit is validated.
+
+### 🟡 Draftable governance records (Phase 3B)
+**Description:** Draft evidence, draft decisions, draft PR/handoff summaries. Governance records that are explicitly tentative until the operator confirms them as canonical.
+**Why it matters:** Reduces friction without mutating truth silently. Makes governance feel lighter without hiding anything.
+**Status:** CANDIDATE — Phase 3B
+
+### 🟡 Native hooks / lifecycle enforcement (Phase 3B)
+**Description:** Local, explicit, opt-in pre-commit / pre-PR governance hooks. Not hidden daemon behavior.
+**Why it matters:** Makes SPINE governance naturally part of existing developer workflow. Low friction, high signal.
+**Status:** CANDIDATE — Phase 3B
+
+### 🟡 Mission interview / brainstorm flow (Phase 3B)
+**Description:** Explicit operator-invoked mission refinement. Draft mission generation only. Operator controls what becomes canonical.
+**Why it matters:** Reduces discipline tax around mission framing without silently mutating canonical truth.
+**Status:** CANDIDATE — Phase 3B, constrained
+
+### 🟡 Stronger local tool-consumption surfaces (Phase 3B)
+**Description:** Stable command contracts, machine-readable outputs, stable artifact references, richer local MCP surfaces.
+**Why it matters:** Makes SPINE governance accessible to agents and tools without requiring human intermediaries.
+**Status:** CANDIDATE — Phase 3B
+
+### 🟡 Optional governance profiles (Phase 3B)
+**Description:** Explicit opt-in workflow profiles. Visible rules, not hidden methodology enforcement.
+**Why it matters:** Could support team-specific governance styles without forcing adoption.
+**Status:** CANDIDATE — Phase 3B, optional
+
+### 🚫 HUD / live observability mode
+**Description:** Dashboard or live monitoring of governance state.
+**Why it matters:** Too easy to drift toward dashboard creep. SPINE is governance, not observability.
+**Status:** REJECTED
+
+### 🚫 Notification / webhook systems
+**Description:** Ping operators when governance events occur.
+**Why it matters:** A governance tool that notifies you is no longer purely local-first.
+**Status:** REJECTED
+
+---
+
 *Last updated: 2026-04-07 by SPINE Repo Manager Agent*
