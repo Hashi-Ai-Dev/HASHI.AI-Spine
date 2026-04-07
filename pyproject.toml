@@ -29,8 +29,16 @@ packages = ["src/spine"]
 [dependency-groups]
 dev = [
   "pytest>=8.0",
+  "ruff>=0.4.0",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]

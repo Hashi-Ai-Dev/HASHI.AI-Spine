@@ -68,7 +68,6 @@ class ReviewService:
         mission_status = "(none)"
         if self.mission_path.exists():
             raw = self.mission_path.read_text(encoding="utf-8")
-            import yaml
             mission = MissionModel.from_yaml(raw)
             mission_title = mission.title
             mission_status = mission.status

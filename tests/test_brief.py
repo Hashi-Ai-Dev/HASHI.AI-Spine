@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-import json
 import os
-import subprocess
 from pathlib import Path
 
-import pytest
 from typer.testing import CliRunner
 
 from spine.main import app
@@ -82,7 +79,6 @@ def test_brief_updates_latest_md(tmp_path: Path) -> None:
     latest_path = tmp_path / ".spine" / "briefs" / "claude" / "latest.md"
     assert latest_path.exists(), f"latest.md not found at {latest_path}"
 
-    first_content = latest_path.read_text(encoding="utf-8")
     first_mtime = latest_path.stat().st_mtime
 
     # Second brief should update latest.md

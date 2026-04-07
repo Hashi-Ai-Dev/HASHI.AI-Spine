@@ -7,7 +7,6 @@ import os
 import subprocess
 from pathlib import Path
 
-import pytest
 from typer.testing import CliRunner
 
 from spine.main import app
@@ -166,7 +165,7 @@ def test_drift_scan_appends_to_drift_jsonl(tmp_path: Path) -> None:
     # drift.jsonl should exist and have content
     assert drift_jsonl.exists()
     content = drift_jsonl.read_text(encoding="utf-8")
-    lines = [l.strip() for l in content.splitlines() if l.strip()]
+    lines = [ln.strip() for ln in content.splitlines() if ln.strip()]
     assert len(lines) > 0, "drift.jsonl should have at least one event"
     # Each line should be valid JSON
     for line in lines:

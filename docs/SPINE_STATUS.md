@@ -41,7 +41,7 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 |---|------|--------|
 | 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
 | 2 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
-| 3 | Add minimal CI pipeline | 🔄 Pending |
+| 3 | Add minimal CI pipeline | ✅ Done (branch `claude/stabilize-v0.1.2-ci-816Ev`) |
 | 4 | Clarify onboarding docs | 🔄 Pending |
 
 Tests now at **136** (up from 123).
@@ -56,7 +56,7 @@ None currently blocking v0.1.2 release.
 
 ## Next 3 Moves
 
-1. **Write CI pipeline** — `ci.yml` with lint + test on push/PR; enables status checks and removes the "always-passing" gap in branch protection
+1. ~~**Write CI pipeline**~~ — ✅ Done (`ci.yml` with ruff lint + pytest on push/PR)
 2. **Update README quickstart** — note `--cwd` support; clarify external-repo flow
 3. **Tag v0.1.2 and publish release**
 
@@ -93,7 +93,7 @@ See GitHub issue #10 for the Phase 3A planning tracking issue.
 | LICENSE | ✅ MIT |
 | SECURITY.md | ✅ Contact + policy |
 | Branch protection | ✅ `main` protected |
-| CI pipeline | ❌ Not created |
+| CI pipeline | ✅ `.github/workflows/ci.yml` (ruff + pytest) |
 | Dependabot alerts | ✅ Enabled |
 | Secret scanning | ✅ Enabled |
 

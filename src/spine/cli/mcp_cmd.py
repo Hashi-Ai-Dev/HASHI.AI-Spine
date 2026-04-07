@@ -45,7 +45,7 @@ def mcp_serve(
         print("ERROR: MCP package not installed. Run: uv add mcp", file=sys.stderr)
         raise typer.Exit(1)
 
-    McpServer = _mcp_modules[0]
+    McpServer, _Resource, _Tool, _TextResourceContents, TextContent = _mcp_modules
 
     try:
         repo_root, spine_root = resolve_roots(cwd)

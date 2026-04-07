@@ -158,7 +158,7 @@ class DoctorService:
                 issues.append(DoctorIssue(
                     severity="warning",
                     file=path.relative_to(self.repo_root).as_posix(),
-                    message=f"JSONL file does not exist (will be created on first append)",
+                    message="JSONL file does not exist (will be created on first append)",
                 ))
                 continue
 
@@ -183,6 +183,6 @@ class DoctorService:
                 issues.append(DoctorIssue(
                     severity="warning",
                     file=path.relative_to(self.repo_root).as_posix(),
-                    message=f"Subdirectory does not exist (will be created as needed)",
+                    message="Subdirectory does not exist (will be created as needed)",
                 ))
         return issues

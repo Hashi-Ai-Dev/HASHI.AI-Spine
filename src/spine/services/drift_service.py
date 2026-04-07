@@ -5,11 +5,10 @@ from __future__ import annotations
 import subprocess
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from spine import constants as C
-from spine.models import DriftEventModel, DRIFT_SEVERITY, DRIFT_CATEGORY
+from spine.models import DriftEventModel, DRIFT_SEVERITY
 from spine.utils.jsonl import append_jsonl, read_jsonl
 
 

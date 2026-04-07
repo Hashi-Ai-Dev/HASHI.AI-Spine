@@ -11,10 +11,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Why it matters:** Blocks external-repo workflows — users must cd into the repo before running any SPINE command. Pain point confirmed in external validation.
 **Status:** DONE — merged in PR #11 (2026-04-07)
 
-### 🔄 Add minimal CI pipeline (lint + tests on push/PR)
+### ✅ Add minimal CI pipeline (lint + tests on push/PR)
 **Description:** A `ci.yml` GitHub Actions workflow that runs lint + test suite on every push and PR.
 **Why it matters:** Enables status checks on PRs, removes "always-passing" gap in branch protection, provides automated quality signal.
-**Status:** NOW
+**Status:** DONE — `.github/workflows/ci.yml` merged in `claude/stabilize-v0.1.2-ci-816Ev` (2026-04-07). Runs ruff + pytest. Fixed 25 pre-existing lint errors.
 
 ### ✅ Enable Dependabot alerts + secret scanning push protection
 **Description:** GitHub security settings enabled via GitHub settings page.
