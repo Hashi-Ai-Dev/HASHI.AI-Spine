@@ -241,14 +241,14 @@ def test_cli_spine_root_used_when_no_cwd(tmp_path: Path) -> None:
 
 
 def test_cli_invalid_cwd_exit_code_and_message(tmp_path: Path) -> None:
-    """CLI: --cwd pointing to a non-repo directory exits 1 with a useful message."""
+    """CLI: --cwd pointing to a non-repo directory exits 2 (context failure) with a useful message."""
     not_a_repo = tmp_path / "not_a_repo"
     not_a_repo.mkdir()
 
     old = os.environ.pop("SPINE_ROOT", None)
     try:
         result = runner.invoke(app, ["doctor", "--cwd", str(not_a_repo)])
-        assert result.exit_code == 1
+        assert result.exit_code == 2, f"Expected exit 2 (context failure), got {result.exit_code}"
         combined = (result.output or "") + (result.stderr if hasattr(result, "stderr") and result.stderr else "")
         assert "No git repository" in combined or "git" in combined.lower()
     finally:
@@ -258,14 +258,14 @@ def test_cli_invalid_cwd_exit_code_and_message(tmp_path: Path) -> None:
 
 
 def test_cli_invalid_spine_root_exit_code_and_message(tmp_path: Path) -> None:
-    """CLI: SPINE_ROOT pointing to a missing path exits 1 with a useful message."""
+    """CLI: SPINE_ROOT pointing to a missing path exits 2 (context failure) with a useful message."""
     missing = tmp_path / "no_such_dir"
 
     old = os.environ.pop("SPINE_ROOT", None)
     try:
         os.environ["SPINE_ROOT"] = str(missing)
         result = runner.invoke(app, ["doctor"])
-        assert result.exit_code == 1
+        assert result.exit_code == 2, f"Expected exit 2 (context failure), got {result.exit_code}"
         combined = (result.output or "") + (result.stderr if hasattr(result, "stderr") and result.stderr else "")
         assert "SPINE_ROOT" in combined
     finally:

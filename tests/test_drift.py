@@ -253,7 +253,7 @@ def test_drift_scan_allowed_file_not_high_severity(tmp_path: Path) -> None:
 
 
 def test_drift_scan_requires_git_repo(tmp_path: Path) -> None:
-    """drift-scan exits with code 1 when not in a git repo."""
+    """drift-scan exits 2 (context failure) when not in a git repo."""
     import os
     original = os.getcwd()
     try:
@@ -261,7 +261,7 @@ def test_drift_scan_requires_git_repo(tmp_path: Path) -> None:
         result = runner.invoke(app, ["drift", "scan"])
     finally:
         os.chdir(original)
-    assert result.exit_code == 1
+    assert result.exit_code == 2, f"Expected exit 2 (context failure), got {result.exit_code}"
 
 
 def test_drift_scan_works_without_init(tmp_path: Path) -> None:

@@ -7,7 +7,7 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_VALIDATION, EXIT_CONTEXT
 from spine.services.decision_service import DecisionService, DecisionValidationError
 
 console = Console()
@@ -41,7 +41,7 @@ def decision_add(
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
 
     def parse_list(s: str | None) -> list[str] | None:
         if s is None:
@@ -64,4 +64,4 @@ def decision_add(
         console.print(f"  Created at: {decision_record.created_at}")
     except DecisionValidationError as exc:
         console.print(f"[bold red]Validation error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_VALIDATION)

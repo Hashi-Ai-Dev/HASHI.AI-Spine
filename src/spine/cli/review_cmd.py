@@ -8,7 +8,7 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_VALIDATION, EXIT_CONTEXT
 from spine.services.review_service import ReviewService
 from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
@@ -58,21 +58,24 @@ def review_weekly(
     """
     if recommendation not in RECOMMENDATION_CHOICES:
         if json_output:
-            print(json.dumps({"error": f"recommendation must be one of: {RECOMMENDATION_CHOICES}"}))
+            print(json.dumps({
+                "error": f"recommendation must be one of: {RECOMMENDATION_CHOICES}",
+                "exit_code": EXIT_VALIDATION,
+            }))
         else:
             console.print(
                 f"[bold red]Error:[/bold red] recommendation must be one of: {RECOMMENDATION_CHOICES}"
             )
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_VALIDATION)
 
     try:
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         if json_output:
-            print(json.dumps({"error": str(exc)}))
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}))
         else:
             console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
 
     branch = get_current_branch(repo_root)
     default_branch = get_default_branch(repo_root)

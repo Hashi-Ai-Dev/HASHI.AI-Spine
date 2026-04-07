@@ -7,7 +7,7 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from spine.cli.app import app, resolve_roots
+from spine.cli.app import app, resolve_roots, EXIT_VALIDATION, EXIT_CONTEXT
 from spine.models.evidence import EVIDENCE_KINDS
 from spine.services.evidence_service import EvidenceService, EvidenceValidationError
 
@@ -41,7 +41,7 @@ def evidence_add(
         repo_root, spine_root = resolve_roots(cwd)
     except Exception as exc:
         console.print(f"[bold red]Error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_CONTEXT)
 
     service = EvidenceService(repo_root, spine_root=spine_root)
     try:
@@ -50,4 +50,4 @@ def evidence_add(
         console.print(f"  Created at: {evidence.created_at}")
     except EvidenceValidationError as exc:
         console.print(f"[bold red]Validation error:[/bold red] {exc}")
-        raise typer.Exit(1)
+        raise typer.Exit(EXIT_VALIDATION)

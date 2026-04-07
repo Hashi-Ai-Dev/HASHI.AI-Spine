@@ -64,12 +64,12 @@ def test_mission_show_displays_fields(tmp_path: Path) -> None:
 
 
 def test_mission_show_requires_init(tmp_path: Path) -> None:
-    """mission show exits with error when .spine/mission.yaml does not exist."""
+    """mission show exits 2 (context failure) when .spine/mission.yaml does not exist."""
     make_git_repo(tmp_path)
     # Do NOT run init
 
     exit_code, stdout, _ = run_mission_show(tmp_path)
-    assert exit_code == 1
+    assert exit_code == 2, f"Expected exit 2 (context failure), got {exit_code}"
     assert "mission.yaml" in stdout.lower() or "not found" in stdout.lower()
 
 
