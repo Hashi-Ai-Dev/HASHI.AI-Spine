@@ -186,7 +186,7 @@ Phase 3A implementation is nearly complete. The following are done:
 - Artifact ergonomics contract (machine-readable manifest, canonical naming)
 - External-repo onboarding docs ([`docs/external-repo-onboarding.md`](docs/external-repo-onboarding.md))
 
-Remaining: alpha-exit validation gate (Issue #25).
+Alpha-exit gates passed. SPINE is ready for v0.2.0-beta declaration.
 
 Not planned: web UI, auth, billing, cloud sync, remote MCP, or multi-user support.
 
