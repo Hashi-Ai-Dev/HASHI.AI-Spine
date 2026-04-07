@@ -181,18 +181,19 @@ This repository uses `.spine/` as canonical governance state.
 - Never silently expand scope beyond `allowed_scope` in `mission.yaml`.
 - Never add UI, auth, billing, cloud sync, or autonomous background loops unless
   they appear explicitly in `allowed_scope`.
-- Do not create new `spine` subcommands — Phase 1 implements only `spine init`.
 - After any change session: run `uv run pytest` and fix all failures before finishing.
 
-## Phase 1 scope
+## Governance workflow (common commands)
 
-Only `spine init` is implemented. Do not add `spine run`, `spine review`,
-`spine status`, or any other command yet.
-
-## Running tests
-
-```
-uv run pytest
+```bash
+uv run spine mission show          # view active mission
+uv run spine doctor                # validate .spine/ state
+uv run spine opportunity add ...   # log a candidate opportunity
+uv run spine evidence add ...      # log evidence
+uv run spine decision add ...      # record a decision
+uv run spine drift scan            # detect scope drift
+uv run spine review weekly ...     # generate weekly review
+uv run spine brief generate ...    # generate agent brief
 ```
 
 ## Governance files
@@ -204,31 +205,41 @@ uv run pytest
 | `.spine/opportunities.jsonl` | Candidate opportunities log |
 | `.spine/evidence.jsonl` | Evidence collected for review |
 | `.spine/decisions.jsonl` | Decision record |
+| `.spine/drift.jsonl` | Detected scope drift log |
 | `.spine/runs.jsonl` | Agent run log |
+| `.spine/reviews/` | Weekly review documents |
+| `.spine/briefs/` | Agent brief documents |
 """
 
 _CLAUDE_MD_CONTENT = """\
-# CLAUDE.md — SPINE Phase 1
+# CLAUDE.md — SPINE Governance
 
-## Scope constraint
+## Purpose
 
-This is **Phase 1 only**. The only implemented command is `spine init`.
+This repository uses SPINE for local-first, repo-native mission governance.
+`.spine/` is the canonical source of truth for governance state.
 
 ## Rules
 
-- Preserve `.spine/` as the canonical source of truth for governance state.
+- Preserve `.spine/` as the canonical source of truth. Never rewrite its files
+  silently.
+- Read `.spine/mission.yaml` before making non-trivial changes.
 - Do not silently expand scope beyond what is defined in `.spine/mission.yaml`.
-- Do not add new CLI commands (`spine run`, `spine status`, `spine review`, etc.).
-- Do not add web UI, authentication, billing, or cloud sync.
-- Do not write to `.spine/state.db` as SQLite in Phase 1.
+- Do not add web UI, authentication, billing, or cloud sync unless explicitly
+  in scope.
+- Run `uv run spine doctor` to verify governance state is valid.
 - Run `uv run pytest` before finishing any change session. Fix all failures.
 
 ## Quick reference
 
 ```bash
-uv sync              # install dependencies
-uv run spine init    # bootstrap .spine/ governance state
-uv run pytest        # run tests
+uv sync                            # install dependencies
+uv run spine doctor                # validate .spine/ governance state
+uv run spine mission show          # view active mission
+uv run spine evidence add ...      # log evidence
+uv run spine decision add ...      # record a decision
+uv run spine review weekly ...     # generate weekly review
+uv run pytest                      # run tests
 ```
 """
 

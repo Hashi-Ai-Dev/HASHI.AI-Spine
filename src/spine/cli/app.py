@@ -82,8 +82,9 @@ app = typer.Typer(
     name="spine",
     help=(
         "SPINE — local-first, repo-native mission governor.\n\n"
-        "Run [bold]spine init[/bold] to scaffold .spine/ governance state.\n"
-        "Run [bold]spine --help[/bold] to see all commands."
+        "First time? Run [bold]spine init[/bold] to bootstrap .spine/ governance state,\n"
+        "then [bold]spine doctor[/bold] to verify, and [bold]spine mission show[/bold] "
+        "to see your active mission."
     ),
     rich_markup_mode="rich",
     no_args_is_help=True,

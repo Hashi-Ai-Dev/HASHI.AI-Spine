@@ -130,3 +130,50 @@ def test_doctor_fails_when_claude_settings_missing(tmp_path: Path) -> None:
     exit_code, stdout, _ = run_doctor(tmp_path)
     assert exit_code == 1, f"Expected exit 1, got {exit_code}. Output: {stdout}"
     assert "settings.json" in stdout or ".claude" in stdout.lower() or "missing" in stdout.lower()
+
+
+# ---------------------------------------------------------------------------
+# Issue #18: error quality — actionable messages and no absolute paths
+# ---------------------------------------------------------------------------
+
+
+def test_doctor_missing_spine_dir_error_mentions_init(tmp_path: Path) -> None:
+    """doctor with missing .spine/ tells operator to run 'spine init'."""
+    make_git_repo(tmp_path)
+
+    exit_code, stdout, _ = run_doctor(tmp_path)
+    assert exit_code == 1
+    assert "spine init" in stdout
+
+
+def test_doctor_contract_error_uses_relative_path(tmp_path: Path) -> None:
+    """doctor contract file errors show relative paths (not absolute paths) in file column."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    # Remove AGENTS.md
+    (tmp_path / "AGENTS.md").unlink()
+
+    exit_code, stdout, _ = run_doctor(tmp_path)
+    assert exit_code == 1
+    assert "AGENTS.md" in stdout
+    # The file column should show just "AGENTS.md", not "/tmp/.../AGENTS.md".
+    # The context line ("repo: /path/...") may contain the absolute path, but
+    # the error row's file field must be a relative name.
+    abs_agents_path = str(tmp_path / "AGENTS.md")
+    assert abs_agents_path not in stdout, (
+        f"Doctor file column should show relative 'AGENTS.md', not absolute '{abs_agents_path}'"
+    )
+
+
+def test_doctor_contract_error_actionable(tmp_path: Path) -> None:
+    """doctor contract file error tells operator how to fix it."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    (tmp_path / "AGENTS.md").unlink()
+
+    exit_code, stdout, _ = run_doctor(tmp_path)
+    assert exit_code == 1
+    # Should suggest running spine init
+    assert "spine init" in stdout

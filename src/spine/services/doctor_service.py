@@ -51,7 +51,7 @@ class DoctorService:
             issues.append(DoctorIssue(
                 severity="error",
                 file=".spine/",
-                message=".spine/ directory does not exist. Run 'spine init' first.",
+                message=".spine/ not found — run 'uv run spine init' to bootstrap governance state",
             ))
             return DoctorResult(passed=False, issues=issues)
 
@@ -78,8 +78,8 @@ class DoctorService:
             if not path.exists():
                 issues.append(DoctorIssue(
                     severity="error",
-                    file=str(path),
-                    message=f"Required repo contract file missing: {fname}",
+                    file=fname,
+                    message="Missing repo contract file — run 'spine init' to create it",
                 ))
         return issues
 

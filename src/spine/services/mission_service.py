@@ -34,13 +34,26 @@ class MissionService:
         self._spine_root = spine_root or repo_root / C.SPINE_DIR
         self.mission_path = self._spine_root / C.MISSION_FILE
 
+    def _mission_not_found_error(self) -> MissionNotFoundError:
+        """Return an actionable error for a missing mission.yaml."""
+        spine_dir = self.mission_path.parent
+        if not spine_dir.exists():
+            return MissionNotFoundError(
+                ".spine/ not found — run 'uv run spine init' to bootstrap governance state"
+            )
+        try:
+            rel = self.mission_path.relative_to(self.repo_root).as_posix()
+        except ValueError:
+            rel = str(self.mission_path)
+        return MissionNotFoundError(
+            f"{rel} not found — run 'uv run spine init' to create it, "
+            "or restore it from version control"
+        )
+
     def show(self) -> MissionShowResult:
         """Read and validate mission.yaml."""
         if not self.mission_path.exists():
-            raise MissionNotFoundError(
-                f"mission.yaml not found at {self.mission_path}. "
-                "Run 'spine init' first."
-            )
+            raise self._mission_not_found_error()
         raw = self.mission_path.read_text(encoding="utf-8")
         mission = MissionModel.from_yaml(raw)
         return MissionShowResult(mission=mission, file_path=self.mission_path)
@@ -65,10 +78,7 @@ class MissionService:
         Raises MissionValidationError on invalid input.
         """
         if not self.mission_path.exists():
-            raise MissionNotFoundError(
-                f"mission.yaml not found at {self.mission_path}. "
-                "Run 'spine init' first."
-            )
+            raise self._mission_not_found_error()
 
         raw = self.mission_path.read_text(encoding="utf-8")
         mission = MissionModel.from_yaml(raw)

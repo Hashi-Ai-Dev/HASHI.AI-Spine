@@ -53,10 +53,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Why it matters:** Human-readable output is insufficient for CI and scripting.
 **Status:** DONE — implemented in PR #21 (2026-04-07)
 
-### 📋 [Phase 3A] Bootstrap polish + discipline-tax ergonomics (#18)
-**Description:** Improve first-run messaging, reduce mandatory ceremony, improve default flows, clarify error messages.
+### ✅ [Phase 3A] Bootstrap polish + discipline-tax ergonomics (#18)
+**Description:** Fixed stale `spine init` templates (AGENTS.md, CLAUDE.md now reflect Phase 3A commands); improved init next-steps panel (doctor verification + git commit guidance); fixed doctor absolute-path bug in contract file errors; context-aware `MissionNotFoundError` messages; unhid `--cwd` in `spine init`; updated top-level `--help` text. 8 new focused tests. 213/213 passing.
 **Why it matters:** SPINE only has value if operators sustain its use. Governance that costs too much attention gets abandoned.
-**Status:** APPROVED — implementation queue #18
+**Status:** DONE — implemented in PR on branch `phase3a/issue18-bootstrap-discipline-tax` (2026-04-07)
 
 ### 🟡 Enhanced CI (integration + smoke tests)
 **Description:** Expand CI beyond lint/unit to integration tests against temp repos and smoke tests against real external repos.

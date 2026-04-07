@@ -37,7 +37,6 @@ def init_cmd(
         None,
         "--cwd",
         help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
-        hidden=True,
     ),
 ) -> None:
     """
@@ -97,10 +96,13 @@ def init_cmd(
             "[bold green]spine init complete[/bold green]\n\n"
             "Next steps:\n"
             "  1. Edit [bold].spine/mission.yaml[/bold] — define your active mission\n"
-            "  2. Edit [bold].spine/constraints.yaml[/bold] — configure work schedule and limits\n"
-            "  3. Commit [bold].spine/[/bold] to version-control your governance state\n"
-            "  4. Run [bold]uv run pytest[/bold] to verify everything is wired correctly",
-            title="[bold]SPINE Phase 1[/bold]",
+            "  2. Edit [bold].spine/constraints.yaml[/bold] — set work schedule and limits\n"
+            "  3. Run [bold]uv run spine doctor[/bold] — verify governance state is valid\n"
+            "  4. Run [bold]git add .spine/ AGENTS.md CLAUDE.md .claude/ .codex/[/bold]\n"
+            "     [bold]git commit -m 'chore: add SPINE governance'[/bold]\n"
+            "     — commit governance state to version control\n\n"
+            "Run [bold]uv run spine --help[/bold] to see all available commands.",
+            title="[bold]Bootstrap complete[/bold]",
             border_style="green",
         )
     )

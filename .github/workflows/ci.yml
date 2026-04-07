@@ -16,7 +16,7 @@ jobs:
 
       - uses: astral-sh/setup-uv@v5
         with:
-          enable-caching: true
+          enable-cache: true
 
       - name: Install dependencies
         run: uv sync --dev
@@ -26,3 +26,5 @@ jobs:
 
       - name: Run tests
         run: uv run pytest
+        env:
+          NO_COLOR: "1"

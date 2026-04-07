@@ -144,13 +144,16 @@ def test_agents_md_created(tmp_path: Path) -> None:
 
 
 def test_claude_md_created(tmp_path: Path) -> None:
-    """CLAUDE.md is created."""
+    """CLAUDE.md is created with current governance content (not stale Phase 1 content)."""
     make_git_repo(tmp_path)
     run_init(tmp_path)
 
     assert (tmp_path / "CLAUDE.md").exists()
     content = (tmp_path / "CLAUDE.md").read_text()
-    assert "Phase 1" in content
+    assert "SPINE Governance" in content
+    assert ".spine/" in content
+    # Must NOT contain stale Phase 1 copy-restrictions
+    assert "The only implemented command is" not in content
 
 
 def test_claude_settings_created(tmp_path: Path) -> None:
@@ -196,3 +199,57 @@ def test_init_idempotent_with_force(tmp_path: Path) -> None:
     run_init(tmp_path, "--force")
     exit_code, stdout, _ = run_init(tmp_path, "--force")
     assert exit_code == 0
+
+
+# ---------------------------------------------------------------------------
+# Issue #18: bootstrap polish — output quality and ergonomics
+# ---------------------------------------------------------------------------
+
+
+def test_init_output_mentions_doctor(tmp_path: Path) -> None:
+    """Successful init output mentions 'spine doctor' as the verification step."""
+    make_git_repo(tmp_path)
+    exit_code, stdout, _ = run_init(tmp_path)
+    assert exit_code == 0
+    assert "spine doctor" in stdout
+
+
+def test_init_output_mentions_git_commit(tmp_path: Path) -> None:
+    """Successful init output mentions committing .spine/ to version control."""
+    make_git_repo(tmp_path)
+    exit_code, stdout, _ = run_init(tmp_path)
+    assert exit_code == 0
+    assert "git" in stdout and "commit" in stdout
+
+
+def test_init_output_no_stale_phase1_title(tmp_path: Path) -> None:
+    """Successful init output does not show the stale 'SPINE Phase 1' panel title."""
+    make_git_repo(tmp_path)
+    exit_code, stdout, _ = run_init(tmp_path)
+    assert exit_code == 0
+    assert "SPINE Phase 1" not in stdout
+
+
+def test_agents_md_mentions_all_key_commands(tmp_path: Path) -> None:
+    """Generated AGENTS.md lists key governance commands, not stale Phase 1 copy."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    content = (tmp_path / "AGENTS.md").read_text()
+    assert "spine mission show" in content
+    assert "spine doctor" in content
+    assert "spine evidence add" in content
+    # Must NOT contain stale Phase 1 restrictions
+    assert "Phase 1 implements only" not in content
+    assert "Do not add new CLI commands" not in content
+
+
+def test_init_cwd_option_visible_in_help() -> None:
+    """--cwd option is visible in 'spine init --help' (not hidden)."""
+    result = runner.invoke(app, ["init", "--help"])
+    assert result.exit_code == 0
+    # Strip ANSI escape codes before checking — CI environments (GITHUB_ACTIONS=true)
+    # cause Rich to inject color codes that can split literal strings like --cwd.
+    import re
+    clean = re.sub(r"\x1b\[[0-9;]*m", "", result.output)
+    assert "--cwd" in clean
