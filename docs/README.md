@@ -44,4 +44,4 @@ These documents are dev-facing operational notes from the build process. They ar
 ## Quick Links
 
 - **Main README:** [`../README.md`](../README.md)
-- **SPINE project root:** [github.com/LucielAI/HASHI.AI-Spine](https://github.com/LucielAI/HASHI.AI-Spine)
+- **SPINE project root:** [github.com/Hashi-Ai-Dev/SPINE](https://github.com/Hashi-Ai-Dev/SPINE)
