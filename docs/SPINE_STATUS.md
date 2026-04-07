@@ -42,7 +42,7 @@ Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests 
 | 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
 | 2 | Add minimal CI pipeline | 🔄 Pending |
 | 3 | Create org-level ruleset for `Hashi-Ai-Dev` | 🔄 Pending |
-| 4 | Enable Dependabot alerts + secret scanning | ⚠️ Human action required |
+| 4 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
 | 5 | Clarify onboarding docs | 🔄 Pending |
 
 Tests now at **136** (up from 123).
@@ -53,7 +53,7 @@ Tests now at **136** (up from 123).
 
 | Blocker | Severity | Resolution |
 |---------|----------|------------|
-| GitHub secret scanning / Dependabot not enabled | High | Human visit: `github.com/Hashi-Ai-Dev/SPINE/settings/security_and_analysis` |
+| GitHub secret scanning / Dependabot not enabled | ~~High~~ → ✅ Resolved | Owner confirmed via settings page. |
 | GitHub org ruleset not created | Medium | Human or token: create org-level ruleset |
 
 ---
@@ -101,8 +101,8 @@ See GitHub issue #10 for the Phase 3A planning tracking issue.
 | Branch protection | ✅ `main` protected |
 | Org ruleset | ❌ Not created |
 | CI pipeline | ❌ Not created |
-| Dependabot alerts | ⚠️ Human action required |
-| Secret scanning | ⚠️ Human action required |
+| Dependabot alerts | ✅ Enabled |
+| Secret scanning | ✅ Enabled |
 
 ---
 
