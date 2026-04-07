@@ -28,9 +28,9 @@
 
 ---
 
-## Completed Milestone
+## Current Milestone
 
-**`Alpha Exit — v0.2.0-beta`** — Released 2026-04-07
+**`Alpha Exit — v0.2.0-beta`**
 
 | # | Issue | Status |
 |---|------|--------|
@@ -44,17 +44,9 @@
 
 ---
 
-## Current Active Milestone
-
-**`Beta`** — Now open
-
-Beta focus: repeated-use proof, discipline-tax reduction, agent-executable governance mechanics, handoff primitives.
-
----
-
 ## Next Active Priority
 
-**Beta planning.** Define the first bounded beta implementation slice(s) and open the Beta milestone with scoped, workable issues.
+**Alpha exit complete.** All Phase 3A items done. Next: declare v0.2.0-beta tag and release, then open Beta milestone.
 
 ---
 
@@ -64,7 +56,7 @@ Beta focus: repeated-use proof, discipline-tax reduction, agent-executable gover
 |---|---|---|
 | `v0.1.2` | Stabilization | ✅ Released |
 | `Alpha Exit — v0.2.0-beta` | Phase 3A complete + validation gates | ✅ Released — v0.2.0-beta (2026-04-07) |
-| `Beta` | Repeated-use proof, handoff primitives, preflight commands | 🔄 Active |
+| `Beta` | Repeated-use proof, handoff primitives, preflight commands | 📋 Planned |
 | `v1.0.0` | Stable contracts, authority boundaries, automation surfaces | 📋 Planned |
 
 ---
@@ -83,4 +75,4 @@ Beta focus: repeated-use proof, discipline-tax reduction, agent-executable gover
 
 ---
 
-*Next status review: after first Beta milestone issues are defined and queued*
+*Next status review: after alpha-exit validation gates pass*
