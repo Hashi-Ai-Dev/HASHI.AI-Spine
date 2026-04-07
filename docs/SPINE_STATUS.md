@@ -10,11 +10,10 @@
 
 | | |
 |---|---|
-| **Version** | `v0.1.1-alpha` |
-| **Published** | 2026-04-07 |
-| **Tag** | `v0.1.1-alpha` at commit `3f2b3ef` |
-| **Type** | Public alpha (prerelease) |
-| **Next target** | `v0.1.2` |
+| **Version** | `v0.1.2` |
+| **Status** | 🔄 Release in preparation |
+| **Previous** | `v0.1.1-alpha` (2026-04-07) |
+| **Tag** | Pending — to be published |
 
 ---
 
@@ -29,37 +28,29 @@
 - `spine decision` — decision logger
 - `spine drift` — deviation detection
 
-Phase 1 + 2 = stable core. No known critical bugs. Alpha smoke test: 120+ tests passing.
+Phase 1 + 2 = stable core.
 
 ---
 
-## Current Milestone
-
-**`v0.1.2 — Stabilization** (complete — 5/5 done)
+## v0.1.2 Stabilization — Complete ✅
 
 | # | Item | Status |
 |---|------|--------|
-| 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11 merged) |
+| 1 | Add `--cwd` to Phase 2 commands | ✅ Done (PR #11) |
 | 2 | Enable Dependabot alerts + secret scanning | ✅ Done (owner via GitHub settings) |
-| 3 | Add minimal CI pipeline | ✅ Done (PR #12 merged — ruff + pytest) |
-| 4 | ~~Create org-level ruleset~~ | ❌ Not a SPINE issue — removed |
-| 5 | Clarify onboarding docs | ✅ Done — Issue #9 |
+| 3 | Add minimal CI pipeline | ✅ Done (PR #12 — ruff + pytest) |
+| 4 | ~~Create org-level ruleset~~ | ❌ Rejected — not a SPINE issue |
+| 5 | Clarify onboarding / README polish | ✅ Done (PR #13 — README + quickstart) |
 
-Tests now at **136+** (CI runs on every push/PR).
-
----
-
-## Current Blockers
-
-None.
+Tests: **136+** passing.
 
 ---
 
-## Next Move
+## Next Active Phase
 
-**v0.1.2 stabilization complete.** All 5 items done.
+**Phase 3A / v0.2** — planning only, not implementation.
 
-Next: close Issue #9, tag `v0.1.2`, publish release.
+Phase 3A spec exists at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Requires human review and explicit approval before any implementation begins. See issue #10.
 
 ---
 
@@ -71,18 +62,8 @@ Next: close Issue #9, tag `v0.1.2`, publish release.
 | **Branch protection** | PR required + CI status checks + force-push blocked + delete blocked |
 | **Open PRs** | None |
 | **Open branches** | `main` only |
-| **Releases** | `v0.1.1-alpha` (published) |
-| **CI pipeline** | ✅ Active — `ci.yml` (ruff + pytest on push/PR) |
-
----
-
-## Phase 3A Planning Status
-
-**Phase 3A spec** exists at `docs/SPINE_PHASE3A_v0.2_SPEC.md` — committed to repo.
-
-Planning status: ✅ Spec exists. **Requires human review and approval before implementation begins.**
-
-See GitHub issue #10 for the Phase 3A planning tracking issue.
+| **Releases** | `v0.1.1-alpha` (published) · `v0.1.2` pending |
+| **Milestone** | `v0.1.2` — closed |
 
 ---
 
@@ -100,4 +81,4 @@ See GitHub issue #10 for the Phase 3A planning tracking issue.
 
 ---
 
-*Next status review: when v0.1.2 is ready for release*
+*Next status review: after v0.1.2 release is published*
