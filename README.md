@@ -177,12 +177,16 @@ See [`docs/README.md`](docs/README.md) for the full documentation index.
 
 ## What's Next
 
-Phase 3A is actively being implemented ([`docs/SPINE_PHASE3A_v0.2_SPEC.md`](docs/SPINE_PHASE3A_v0.2_SPEC.md)):
+Phase 3A implementation is nearly complete. The following are done:
 
 - Explicit repo targeting contract + `--cwd` precedence normalization
 - Repo/branch context visibility + deterministic default branch resolution
 - Stable exit codes + `--json` output modes for CI workflows
 - Bootstrap polish + discipline-tax ergonomics
+- Artifact ergonomics contract (machine-readable manifest, canonical naming)
+- External-repo onboarding docs ([`docs/external-repo-onboarding.md`](docs/external-repo-onboarding.md))
+
+Remaining: alpha-exit validation gate (Issue #25).
 
 Not planned: web UI, auth, billing, cloud sync, remote MCP, or multi-user support.
 
