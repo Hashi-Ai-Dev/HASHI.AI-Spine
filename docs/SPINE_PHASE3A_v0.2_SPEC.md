@@ -2,9 +2,9 @@
 
 ## Portability + Operator Polish
 
-**Status:** Alpha exit complete. Issues #15–#18, #23, #24, #25 all complete. Ready to declare v0.2.0-beta.  
-**Implementation state:** All Phase 3A issues (#15, #16, #17, #18, #23, #24, #25) **complete** (2026-04-07). Alpha exit validated.  
-**Next required step:** Declare v0.2.0-beta release. Close Alpha Exit milestone. Open Beta milestone. Begin Phase 3B planning.
+**Status:** ✅ Complete. Issues #15–#18, #23, #24, #25 all done. Alpha exit validated.  
+**Implementation state:** All Phase 3A issues (#15, #16, #17, #18, #23, #24, #25) **complete** (2026-04-07). v0.2.0-beta released 2026-04-07.  
+**Next step:** Beta is now active. Define first bounded Beta implementation slice(s).
 
 ---
 

@@ -48,8 +48,6 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ### ✅ External-repo onboarding docs (#24)
 **Description:** Practical guide for using SPINE in an arbitrary external repo. Created docs/external-repo-onboarding.md.
 **Status:** DONE — implemented in PR #28 (2026-04-07)
-**Description:** Practical guide for using SPINE in an arbitrary external repo.
-**Status:** IN QUEUE — Alpha Exit
 
 ### ✅ Alpha-exit validation gate matrix (#25)
 **Description:** 21 gates assessed, 20 pass, 1 non-blocking partial. Alpha exit validated.
@@ -57,29 +55,29 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-## Phase 3B / Beta Candidates
+## Beta Candidates
 
-> Preserved inputs from product review session 2026-04-07. Not active work. Phase 3B begins after alpha exit is validated.
+> Alpha exit complete. Beta is now the active stage. These candidates are queued for scoping into the first bounded Beta implementation slice(s).
 
 ### 🟡 Draftable governance records
 **Description:** Draft evidence, draft decisions, draft PR/handoff summaries.
-**Status:** CANDIDATE — Phase 3B
+**Status:** CANDIDATE — Beta
 
 ### 🟡 Native hooks / lifecycle enforcement
 **Description:** Local, explicit, opt-in pre-commit / pre-PR governance hooks.
-**Status:** CANDIDATE — Phase 3B
+**Status:** CANDIDATE — Beta
 
 ### 🟡 Mission interview / brainstorm flow
 **Description:** Explicit operator-invoked mission refinement. Draft mission generation only.
-**Status:** CANDIDATE — Phase 3B, constrained
+**Status:** CANDIDATE — Beta, constrained
 
 ### 🟡 Stronger local tool-consumption surfaces
 **Description:** Stable command contracts, machine-readable outputs, richer local MCP surfaces.
-**Status:** CANDIDATE — Phase 3B
+**Status:** CANDIDATE — Beta
 
 ### 🟡 Optional governance profiles
 **Description:** Explicit opt-in workflow profiles. Visible rules, not hidden enforcement.
-**Status:** CANDIDATE — Phase 3B, optional
+**Status:** CANDIDATE — Beta, optional
 
 ### 🚫 HUD / live observability mode
 **Description:** Dashboard or live monitoring.

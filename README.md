@@ -8,7 +8,7 @@
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![uv](https://img.shields.io/badge/built%20with-uv-blueviolet)](https://github.com/astral-sh/uv)
-[![alpha](https://img.shields.io/badge/status-alpha-orange.svg)]()
+[![beta](https://img.shields.io/badge/status-beta-blue.svg)]()
 
 </div>
 
@@ -67,7 +67,7 @@ uv run spine doctor --cwd /path/to/your-project
 
 `.spine/` is version-controlled inside your target repo alongside your code.
 
-## Current Alpha Capabilities
+## Current Capabilities
 
 | Command | Description |
 |---------|-------------|
@@ -142,7 +142,7 @@ Commands that require a git repo fail fast with a clear message when the resolve
 
 ## Validation
 
-This alpha was validated against two repos before release:
+Validated against two repos before the v0.2.0-beta release:
 
 - **Self-governance:** Full governance loop on SPINE's own repo — mission set, evidence logged, decisions recorded, drift scanned, weekly review and agent briefs generated. Test suite: **300+ passing** (15 test files, CI active on every push and PR).
 - **External repo (gsn-connector):** `--cwd` and `SPINE_ROOT` targeting verified end-to-end across all commands. Drift scan correctly read the external repo's git history. No state pollution between repos.
@@ -177,7 +177,7 @@ See [`docs/README.md`](docs/README.md) for the full documentation index.
 
 ## What's Next
 
-Phase 3A implementation is nearly complete. The following are done:
+SPINE is now in **beta** (`v0.2.0-beta`). Phase 3A is complete:
 
 - Explicit repo targeting contract + `--cwd` precedence normalization
 - Repo/branch context visibility + deterministic default branch resolution
@@ -186,13 +186,13 @@ Phase 3A implementation is nearly complete. The following are done:
 - Artifact ergonomics contract (machine-readable manifest, canonical naming)
 - External-repo onboarding docs ([`docs/external-repo-onboarding.md`](docs/external-repo-onboarding.md))
 
-Alpha-exit gates passed. SPINE is ready for v0.2.0-beta declaration.
+Beta work focuses on reducing discipline tax and making governance mechanics more executable for agents and tools. See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the beta direction.
 
 Not planned: web UI, auth, billing, cloud sync, remote MCP, or multi-user support.
 
-## Alpha Status
+## Beta Status
 
-This is an **alpha release**. The core command surface is stable and validated, but breaking changes are possible before v1. Do not use in production without review.
+This is a **beta release** (`v0.2.0-beta`). The core command surface is stable and validated. Breaking changes are possible before v1. Do not use in production without review.
 
 ---
 

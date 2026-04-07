@@ -20,35 +20,22 @@ This roadmap explains:
 
 ## Current Status
 
-SPINE is currently in **public alpha**.
+SPINE is currently in **public beta** (`v0.2.0-beta`).
 
-The core governance loop is already real and usable:
+Alpha exit is complete. Phase 3A delivered:
 
-- mission definition
-- scope boundaries
-- evidence and decision logs
-- drift detection
-- reviews
-- agent brief generation
+- explicit repo targeting + `--cwd` precedence normalization
+- repo/branch context visibility + deterministic default branch resolution
+- stable exit codes + `--json` output modes
+- bootstrap polish + discipline-tax ergonomics
+- artifact ergonomics contract
+- external-repo onboarding docs
 
-The current active phase is:
+The current active stage is:
 
-> **v0.2 / Phase 3A — Portability + Operator Polish**
+> **Beta — Repeated-use proof, discipline-tax reduction, agent-executable governance**
 
-Phase 3A is focused on making SPINE:
-
-- clearer across arbitrary repos
-- easier to use from tools and CI
-- more explicit in its operating context
-- less awkward to adopt and repeat
-
-What that means in practice:
-
-- explicit repo targeting
-- visible repo / branch context
-- machine-readable output where it matters
-- better first-run experience
-- clearer external-repo usage
+Beta is focused on making SPINE sustainable in repeated real workflows — reducing governance overhead for agents and operators without hiding what happens.
 
 ---
 
@@ -74,87 +61,18 @@ That means SPINE should reduce operational friction without hiding what happened
 
 ## Alpha Exit
 
-### Goal
+**Complete.** Alpha exit criteria were met and `v0.2.0-beta` was released on 2026-04-07.
 
-SPINE exits alpha when it becomes trustworthy enough for **repeated real use across arbitrary repos**.
+All Phase 3A goals delivered:
 
-Alpha is complete when the product is:
-
-- explicit
-- portable
-- automatable where needed
-- clear to first-time users
-- less awkward in repeated use
-
-### What still matters before alpha exit
-
-#### 1. Operator / CI output modes
-
-SPINE should support machine-readable behavior where it matters.
-
-This includes:
-
-- `--json` on operationally relevant commands
-- reduced-noise output where useful
-- stable, documented exit behavior
-
-**Why it matters:** agents and CI need reliable structured behavior; human-readable output alone is not enough for automation.
-
-#### 2. Bootstrap polish + discipline-tax ergonomics
-
-SPINE's first-run and repeated-use experience still matter.
-
-This includes:
-
-- clearer init/bootstrap messaging
-- clearer prerequisites and expected files
-- better first-run verification steps
-- less unnecessary ceremony
-- more actionable and consistent error messages
-
-**Why it matters:** adoption friction is product friction; repeated awkwardness becomes abandonment.
-
-#### 3. Stable artifact references
-
-Generated outputs should be easier to find and reuse.
-
-This includes:
-
-- stable aliases for "current" artifacts
-- predictable artifact paths
-- conventions that work well for humans and tools
-
-**Why it matters:** agents and operators should not have to guess where the current brief, review, or drift output lives.
-
-#### 4. Strong external-repo docs / examples
-
-SPINE needs strong examples for governing repos other than itself.
-
-This includes:
-
-- operator-grade external-repo examples
-- CI usage examples
-- brief → work → evidence → drift → PR flow examples
-- anti-pattern warnings
-
-**Why it matters:** SPINE should be understandable outside the SPINE repo itself.
-
-### Alpha Exit Criteria
-
-SPINE exits alpha only when **all** of these are true:
-
-- [ ] repo targeting is explicit and predictable
-- [ ] repo / branch / compare-context visibility is trustworthy
-- [ ] machine-readable output exists where justified
-- [ ] exit behavior is stable and documented
-- [ ] artifact references are easy to inspect and automate against
-- [ ] bootstrap/install guidance is clear for non-SPINE repos
-- [ ] external-repo docs/examples are strong
-- [ ] no unwanted scope drift has crept in
-
-### Alpha Exit Deliverable
-
-Target: **v0.2.0-beta**
+- [x] repo targeting is explicit and predictable
+- [x] repo / branch / compare-context visibility is trustworthy
+- [x] machine-readable output exists where justified
+- [x] exit behavior is stable and documented
+- [x] artifact references are easy to inspect and automate against
+- [x] bootstrap/install guidance is clear for non-SPINE repos
+- [x] external-repo docs/examples are strong
+- [x] no unwanted scope drift crept in
 
 ---
 
@@ -459,11 +377,9 @@ These remain **out of scope** unless a future spec explicitly changes direction:
 
 ## Immediate Next Priorities
 
-1. Complete operator / CI output modes + stable exit codes
-2. Complete bootstrap polish + discipline-tax ergonomics
-3. Add and complete artifact naming / stable artifact references work
-4. Make sure external-repo docs/examples are strong enough for alpha exit
-5. Declare alpha exit only when the actual criteria are met
+1. Define the first bounded beta implementation slice(s)
+2. Open the Beta milestone on GitHub with scoped, workable issues
+3. Begin Beta execution — discipline-tax reduction, agent-executable mechanics, handoff primitives
 
 ---
 
