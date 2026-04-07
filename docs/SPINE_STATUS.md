@@ -39,14 +39,14 @@
 | #17 | Stable exit codes + JSON output | ✅ Done |
 | #18 | Bootstrap polish + discipline-tax ergonomics | ✅ Done (PR #26 merged) |
 | #23 | Artifact ergonomics contract | ✅ Done (PR #27 merged) |
-| #24 | External-repo onboarding docs | 📋 In Queue |
+| #24 | External-repo onboarding docs | ✅ Done (PR in review) |
 | #25 | Alpha-exit validation gate matrix | 📋 In Queue |
 
 ---
 
 ## Next Active Priority
 
-**Issue #24** — External-repo onboarding docs. Second in alpha-exit queue. #24 → #25 → alpha-exit validation.
+**Issue #25** — Alpha-exit validation gate matrix. Final gate before v0.2.0-beta.
 
 ---
 

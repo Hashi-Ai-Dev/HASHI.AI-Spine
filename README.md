@@ -168,10 +168,10 @@ This is alpha software. Known rough edges:
 ## Documentation
 
 **Start here:**
+- [`docs/external-repo-onboarding.md`](docs/external-repo-onboarding.md) — how to use SPINE on an external repo (quickstart, walkthrough, targeting, verification, FAQ)
 - [`docs/SPINE_OFFICIAL_SPEC_v0.1.md`](docs/SPINE_OFFICIAL_SPEC_v0.1.md) — authoritative design spec
 - [`docs/SPINE_FEATURE_BACKLOG.md`](docs/SPINE_FEATURE_BACKLOG.md) — current and planned features
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — public product roadmap (alpha → beta → v1.0.0)
-- [`docs/SPINE_ROADMAP.md`](docs/SPINE_ROADMAP.md) — phase map and milestone structure
 
 See [`docs/README.md`](docs/README.md) for the full documentation index.
 

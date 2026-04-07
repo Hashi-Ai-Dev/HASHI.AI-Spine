@@ -45,11 +45,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Machine-readable artifact manifest, canonical naming, discoverable artifacts.
 **Status:** DONE — implemented in PR #27 (2026-04-07)
 
-### 📋 External-repo onboarding docs (#24)
-**Description:** Practical guide for using SPINE in an arbitrary external repo.
-**Status:** IN QUEUE — Alpha Exit
-**Description:** Practical guide for using SPINE in an arbitrary external repo.
-**Status:** IN QUEUE — Alpha Exit
+### ✅ External-repo onboarding docs (#24)
+**Description:** Practical guide for using SPINE in an arbitrary external repo — quickstart, governance walkthrough, `--cwd` vs `SPINE_ROOT` targeting, verification, and FAQ.
+**Status:** DONE — `docs/external-repo-onboarding.md` created
 
 ### 📋 Alpha-exit validation gate matrix (#25)
 **Description:** Structured gate pass before declaring v0.2.0-beta.
