@@ -248,4 +248,8 @@ def test_init_cwd_option_visible_in_help() -> None:
     """--cwd option is visible in 'spine init --help' (not hidden)."""
     result = runner.invoke(app, ["init", "--help"])
     assert result.exit_code == 0
-    assert "--cwd" in result.output
+    # Strip ANSI escape codes before checking — CI environments (GITHUB_ACTIONS=true)
+    # cause Rich to inject color codes that can split literal strings like --cwd.
+    import re
+    clean = re.sub(r"\x1b\[[0-9;]*m", "", result.output)
+    assert "--cwd" in clean
