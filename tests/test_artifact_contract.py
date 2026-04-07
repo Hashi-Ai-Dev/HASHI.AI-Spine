@@ -207,7 +207,7 @@ def test_brief_manifest_updated_on_codex_generation(tmp_path: Path) -> None:
 
 def test_brief_manifest_last_generated_at_is_iso8601(tmp_path: Path) -> None:
     """Manifest last_generated_at must be an ISO 8601 timestamp string."""
-    from datetime import datetime, timezone
+    from datetime import datetime
     make_git_repo(tmp_path)
     run_init(tmp_path)
     run_brief(tmp_path, "claude")
