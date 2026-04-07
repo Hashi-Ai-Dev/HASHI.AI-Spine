@@ -149,7 +149,7 @@ Validated against two repos before the v0.2.0-beta release:
 
 ## Known Limitations
 
-This is alpha software. Known rough edges:
+This is beta software. Known rough edges:
 
 1. `SPINE_ROOT` is process-global — if set in a shell profile, all commands are affected. Use `--cwd` per-command to target a specific repo.
 2. No migration tooling yet — this is the first public release.
