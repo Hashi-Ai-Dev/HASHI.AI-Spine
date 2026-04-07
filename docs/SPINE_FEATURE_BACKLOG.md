@@ -33,27 +33,50 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-## v0.2 / Phase 3A
+## v0.2 / Phase 3A — Portability + Operator Polish
 
-### 📋 Plan: CLI surface expansion
-**Description:** Additional governance commands beyond Phase 2 (e.g., `spine review`, `spine scope`, `spine sync`). Exact commands TBD from Phase 3A spec.
-**Why it matters:** Phase 2 CLI is functional but deliberately minimal. Phase 3A expands the command surface with more governance primitives.
-**Status:** PLANNED — requires Phase 3A spec approval before implementation
+> Phase 3A focus: make SPINE portable and ergonomic across arbitrary repos. Reduce discipline tax. No new product surface.
+> Full spec at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Planning normalized 2026-04-07 (Issue #10).
 
-### 📋 Plan: Phase 3 architecture implementation
-**Description:** Implement architectural decisions from `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Likely includes refactors to Phase 2 command structure, better state management, possibly plugin architecture.
-**Why it matters:** Phase 3 is the first real architectural step — not just new commands but better foundations.
-**Status:** PLANNED — requires approved spec
+### 📋 Plan: Explicit repo targeting
+**Description:** Standardize repo-targeting semantics across all Phase 3A-touched commands. Normalize and display resolved target path. Fail fast with clear errors for invalid or non-repo targets.
+**Why it matters:** Ambiguous working-directory behavior undermines trust and causes accidental writes to wrong repos. Operator and CI workflows need deterministic targeting.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
 
-### 📋 Plan: External-repo compatibility pass
-**Description:** Broader external-repo compatibility testing and fixes beyond the `--cwd` fix in v0.1.2.
-**Why it matters:** SPINE should work on any AI coding workflow repo, not just the ones with a specific setup.
-**Status:** PLANNED
+### 📋 Plan: Repo context and branch visibility
+**Description:** Standard context reporting on relevant commands: active repo path, current HEAD branch/detached state, resolved default branch or explicit compare target.
+**Why it matters:** Drift and review trust depend on operators knowing exactly which branch and comparison base are active. Implicit defaults without reporting are opaque.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
+
+### 📋 Plan: Operator/CI output modes (`--json`, `--quiet`, stable exits)
+**Description:** Machine-readable output mode where operationally justified. Reduced-noise mode for healthy-path checks. Stable, documented exit codes for success, validation failure, and context failure.
+**Why it matters:** Human-readable output is insufficient for CI and scripting. Predictable exit codes are required for automation.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
+
+### 📋 Plan: Artifact naming and path conventions
+**Description:** Canonical stable artifact aliases (for "current" assets) alongside history retention. Standardized naming pattern and directory layout.
+**Why it matters:** Timestamp-only naming is difficult to navigate or automate. Operators need both stable references and historical records.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
+
+### 📋 Plan: Discipline tax reduction (ergonomics + defaults)
+**Description:** Reduce unnecessary manual ceremony across governance workflows. Improve default flows, clearer error paths, better output legibility, cleaner first-run bootstrap guidance.
+**Why it matters:** SPINE only has value if operators actually sustain its use. Governance that costs too much attention will be abandoned. Tax reduction = adoption longevity.
+**Status:** PLANNED — applies as a design lens across all Phase 3A items
+
+### 📋 Plan: External-repo docs and usage examples
+**Description:** Add operator-grade examples for adopting SPINE in unrelated repos. Document explicit targeting patterns, branch context interpretation, CI usage patterns, anti-patterns.
+**Why it matters:** v0.1 documents SPINE itself well but lacks direct adoption guidance for operators using SPINE on their own projects.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
+
+### 📋 Plan: Bootstrap/install polish
+**Description:** Improve bootstrap and install messaging for zero-context operators. Clarify expected files, minimal workflow, verification steps.
+**Why it matters:** First-run experience determines adoption in non-SPINE repos.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
 
 ### 📋 Plan: Enhanced CI (integration tests, smoke tests)
 **Description:** Expand CI beyond lint/unit tests to include integration tests against temp repos and smoke tests against real external repos.
-**Why it matters:** Confidence at release time currently depends on manual testing. Automated regression detection is needed at scale.
-**Status:** PLANNED
+**Why it matters:** Confidence at release time currently depends on manual testing. Automated regression detection needed at scale.
+**Status:** PLANNED — requires Phase 3A spec approval + implementation authorization
 
 ---
 
@@ -110,4 +133,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
+*Last updated: 2026-04-07 — Phase 3A planning normalization (Issue #10)*

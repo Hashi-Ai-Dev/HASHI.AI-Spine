@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07
+**Last updated:** 2026-04-07 (Phase 3A planning normalization — Issue #10)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
@@ -11,24 +11,27 @@
 | | |
 |---|---|
 | **Version** | `v0.1.2` |
-| **Status** | 🔄 Release in preparation |
+| **Status** | ✅ Stabilization complete — tag pending |
 | **Previous** | `v0.1.1-alpha` (2026-04-07) |
-| **Tag** | Pending — to be published |
+| **Tag** | Pending — stabilization done, release to be published |
 
 ---
 
 ## Current Phase
 
-**Phase 2 Complete.** Full governance command suite implemented:
+**Phase 1 + 2 Complete.** Full governance command suite implemented:
 - `spine init` — mission bootstrapping
-- `spine brief` — current mission display
-- `spine doctor` — environment validation
-- `spine mission` — goal check
-- `spine proof` — artifact manifest
-- `spine decision` — decision logger
-- `spine drift` — deviation detection
+- `spine mission show/set` — mission management
+- `spine brief --target <claude|codex>` — brief generation
+- `spine evidence add` — evidence logging
+- `spine decision add` — decision logging
+- `spine opportunity score` — deterministic opportunity scoring
+- `spine drift scan` — scope drift detection
+- `spine review weekly` — weekly review generation
+- `spine doctor` — environment and state validation
+- `spine mcp serve` — stdio MCP server
 
-Phase 1 + 2 = stable core.
+Phase 1 + 2 = stable core. 136+ tests passing.
 
 ---
 
@@ -48,9 +51,9 @@ Tests: **136+** passing.
 
 ## Next Active Phase
 
-**Phase 3A / v0.2** — planning only, not implementation.
+**Phase 3A / v0.2 — Portability + operator polish** — planning only, not implementation.
 
-Phase 3A spec exists at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Requires human review and explicit approval before any implementation begins. See issue #10.
+Phase 3A spec normalized 2026-04-07 at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Planning normalization (Issue #10) complete. Implementation requires human review and explicit approval before beginning.
 
 ---
 

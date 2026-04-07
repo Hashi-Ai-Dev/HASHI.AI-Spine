@@ -1,5 +1,7 @@
 # SPINE Official Specification v0.1
 
+> **Status note (2026-04-07):** SPINE is in public alpha. v0.1.1-alpha was published and v0.1.2 stabilization is complete. Phase 1 and Phase 2 are both complete historical phases. The next planned phase is v0.2 / Phase 3A (Portability + operator polish). See `docs/SPINE_PHASE3A_v0.2_SPEC.md`.
+
 ## What SPINE Is
 
 SPINE (Strategic Proof & Intelligent Navigation Engine) is a repo-native mission governor for AI-native solo builders. It is the governance layer above coding agents—not another coding agent itself. SPINE exists to turn repo chaos, project sprawl, and agent drift into: one active mission, one bounded execution lane, one proof ledger, one review loop, and one anti-drift governance layer.
@@ -8,7 +10,7 @@ SPINE (Strategic Proof & Intelligent Navigation Engine) is a repo-native mission
 
 Phase 1 established the repo bootstrap contract: `spine init` scaffolds the `.spine/` directory with canonical state files and agent guidance.
 
-Phase 2 (current) implements the core command surface:
+Phase 2 (complete) implemented the core command surface:
 
 | Command | Purpose |
 |---------|---------|
@@ -167,11 +169,6 @@ Severity levels:
 
 Untracked files are NOT flagged as drift — they must be staged/committed to be detected.
 
-Severity levels:
-- HIGH: matches forbidden_expansions directly
-- MEDIUM: likely sprawl (new top-level module without clear mission alignment)
-- LOW: worth noting but not clearly drift
-
 ## MCP Process Model
 
 `spine mcp serve` is a stdio-only MCP server. It:
@@ -186,11 +183,14 @@ Severity levels:
 | Phase | Status | Scope |
 |-------|--------|-------|
 | Phase 1 | Complete | `spine init` bootstrap only |
-| Phase 2 | Current | Core CLI commands, MCP server |
-| Phase 3 | Future | SQLite projection, model-assisted scoring |
-| Phase 4 | Future | Multi-mission support, web UI |
+| Phase 2 | Complete | Core CLI commands, MCP server |
+| Phase 3A / v0.2 | Planned | Portability + operator polish (see `docs/SPINE_PHASE3A_v0.2_SPEC.md`) |
+| Phase 3B+ | Future | SQLite projection, model-assisted scoring, multi-mission support |
+| Phase 4+ | Future | Web UI, multi-user, cloud features (explicitly deferred) |
 
-## Acceptance Criteria
+## v0.1 Acceptance Criteria (Historical — Phase 1 + 2 Complete)
+
+The following criteria defined Phase 2 completion and have been met:
 
 - All Phase 2 commands pass their contract tests
 - `uv run pytest` passes with zero failures
@@ -199,3 +199,5 @@ Severity levels:
 - `spine brief --target claude` and `--target codex` produce valid markdown
 - MCP server starts and responds to resource/tool requests over stdio
 - No new dependencies beyond pyproject.toml without explicit approval
+
+Phase 3A acceptance criteria are defined separately in `docs/SPINE_PHASE3A_v0.2_SPEC.md`.

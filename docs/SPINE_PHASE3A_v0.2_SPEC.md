@@ -1,7 +1,10 @@
-# SPINE Phase 3A Specification v0.2 (Planning)
+# SPINE Phase 3A Specification v0.2
 
-**Status:** Draft for planning and scope control only.  
-**Implementation state:** Not started. This document does **not** authorize or imply Phase 3A implementation work.
+## Portability + Operator Polish
+
+**Status:** Planning spec — normalized 2026-04-07. Implementation not yet authorized.  
+**Implementation state:** Not started. This document does **not** authorize or imply Phase 3A implementation work.  
+**Next required step:** Human review and explicit approval before any implementation begins.
 
 ---
 
@@ -9,7 +12,9 @@
 
 SPINE v0.1 established and validated the core governance loop: mission control, bounded scope, opportunity scoring, brief generation, evidence and decision logging, drift scanning, and weekly review. Internal use and self-dogfooding confirmed this loop is real and useful.
 
-However, Phase 1–2 success does not yet guarantee smooth adoption on arbitrary repositories. v0.1.1 hardening highlighted practical operator friction: repo targeting ambiguity, branch context confusion, output ergonomics, and artifact discoverability.
+v0.1.2 stabilization is now complete (CI, `--cwd` support, security settings, onboarding polish). SPINE is in public alpha with 136+ passing tests and branch protection active.
+
+However, Phase 1–2 success does not yet guarantee smooth adoption on arbitrary repositories. Practical operator friction remains: repo targeting ambiguity, branch context confusion, output ergonomics, and artifact discoverability. There is also a meaningful **discipline tax** — the accumulated effort cost of sustained governance use — that must be reduced before the product earns repeat adoption.
 
 Phase 3A exists to solve those practical portability and operations gaps **before** any higher-surface expansion. This keeps SPINE aligned with its product thesis: governance reliability first, novelty later.
 
@@ -47,9 +52,25 @@ Phase 3A explicitly excludes:
 
 ---
 
-## 4) Proposed Scope
+## 4) Discipline Tax Lens
 
-### 4.1 Explicit repo targeting
+**Discipline tax** is the accumulated effort cost that makes governance harder to sustain over time. SPINE only has value if operators actually continue using it. Phase 3A must treat discipline tax reduction as a major design lens alongside portability.
+
+This means:
+
+- **Reduce mandatory ceremony** — every governance step that requires unnecessary friction is a step operators will eventually skip.
+- **Improve default flows** — the shortest reasonable path to a correct governance action should be clear and immediate.
+- **Preserve auditability** — reducing tax does not mean hiding state or papering over governance gaps. The `.spine/` files remain canonical, readable, and version-controlled.
+- **No fake automation theater** — do not invent magic workflows that appear to reduce tax but actually obscure what is happening. Operators need to trust the tool, not be surprised by it.
+- **Smooth the rough edges** — error messages, context reporting, and bootstrap guidance are all discipline tax vectors. Clear output reduces the cognitive overhead of sustained use.
+
+Phase 3A scope items in sections 5.1–5.6 should each be evaluated against this lens: does it reduce or eliminate a real discipline tax friction point without creating new opacity?
+
+---
+
+## 5) Proposed Scope
+
+### 5.1 Explicit repo targeting
 
 **Why it matters**  
 Ambiguous working-directory behavior undermines trust and causes accidental writes to the wrong repo.
@@ -66,7 +87,7 @@ Operators and CI need to intentionally direct SPINE at a specific repository pat
 - Repo discovery “magic” across arbitrary parent directories.
 - Multi-repo orchestration from one command invocation.
 
-### 4.2 Repo context and default-branch visibility
+### 5.2 Repo context and default-branch visibility
 
 **Why it matters**  
 Drift and review trust depend on operators knowing exactly which branch and comparison base are active.
@@ -83,7 +104,7 @@ Implicit default-branch inference is useful but opaque without explicit reportin
 - Automatic branch remediation or branch-switching flows.
 - Advanced branch graph analytics.
 
-### 4.3 Operator/CI output modes (`--json`, `--quiet`, stable exits)
+### 5.3 Operator/CI output modes (`--json`, `--quiet`, stable exits)
 
 **Why it matters**  
 Human-readable output is not sufficient for CI and scripts.
@@ -101,7 +122,7 @@ Operators need parseable output and predictable exit codes.
 - Event streaming, remote telemetry, or observability platforms.
 - Complex output formatting families beyond practical operator use.
 
-### 4.4 Artifact naming and path conventions
+### 5.4 Artifact naming and path conventions
 
 **Why it matters**  
 Timestamp-only naming is difficult for quick navigation and scripting.
@@ -118,7 +139,7 @@ Operators need both stable references and historical records.
 - Large artifact indexing systems.
 - Database-backed artifact catalogs.
 
-### 4.5 Bootstrap/install polish
+### 5.5 Bootstrap/install polish
 
 **Why it matters**  
 First-run experience determines adoption in non-SPINE repos.
@@ -134,7 +155,7 @@ Initial setup should clearly communicate prerequisites, side effects, and result
 **Deferred**  
 - Hosted installers, managed agents, or background services.
 
-### 4.6 Docs and examples for external repo usage
+### 5.6 Docs and examples for external repo usage
 
 **Why it matters**  
 v0.1 documents SPINE itself well, but operators need direct examples for adopting SPINE in unrelated repos.
@@ -153,7 +174,7 @@ Reduce onboarding ambiguity and prevent misuse.
 
 ---
 
-## 5) Risks and Anti-Drift Notes
+## 6) Risks and Anti-Drift Notes
 
 Phase 3A drift risks and required guardrails:
 
@@ -179,7 +200,7 @@ Phase 3A drift risks and required guardrails:
 
 ---
 
-## 6) Acceptance Criteria
+## 7) Acceptance Criteria
 
 Phase 3A is successful only if all of the following are true:
 
@@ -194,9 +215,10 @@ Phase 3A is successful only if all of the following are true:
 
 ---
 
-## 7) Milestone Breakdown (Planning Sequence)
+## 8) Milestone Breakdown (Planning Sequence)
 
-### Phase 3A.1 — Spec finalization + explicit targeting design
+### Phase 3A.1 — Spec normalization + explicit targeting design ✅ In progress
+- Normalize Phase 3A planning spec and align all docs to current reality. (This pass — Issue #10.)
 - Finalize Phase 3A boundaries and command-level targeting contract.
 - Define context-reporting contract fields and error semantics.
 - Lock non-goals and drift guardrails.
@@ -217,7 +239,7 @@ Phase 3A is successful only if all of the following are true:
 
 ---
 
-## 8) Recommended First Slice (when implementation is approved)
+## 9) Recommended First Slice (when implementation is approved)
 
 **Recommended first implementation slice:**  
 **Explicit repo targeting + clear repo/branch/default-branch context reporting.**
@@ -232,18 +254,19 @@ This first slice should remain narrow: no new product surfaces, no remote capabi
 
 ---
 
-## 9) Relation to Current State
+## 10) Relation to Current State
 
-This Phase 3A planning spec is a direct continuation of:
+This Phase 3A planning spec reflects the state of SPINE as of v0.1.2 stabilization (2026-04-07):
 
-- **SPINE Official Spec v0.1:** establishes the core governance contract and non-goal posture.
-- **SPINE Origin and Product Thesis v0.1:** reinforces SPINE’s role as governance above agents and warns against becoming a sprawl machine.
-- **SPINE v0.1.1 Self-Dogfood Cleanup:** surfaces practical operator friction and hardening insights that motivate portability/polish as the next maturity step.
-- **External validation gate:** remains the real-world progression criterion; Phase 3A is scoped to improve reliability and usability for that gate, not bypass it.
+- **SPINE Official Spec v0.1** (normalized 2026-04-07): establishes the core governance contract. Phase 1 + 2 are complete. Phase 3A is the next planned phase.
+- **SPINE v0.1.2 Stabilization Report**: confirms all stabilization items done — CI, `--cwd` support, security settings, onboarding polish, 136+ tests passing.
+- **SPINE v0.1.1 Self-Dogfood Cleanup and External Validation**: surface practical operator friction (targeting ambiguity, branch context confusion, output ergonomics) that directly motivates Phase 3A portability/polish scope.
+- **SPINE Roadmap and Backlog** (aligned 2026-04-07): `v0.2 / Phase 3A` is the explicit next active planning phase.
 
 ---
 
-## 10) Planning Status Note
+## 11) Planning Status Note
 
-Phase 3A is currently **specified, not approved for implementation in this document**.  
+Phase 3A is currently **specified, not approved for implementation**.  
+The planning spec normalization pass (Issue #10) is complete as of 2026-04-07.  
 Any implementation must be separately authorized and executed as a bounded follow-on phase.

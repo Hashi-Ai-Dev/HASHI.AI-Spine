@@ -14,9 +14,9 @@
 
 ## Current Phase
 
-**Phase 2 Complete.** SPINE has a working Phase 1 (init) and Phase 2 (governance commands: brief, doctor, mission, proof, decision, drift) CLI suite.
+**Phase 1 + 2 Complete.** SPINE has a working Phase 1 (init) and Phase 2 (full governance command suite: mission, brief, evidence, decision, opportunity, drift, review, doctor, mcp) CLI.
 
-Current stabilization target: **v0.1.2**
+**v0.1.2 stabilization is complete.** Tag pending. Phase 3A planning is now the active focus.
 
 ---
 
@@ -25,35 +25,37 @@ Current stabilization target: **v0.1.2**
 | Milestone | Scope | Status |
 |-----------|-------|--------|
 | `v0.1.1-alpha` | Phase 1 + 2 core, public alpha launch | ✅ Published |
-| `v0.1.2` | Stabilization: CI, `--cwd` support, security settings, docs | 🔄 Next |
-| `v0.2 / Phase 3A` | CLI surface expansion, Phase 3 spec implementation | 📋 Planned |
+| `v0.1.2` | Stabilization: CI, `--cwd` support, security settings, docs | ✅ Stabilization complete — tag pending |
+| `v0.2 / Phase 3A` | Portability + operator polish | 📋 Planning (spec normalized 2026-04-07) |
 
 ---
 
-## v0.1.2 — Stabilization (Next)
+## v0.1.2 — Stabilization (Complete ✅)
 
 **Goal:** Fix known gaps, add minimal CI, improve external-repo support, close security settings.
 
-### Planned items:
-- Enable Dependabot alerts + secret scanning (human action required in GitHub settings)
-- Add `--cwd` support to Phase 2 commands (only `spine init` accepts it currently)
-- Add minimal CI pipeline (lint + tests on push/PR)
-- Create org-level ruleset for `Hashi-Ai-Dev`
-- Clarify onboarding / quickstart docs
+### Completed items:
+- ✅ Enable Dependabot alerts + secret scanning
+- ✅ Add `--cwd` support to all Phase 2 commands (PR #11)
+- ✅ Add minimal CI pipeline (ruff + pytest) (PR #12)
+- ❌ Create org-level ruleset — rejected (org-level concern, not a SPINE issue)
+- ✅ Clarify onboarding / quickstart docs (PR #13)
 
 ---
 
-## v0.2 / Phase 3A — CLI Expansion
+## v0.2 / Phase 3A — Portability + Operator Polish
 
-**Goal:** Expand command surface beyond Phase 2, implement Phase 3 architecture spec.
+**Goal:** Make SPINE portable and ergonomic across arbitrary repos. Reduce discipline tax without inventing fake automation. No new product surface.
 
-### Planned items (see `docs/SPINE_FEATURE_BACKLOG.md` for full list):
-- CLI surface: additional governance commands
-- Phase 3 architecture decisions from planning spec
-- Further external-repo compatibility
-- CI/status check improvements
+### Planned items (see `docs/SPINE_PHASE3A_v0.2_SPEC.md` and `docs/SPINE_FEATURE_BACKLOG.md`):
+- Explicit repo targeting with clear error paths
+- Repo/branch/default-branch context visibility
+- Operator/CI output modes (`--json`, `--quiet`, stable exits)
+- Artifact naming and path convention standardization
+- Bootstrap/install polish for non-SPINE repos
+- External-repo usage docs and examples
 
-**Phase 3A spec exists** at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Implementation requires human review + explicit approval.
+**Phase 3A spec normalized** at `docs/SPINE_PHASE3A_v0.2_SPEC.md` (2026-04-07). Planning complete per Issue #10. Implementation requires human review + explicit approval before beginning.
 
 ---
 
@@ -85,4 +87,4 @@ Solo builder advantage: no committee, no infinite scope. Ship fast, learn fast.
 
 ---
 
-*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
+*Last updated: 2026-04-07 — Phase 3A planning normalization (Issue #10)*
