@@ -3,8 +3,8 @@
 ## Portability + Operator Polish
 
 **Status:** In progress. Implementation queue: issues #15–#18.  
-**Implementation state:** Issue #15 (explicit repo targeting contract) **complete** (2026-04-07). Issue #16 is next.  
-**Next required step:** Implement Issue #16 — repo/branch context visibility.
+**Implementation state:** Issues #15 (explicit repo targeting contract) and #16 (repo/branch context visibility) **complete** (2026-04-07). Issue #17 is next.  
+**Next required step:** Implement Issue #17 — CI/operator output modes + stable exit codes.
 
 ---
 
