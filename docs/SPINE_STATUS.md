@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-08 (blocker stabilization — Beta Bug Hunt complete)
+**Last updated:** 2026-04-08 (blocker stabilization complete — PR #46)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -11,7 +11,7 @@
 |---|---|
 | **Version** | `v0.2.0-beta` |
 | **Status** | Published (2026-04-07) — pre-release |
-| **Target** | Beta stabilization |
+| **Target** | Beta |
 
 ---
 
@@ -20,9 +20,9 @@
 | Phase | Status |
 |---|---|
 | Phase 1 + 2 | ✅ Complete |
-| Alpha Exit → v0.2.0-beta | ✅ Released — v0.2.0-beta (2026-04-07) |
-| Beta blocker stabilization | 🔄 In Progress |
-| Beta feature queue | 📋 Queued |
+| Alpha Exit → v0.2.0-beta | ✅ Released (2026-04-07) |
+| Beta blocker stabilization | ✅ Complete — PR #46 |
+| Beta feature queue | 📋 Active |
 
 ---
 
@@ -30,21 +30,23 @@
 
 **`Beta`** — v0.2.0-beta
 
-### ⚠️ BLOCKERS — 3 regression issues found in shipped Beta features
-
-> These regressions were found in the Beta Bug Hunt (PR #42). They must be fixed before more Beta features ship.
-
-| # | Issue | Priority |
-|---|---|---|
-| #43 | [BUG] `check before-pr` exits 1 on healthy repos due to doctor warnings | 🔴 FIX FIRST |
-| #44 | [BUG] Hook script uses `spine` instead of `uv run` — hook fails | 🔴 FIX SECOND |
-| #45 | [BUG] AGENTS.md template has invalid commands — shipped to users | 🔴 FIX THIRD |
-
-### Beta Feature Queue (after blockers resolved)
+### Completed Beta Issues
 
 | # | Issue | Status |
 |---|---|---|
-| #36 | Mission refine draft flow | 📋 Queued |
+| #31 | `spine check before-pr` preflight checkpoint | ✅ Done — PR #35 |
+| #32 | Handoff/PR-prep summary primitive | ✅ Done — PR #39 |
+| #33 | Draftable governance records | ✅ Done — PR #40 |
+| #34 | Local optional hook/checkpoint integration | ✅ Done — PR #41 |
+| #43 | `check before-pr` exit 1 on healthy repos | ✅ Fixed — PR #46 |
+| #44 | Hook script missing `uv run` | ✅ Fixed — PR #46 |
+| #45 | AGENTS.md template invalid commands | ✅ Fixed — PR #46 |
+
+### Beta Feature Queue
+
+| # | Issue | Status |
+|---|---|---|
+| #36 | Mission refine draft flow | 📋 Next |
 | #37 | Compatibility/integration guide | 📋 Queued |
 | #38 | Deterministic validation fixtures | 📋 Queued |
 
@@ -52,7 +54,7 @@
 
 ## Next Active Priority
 
-**Issue #43** — Fix `check before-pr` exit 1 regression. Blockers must be cleared before returning to Beta feature queue.
+**Issue #36** — Mission refine draft flow. Beta blockers cleared. Resuming Beta feature queue.
 
 ---
 
