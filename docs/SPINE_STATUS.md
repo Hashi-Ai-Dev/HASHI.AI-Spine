@@ -41,7 +41,7 @@
 | #43 | `check before-pr` exit 1 on healthy repos | ✅ Fixed — PR #46 |
 | #44 | Hook script missing `uv run` | ✅ Fixed — PR #46 |
 | #45 | AGENTS.md template invalid commands | ✅ Fixed — PR #46 |
-| #36 | Mission refine draft flow | ✅ Done — branch `beta/issue36-mission-refine-draft-flow` |
+| #36 | Mission refine draft flow | ✅ Done — PR #47 |
 
 ### Beta Feature Queue
 
