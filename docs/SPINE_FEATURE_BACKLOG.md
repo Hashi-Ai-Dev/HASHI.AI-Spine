@@ -26,90 +26,70 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ## Alpha Exit — v0.2.0-beta (Released 2026-04-07)
 
 ### ✅ Explicit repo targeting contract (#15)
-**Description:** Fixed `--cwd` precedence over `SPINE_ROOT`. Targeting contract standardized.
 **Status:** DONE — merged in PR #19 (2026-04-07)
 
 ### ✅ Repo/branch context visibility (#16)
-**Description:** Deterministic default branch resolution + context line on git-relevant commands.
 **Status:** DONE — merged in PR #20 (2026-04-07)
 
 ### ✅ Operator/CI output modes + stable exit codes (#17)
-**Description:** Stable exit codes (0/1/2), `--json` output on all relevant commands.
 **Status:** DONE — merged in PR #21 (2026-04-07)
 
 ### ✅ Bootstrap polish + discipline-tax ergonomics (#18)
-**Description:** Next-steps panel, `spine doctor` verification, git commit guidance. Bug fixes: doctor absolute-path bug.
 **Status:** DONE — merged in PR #26 (2026-04-07)
 
 ### ✅ Artifact ergonomics contract (#23)
-**Description:** Machine-readable artifact manifest, canonical naming, discoverable artifacts.
 **Status:** DONE — implemented in PR #27 (2026-04-07)
 
 ### ✅ External-repo onboarding docs (#24)
-**Description:** Practical guide for using SPINE in an arbitrary external repo. Created docs/external-repo-onboarding.md.
 **Status:** DONE — implemented in PR #28 (2026-04-07)
-**Description:** Practical guide for using SPINE in an arbitrary external repo.
-**Status:** IN QUEUE — Alpha Exit
 
 ### ✅ Alpha-exit validation gate matrix (#25)
-**Description:** 21 gates assessed, 20 pass, 1 non-blocking partial. Alpha exit validated.
 **Status:** DONE — implemented in PR #29 (2026-04-07)
 
 ---
 
 ## Beta — v0.2.0-beta Active Issues
 
-> Beta milestone — Phase 3B. Execution order:
-> **#33 → #34 → #36 → #37 → #38**
-> 
+> Beta milestone. Execution order: **#34 → #36 → #37 → #38**
+>
 > Dependency rationale:
-> - **#33 first** — establishes draft-vs-canonical model (foundational for #36)
-> - **#34 second** — builds on #31 checkpoint + anticipates #33 draft confirmation
-> - **#36 third** — depends on #33's draft infrastructure
-> - **#37 fourth** — docs-only, runs parallel to implementation
-> - **#38 last** — hardens Beta surface once core mechanics are in place
+> - **#34 first** — builds on #31 checkpoint; anticipates #33 draft confirmation
+> - **#36 second** — depends on #33's draft infrastructure
+> - **#37 third** — docs-only, can run parallel to implementation
+> - **#38 fourth** — hardens Beta surface once core mechanics are in place
 
 ### ✅ `spine check before-pr` — preflight checkpoint (#31)
-**Description:** Bounded preflight checkpoint command. Exit 0=pass, exit 1=review recommended. Local, explicit, operator-controlled.
 **Status:** DONE — implemented in PR #35 (2026-04-08)
 
 ### ✅ Handoff/PR-prep summary primitive (#32)
-**Description:** `spine review handoff` — generates human-readable governance summary for PR context.
 **Status:** DONE — implemented in PR #39 (2026-04-08)
 
 ### ✅ Draftable governance records (#33)
-**Description:** `--draft` flag on `evidence add` / `decision add`. Drafts stored under `.spine/drafts/`. Explicit `spine drafts confirm <id>` for promotion. Default exclusion from all canonical surfaces.
-**Why it matters:** Reduces governance friction — provisional entries without silently mutating truth.
+**Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
 **Status:** DONE — implemented in PR #40 (2026-04-08)
 
 ### 📋 Local optional hook/checkpoint integration (#34)
 **Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
 **Why it matters:** Operators who want enforcement can opt in without daemon or cloud dependency.
-**Status:** QUEUED — after #33
+**Status:** NEXT ACTIVE — fourth Beta slice
 
 ### 📋 Mission refine draft flow (#36)
 **Description:** `spine mission refine` — explicit operator-invoked refinement producing draft mission.
-**Status:** QUEUED — Phase 3B candidate, after hook integration
+**Status:** QUEUED — after #34
 
 ### 📋 Compatibility/integration guide (#37)
 **Description:** Public guide for SPINE + Claude Code / oh-my-claudecode / Superpowers layering.
-**Status:** QUEUED — Phase 3B candidate, docs-only
+**Status:** QUEUED — after #36
 
 ### 📋 Deterministic validation fixtures (#38)
 **Description:** Fixture harness for repeatable command/file/contract validation.
-**Status:** QUEUED — Phase 3B candidate, after hook integration
+**Status:** QUEUED — after #36
 
-### 🟡 Draftable governance records
-**Description:** Draft evidence, draft decisions, draft PR/handoff summaries.
-**Status:** CANDIDATE — Phase 3B
+---
 
-### 🟡 Native hooks / lifecycle enforcement
-**Description:** Local, explicit, opt-in pre-commit / pre-PR governance hooks.
-**Status:** CANDIDATE — Phase 3B
+## Phase 3B Candidates
 
-### 🟡 Mission interview / brainstorm flow
-**Description:** Explicit operator-invoked mission refinement. Draft mission generation only.
-**Status:** CANDIDATE — Phase 3B, constrained
+> Preserved inputs. Not active work. These are potential Phase 3B directions — not all will become issues.
 
 ### 🟡 Stronger local tool-consumption surfaces
 **Description:** Stable command contracts, machine-readable outputs, richer local MCP surfaces.
