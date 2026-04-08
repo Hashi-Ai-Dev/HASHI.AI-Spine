@@ -24,7 +24,10 @@ jobs:
       - name: Lint (ruff)
         run: uv run ruff check .
 
+      - name: Show Python version
+        run: uv run python --version && uv run python -c "import sys; print(sys.executable)"
+
       - name: Run tests
-        run: uv run pytest
+        run: uv run pytest -v --tb=long
         env:
           NO_COLOR: "1"
