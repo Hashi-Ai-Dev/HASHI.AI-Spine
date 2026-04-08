@@ -66,9 +66,8 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Status:** DONE — implemented in PR #35 (2026-04-08)
 
 ### ✅ Handoff/PR-prep summary primitive (#32)
-**Description:** `spine review handoff` — compact governance summary: mission, recent decisions/evidence, drift state. Stdout-only, read-only, no state mutation.
-**Why it matters:** Next operator or reviewer can understand governance state without reading raw JSONL.
-**Status:** DONE — implemented in PR #36 (2026-04-08)
+**Description:** `spine review handoff` — generates human-readable governance summary for PR context.
+**Status:** DONE — implemented in PR #39 (2026-04-08)
 
 ### 📋 Draftable governance records (#33)
 **Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
