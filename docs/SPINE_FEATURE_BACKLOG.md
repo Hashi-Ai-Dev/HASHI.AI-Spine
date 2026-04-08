@@ -59,7 +59,15 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ## Beta — v0.2.0-beta Active Issues
 
-> Beta milestone — Phase 3B. Issues execute in order: #31 first, then #32–#34.
+> Beta milestone — Phase 3B. Execution order:
+> **#33 → #34 → #36 → #37 → #38**
+> 
+> Dependency rationale:
+> - **#33 first** — establishes draft-vs-canonical model (foundational for #36)
+> - **#34 second** — builds on #31 checkpoint + anticipates #33 draft confirmation
+> - **#36 third** — depends on #33's draft infrastructure
+> - **#37 fourth** — docs-only, runs parallel to implementation
+> - **#38 last** — hardens Beta surface once core mechanics are in place
 
 ### ✅ `spine check before-pr` — preflight checkpoint (#31)
 **Description:** Bounded preflight checkpoint command. Exit 0=pass, exit 1=review recommended. Local, explicit, operator-controlled.
