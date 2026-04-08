@@ -18,6 +18,7 @@ This index organizes all documentation in this repository. New users should star
 | Document | Description |
 |----------|-------------|
 | [`SPINE_OFFICIAL_SPEC_v0.1.md`](SPINE_OFFICIAL_SPEC_v0.1.md) | Authoritative design specification — what SPINE is, what each command does, non-goals, and design constraints |
+| [`SPINE_INTEGRATIONS.md`](SPINE_INTEGRATIONS.md) | Compatibility and integration guide — how SPINE layers with Claude Code, oh-my-claudecode, and Superpowers |
 | [`ROADMAP.md`](ROADMAP.md) | Public product roadmap — alpha exit criteria, beta direction, and v1.0.0 goals |
 | [`SPINE_STATUS.md`](SPINE_STATUS.md) | Current implementation status — command surface, known issues |
 | [`SPINE_FEATURE_BACKLOG.md`](SPINE_FEATURE_BACKLOG.md) | Feature backlog by milestone |
@@ -43,4 +44,5 @@ These documents are dev-facing operational notes from the build process.
 
 - **Main README:** [`../README.md`](../README.md)
 - **External repo onboarding:** [`external-repo-onboarding.md`](external-repo-onboarding.md)
+- **Integrations guide:** [`SPINE_INTEGRATIONS.md`](SPINE_INTEGRATIONS.md)
 - **SPINE project root:** [github.com/Hashi-Ai-Dev/SPINE](https://github.com/Hashi-Ai-Dev/SPINE)

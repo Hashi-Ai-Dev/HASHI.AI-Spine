@@ -48,9 +48,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ### 📋 Mission refine draft flow (#36)
 **Status:** QUEUED — after blockers fixed
 
-### 📋 Compatibility/integration guide (#37)
+### ✅ Compatibility/integration guide (#37)
 **Description:** Public guide for SPINE + Claude Code / oh-my-claudecode / Superpowers layering.
-**Status:** QUEUED — after #36
+**Status:** DONE — `docs/SPINE_INTEGRATIONS.md`
 
 ### 📋 Deterministic validation fixtures (#38)
 **Description:** Fixture harness for repeatable command/file/contract validation.

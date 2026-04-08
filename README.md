@@ -186,6 +186,7 @@ This is beta software. Known rough edges:
 
 **Start here:**
 - [`docs/external-repo-onboarding.md`](docs/external-repo-onboarding.md) — how to use SPINE on an external repo (quickstart, walkthrough, targeting, verification, FAQ)
+- [`docs/SPINE_INTEGRATIONS.md`](docs/SPINE_INTEGRATIONS.md) — compatibility and integration guide for Claude Code, oh-my-claudecode, and Superpowers
 - [`docs/SPINE_OFFICIAL_SPEC_v0.1.md`](docs/SPINE_OFFICIAL_SPEC_v0.1.md) — authoritative design spec
 - [`docs/SPINE_FEATURE_BACKLOG.md`](docs/SPINE_FEATURE_BACKLOG.md) — current and planned features
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — public product roadmap (alpha → beta → v1.0.0)

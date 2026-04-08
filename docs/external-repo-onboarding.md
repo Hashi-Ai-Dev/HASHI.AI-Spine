@@ -386,3 +386,4 @@ If you expected drift to be flagged:
 
 *For the full command reference, see [`SPINE_OFFICIAL_SPEC_v0.1.md`](SPINE_OFFICIAL_SPEC_v0.1.md).*
 *For the current implementation status, see [`SPINE_STATUS.md`](SPINE_STATUS.md).*
+*For guidance on layering SPINE with Claude Code, oh-my-claudecode, or Superpowers, see [`SPINE_INTEGRATIONS.md`](SPINE_INTEGRATIONS.md).*

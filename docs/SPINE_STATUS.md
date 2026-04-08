@@ -46,15 +46,15 @@
 
 | # | Issue | Status |
 |---|---|---|
-| #36 | Mission refine draft flow | 📋 Next |
-| #37 | Compatibility/integration guide | 📋 Queued |
+| #36 | Mission refine draft flow | ✅ Done — PR #47 |
+| #37 | Compatibility/integration guide | ✅ Done — this PR |
 | #38 | Deterministic validation fixtures | 📋 Queued |
 
 ---
 
 ## Next Active Priority
 
-**Issue #36** — Mission refine draft flow. Beta blockers cleared. Resuming Beta feature queue.
+**Issue #38** — Deterministic validation fixtures. Issues #36 and #37 complete.
 
 ---
 
