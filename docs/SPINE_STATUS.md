@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07 (post-beta-release normalization)
+**Last updated:** 2026-04-08 (beta queue normalization)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
@@ -35,18 +35,18 @@
 | # | Issue | Status |
 |---|------|--------|
 | #31 | Beta: `spine check before-pr` — preflight checkpoint | ✅ Done — implemented in PR #35 |
-| #32 | Beta: handoff/PR-prep summary primitive | 📋 Next |
+| #32 | Beta: handoff/PR-prep summary primitive | ✅ Done — implemented in PR #39 |
 | #33 | Beta: draftable governance records | 📋 Queued |
 | #34 | Beta: local optional hook/checkpoint integration | 📋 Queued |
 | #36 | Beta: mission refine draft flow | 📋 Queued |
 | #37 | Beta: compatibility/integration guide | 📋 Queued |
-| #38 | Beta: deterministic validation fixtures | 📋 Queued |rtial) |
+| #38 | Beta: deterministic validation fixtures | 📋 Queued |
 
 ---
 
 ## Next Active Priority
 
-**Beta operating state.** Issue #31 complete. Next in queue: Issue #32 — handoff/PR-prep summary primitive.
+**Beta operating state.** Issues #31 and #32 complete. Next in queue: Issue #33 — draftable governance records. Queue order: #33 → #34 → #36 → #37 → #38.mitive.
 
 ---
 
