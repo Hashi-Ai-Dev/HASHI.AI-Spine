@@ -139,3 +139,110 @@ No exit code 1 — this command is read-only and always succeeds if context is a
 - GitHub PR description automation: explicitly out of scope
 - Webhook/notification delivery: explicitly out of scope
 - Any hook installation or hidden generation: explicitly out of scope
+
+---
+
+## Issue #33 — Beta: draftable governance records
+
+**Branch:** `claude/draftable-governance-records-iyaJs`
+**Date:** 2026-04-08
+
+### Issue targeted
+
+GitHub Issue #33: "Beta: draftable governance records"
+
+Third Beta implementation slice. Reduces governance friction by allowing operators
+and agents to create draft evidence/decision records provisionally without touching
+canonical `.spine/` state. Promotion is always explicit via `spine drafts confirm`.
+
+### Draft contract implemented
+
+**Draft creation:**
+- `spine evidence add --draft` — saves evidence draft to `.spine/drafts/`, no write to `evidence.jsonl`
+- `spine decision add --draft` — saves decision draft to `.spine/drafts/`, no write to `decisions.jsonl`
+
+**Draft listing:**
+- `spine drafts list [--cwd PATH]` — shows all pending drafts with IDs and promotion hints
+
+**Draft promotion:**
+- `spine drafts confirm <draft_id> [--cwd PATH]` — explicit operator action; promotes draft to canonical JSONL, deletes draft file
+
+Promotion is never silent or automatic. No auto-confirm flows.
+
+### Storage / promotion behavior
+
+**Draft files:** `.spine/drafts/<type>-<YYYYMMDDTHHMMSSffffff>.json`
+
+Each draft file contains the full record plus a `_record_type` field (`"evidence"` or `"decision"`).
+
+**Naming:** `evidence-20260408T113000123456.json` / `decision-20260408T113000123456.json`
+
+**Promotion path:**
+1. `spine drafts confirm <id>` reads `.spine/drafts/<id>.json`
+2. Strips `_record_type` from the record
+3. Appends the clean record to the appropriate canonical JSONL file
+4. Deletes the draft file
+
+`_record_type` never appears in canonical records.
+
+### Visibility / default-exclusion rules
+
+Drafts are stored in `.spine/drafts/`, which is separate from all canonical files.
+
+The following canonical surfaces are **unaffected** (no changes needed):
+- `spine review weekly` — reads `evidence.jsonl` / `decisions.jsonl` directly
+- `spine brief` — does not read evidence/decisions
+- `spine check before-pr` — reads canonical JSONL files only
+- `spine review handoff` — reads canonical JSONL files only
+- `spine doctor` — validates specific known files, not `.spine/drafts/`
+
+Drafts are **never visible** on canonical surfaces unless explicitly confirmed.
+
+### Files changed
+
+**New files:**
+- `src/spine/services/draft_service.py` — `DraftService` with `save_evidence_draft()`, `save_decision_draft()`, `confirm()`, `list_drafts()`
+- `src/spine/cli/drafts_cmd.py` — `spine drafts list` and `spine drafts confirm <id>` subcommands
+- `tests/test_drafts.py` — 24 focused tests
+
+**Modified files:**
+- `src/spine/constants.py` — added `DRAFTS_DIR = "drafts"`
+- `src/spine/services/evidence_service.py` — added `add_draft()` method (existing `add()` unchanged)
+- `src/spine/services/decision_service.py` — added `add_draft()` method (existing `add()` unchanged)
+- `src/spine/cli/evidence_cmd.py` — added `--draft` flag to `evidence add`
+- `src/spine/cli/decision_cmd.py` — added `--draft` flag to `decision add`
+- `src/spine/main.py` — registered `drafts_cmd`
+- `docs/SPINE_STATUS.md` — marked #33 done, updated next priority
+- `docs/SPINE_FEATURE_BACKLOG.md` — marked #33 done, removed duplicate entries
+- `docs/SPINE_BETA_IMPLEMENTATION_REPORT.md` — this section
+
+**Not changed:**
+- `README.md` — no public-facing mention warranted at this scope
+- Any review, brief, doctor, or handoff service — drafts are excluded by default, no changes needed
+
+### Test results
+
+24 new draft-specific tests, all passing. Full suite: **297/297 passed**.
+
+Tests cover:
+- `evidence add --draft` creates file in `.spine/drafts/`, not `evidence.jsonl`
+- `decision add --draft` creates file in `.spine/drafts/`, not `decisions.jsonl`
+- Draft file structure: correct fields + `_record_type`
+- Deterministic naming: `evidence-YYYYMMDDTHHMMSS*` format
+- `spine drafts list` — empty state, shows evidence drafts, shows decision drafts, multiple drafts
+- `spine drafts confirm` — promotes evidence to `evidence.jsonl`, promotes decision to `decisions.jsonl`
+- Confirm removes draft file and it disappears from list
+- Confirm nonexistent ID returns non-zero exit code
+- Default exclusion: canonical JSONL files unaffected by draft creation
+- `--cwd` support on all three draft-related commands
+- Multiple drafts: each gets its own file, confirming one leaves others intact
+
+### What was explicitly deferred
+
+- **Issue #34** — local optional hook/checkpoint integration: `spine hooks install/list/uninstall`
+- **Issue #36** — mission refine draft flow: `spine mission refine`
+- **Issue #37** — compatibility/integration guide docs
+- **Issue #38** — deterministic validation fixtures
+- Draft mission refinement: not in scope for this slice
+- Bulk draft workflows or hidden auto-confirm flows: explicitly rejected
+- Any webhook, notification, or remote behavior: explicitly out of scope

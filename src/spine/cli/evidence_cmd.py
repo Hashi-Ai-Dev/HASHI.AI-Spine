@@ -30,12 +30,19 @@ def evidence_add(
     kind: EVIDENCE_KINDS = typer.Option(..., "--kind", "-k", help="Evidence kind"),
     description: str = typer.Option("", "--description", "-d", help="Description of the evidence"),
     url: str = typer.Option("", "--url", help="URL or reference for the evidence"),
+    draft: bool = typer.Option(
+        False,
+        "--draft",
+        help="[Beta] Save as a draft under .spine/drafts/ instead of appending to evidence.jsonl. Use 'spine drafts confirm <id>' to promote.",
+    ),
 ) -> None:
     """
     Add an evidence record to .spine/evidence.jsonl.
 
     Allowed kinds: brief_generated, commit, pr, test_pass, review_done,
                    demo, user_feedback, payment, kill, narrow
+
+    Use --draft to save provisionally to .spine/drafts/ without touching canonical state.
     """
     try:
         repo_root, spine_root = resolve_roots(cwd)
@@ -45,9 +52,15 @@ def evidence_add(
 
     service = EvidenceService(repo_root, spine_root=spine_root)
     try:
-        evidence = service.add(kind=kind, description=description, evidence_url=url)
-        console.print(f"[bold green]Evidence added:[/bold green] [{evidence.kind}] {evidence.description or '(no description)'}")
-        console.print(f"  Created at: {evidence.created_at}")
+        if draft:
+            evidence, draft_id = service.add_draft(kind=kind, description=description, evidence_url=url)
+            console.print(f"[bold yellow]Evidence draft saved:[/bold yellow] [{evidence.kind}] {evidence.description or '(no description)'}")
+            console.print(f"  Draft ID: {draft_id}")
+            console.print(f"  Promote with: spine drafts confirm {draft_id}")
+        else:
+            evidence = service.add(kind=kind, description=description, evidence_url=url)
+            console.print(f"[bold green]Evidence added:[/bold green] [{evidence.kind}] {evidence.description or '(no description)'}")
+            console.print(f"  Created at: {evidence.created_at}")
     except EvidenceValidationError as exc:
         console.print(f"[bold red]Validation error:[/bold red] {exc}")
         raise typer.Exit(EXIT_VALIDATION)
