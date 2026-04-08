@@ -65,10 +65,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Bounded preflight checkpoint command. Exit 0=pass, exit 1=review recommended. Local, explicit, operator-controlled.
 **Status:** DONE — implemented in PR #35 (2026-04-08)
 
-### 📋 Handoff/PR-prep summary primitive (#32)
-**Description:** `spine brief handoff` — generates human-readable governance summary for PR context.
+### ✅ Handoff/PR-prep summary primitive (#32)
+**Description:** `spine review handoff` — compact governance summary: mission, recent decisions/evidence, drift state. Stdout-only, read-only, no state mutation.
 **Why it matters:** Next operator or reviewer can understand governance state without reading raw JSONL.
-**Status:** NEXT ACTIVE — second Beta slice
+**Status:** DONE — implemented in PR #36 (2026-04-08)
 
 ### 📋 Draftable governance records (#33)
 **Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
