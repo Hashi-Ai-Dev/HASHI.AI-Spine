@@ -26,6 +26,13 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ## Beta — v0.2.0-beta
 
+> ⚠️ **BLOCKERS found in shipped Beta features (Beta Bug Hunt audit, PR #42):**
+> - **#43** — `check before-pr` exits 1 on healthy repos (A-01) — regression in #31
+> - **#44** — hook script missing `uv run` (A-02) — regression in #34
+> - **#45** — AGENTS.md template has invalid commands (A-06) — shipped to users
+>
+> Fix these regressions before shipping more Beta features.
+
 ### ✅ `spine check before-pr` preflight checkpoint (#31)
 **Status:** DONE — PR #35
 
@@ -38,20 +45,16 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ### ✅ Local optional hook/checkpoint integration (#34)
 **Status:** DONE — PR #41
 
-### ✅ Beta blocker stabilization (#43, #44, #45)
-**Status:** DONE — PR #46
-
-### ✅ Mission refine draft flow (#36)
-**Description:** `spine mission refine [--cwd]` creates a draft mission at `.spine/drafts/missions/<timestamp>.yaml`. Explicit `spine mission confirm <draft_id>` promotes to canonical. No silent mutation.
-**Status:** DONE — branch `beta/issue36-mission-refine-draft-flow`
+### 📋 Mission refine draft flow (#36)
+**Status:** QUEUED — after blockers fixed
 
 ### 📋 Compatibility/integration guide (#37)
 **Description:** Public guide for SPINE + Claude Code / oh-my-claudecode / Superpowers layering.
-**Status:** NEXT — after #36
+**Status:** QUEUED — after #36
 
 ### 📋 Deterministic validation fixtures (#38)
 **Description:** Fixture harness for repeatable command/file/contract validation.
-**Status:** QUEUED — after #37
+**Status:** QUEUED — after #36
 
 ---
 
