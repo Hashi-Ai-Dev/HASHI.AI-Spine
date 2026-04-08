@@ -62,11 +62,11 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ### 📋 Before-work / start-session checkpoint (#50)
 **Description:** Agent session start checkpoint to anchor context and confirm mission alignment.
-**Status:** DEFERRED — not in scope for #49
+**Status:** QUEUED — after #49
 
 ### 📋 Beta-exit repeated-use proof (#51)
 **Description:** Proof harness for repeated Beta use across multiple agent sessions.
-**Status:** DEFERRED — not in scope for #49
+**Status:** QUEUED — after #49
 
 ---
 
@@ -86,4 +86,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-08 — Issue #49 write-flow machine-readable consistency complete*
+*Last updated: 2026-04-08 — Issue #49 in review (PR #53)*
