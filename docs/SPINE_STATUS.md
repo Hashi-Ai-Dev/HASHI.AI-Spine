@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-08 (Issue #49 — in review, PR #53)
+**Last updated:** 2026-04-08 (Issue #49 — write-flow consistency merged)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -41,21 +41,21 @@
 | #43 | `check before-pr` exit 1 on healthy repos | ✅ Fixed — PR #46 |
 | #44 | Hook script missing `uv run` | ✅ Fixed — PR #46 |
 | #45 | AGENTS.md template invalid commands | ✅ Fixed — PR #46 |
-| #49 | Write-flow machine-readable consistency | 📋 In review (PR #53) |
+| #49 | Write-flow machine-readable consistency | ✅ Done — PR #53 |
 
 ### Beta Polish Queue
 
 | # | Issue | Status |
 |---|---|---|
-| #49 | Write-flow machine-readable consistency | 📋 In review (PR #53) |
-| #50 | Before-work / start-session checkpoint | 📋 Queued |
+| #49 | Write-flow machine-readable consistency | ✅ Done — PR #53 |
+| #50 | Before-work / start-session checkpoint | 📋 Next |
 | #51 | Beta-exit repeated-use proof | 📋 Queued |
 
 ---
 
 ## Next Active Priority
 
-**Issue #49 in review.** Beta core complete. Polish queue active.
+**Issue #49 done.** Beta polish queue: #50 and #51 remaining.
 
 ---
 
