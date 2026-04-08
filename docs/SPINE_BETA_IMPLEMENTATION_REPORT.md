@@ -480,3 +480,128 @@ Focused tests cover:
 | New governance command surfaces | — | Not in scope — write-path consistency only |
 | General snapshot testing overhaul | — | Explicitly excluded |
 | Cloud/webhook/platform features | — | Explicitly excluded |
+
+---
+
+## Issue #50 — Before-Work / Start-Session Governance Checkpoint
+
+**Date:** 2026-04-08
+**Branch:** `claude/issue-50-checkpoint-2Aq80`
+**Issue targeted:** #50 — Beta: before-work / start-session governance checkpoint
+
+---
+
+### Summary
+
+Adds `spine check before-work` — a bounded pre-work/start-session checkpoint
+that helps operators and agents start work with better context and fewer missed
+governance steps. No hidden state, no daemon behavior, no session tracking.
+
+---
+
+### Checkpoint Behavior Chosen
+
+**`spine check before-work`** — added as a subcommand under the existing
+`spine check` surface, parallel to `before-pr`.
+
+**Checks (in order):**
+
+| Check | Behavior | Fail → |
+|---|---|---|
+| `spine_dir` | .spine/ directory present | fail → exit 1, stop |
+| `mission` | mission.yaml present and readable | fail → exit 1 |
+| `doctor` | repo health (errors only; warnings advisory) | error → fail; warning → pass |
+| `branch_context` | current branch/repo context | always pass — informational |
+| `recent_brief` | brief files present in .spine/briefs/ | no briefs → warn → exit 1 |
+
+**Key design choice:** `before-work` does NOT check for evidence, decisions, or
+drift — those are `before-pr`'s concern. The start-session check answers "can I
+responsibly begin work here?" not "have I done enough governance for a PR?"
+
+---
+
+### Output and Exit Behavior
+
+- Human-readable table (same style as `before-pr`)
+- `--json` flag for machine-readable output (same shape as `before-pr` JSON)
+- `--cwd` flag for targeting external repos
+
+**Exit codes:**
+- `0` — all checks passed — clear to begin work
+- `1` — review recommended — one or more checks need attention
+- `2` — context failure — cannot resolve repo or .spine/ root
+
+Does NOT mutate state. No hidden logging. No background behavior.
+
+---
+
+### Files Changed
+
+| File | Change |
+|---|---|
+| `src/spine/services/check_service.py` | Added `BeforeWorkResult` dataclass; added `run_before_work()` method; added `_check_branch_context()` and `_check_recent_brief()` private check methods |
+| `src/spine/cli/check_cmd.py` | Added `check_before_work` subcommand with `--cwd`/`--json`; added `_output_before_work_json()` and `_output_before_work_human()` formatters; imported `BeforeWorkResult` |
+| `tests/test_check_before_work.py` | New: 28 focused tests |
+| `docs/SPINE_STATUS.md` | Narrow update — #50 marked done, next priority updated |
+| `docs/SPINE_FEATURE_BACKLOG.md` | Narrow update — #50 marked done, #51 added |
+| `docs/SPINE_BETA_IMPLEMENTATION_REPORT.md` | This section |
+
+---
+
+### Test Results
+
+```
+28 focused tests added (tests/test_check_before_work.py)
+501 total tests pass
+0 failures
+```
+
+Focused tests cover:
+- Command registration (before-work in check --help)
+- Help text (--cwd, --json, exit codes documented)
+- Pass path: all checks pass with brief present
+- Pass path: all expected check names in output
+- Pass path: branch_context shown in output
+- Review-recommended: .spine/ missing → exit 1
+- Review-recommended: mission.yaml missing → exit 1
+- Review-recommended: mission.yaml corrupt → exit 1
+- Review-recommended: no briefs → exit 1
+- Review-recommended: briefs dir empty (no .md files) → exit 1
+- No-brief message contains actionable suggestion
+- Context failure: non-git dir → exit 2
+- --cwd support without process chdir
+- --cwd invalid path → exit 2
+- JSON output structure (all required keys)
+- JSON output includes all 5 check names
+- JSON exit codes match result field
+- JSON context failure emits error JSON
+- Deterministic: same result twice
+- No state mutation (.spine/ unchanged after run)
+- Human output includes repo path
+- Human output includes final Result line
+- Doctor warnings do NOT cause exit 1 (advisory only)
+- Doctor errors DO cause exit 1
+- No evidence required (before-work isolation from before-pr)
+- No decisions required (before-work isolation from before-pr)
+- Drift events do NOT block before-work
+
+---
+
+### SPINE Governance
+
+- `spine decision add` — recorded rationale for Issue #50
+- `spine evidence add` — logged implementation work (28 tests, 501 total passing)
+- `spine review weekly --recommendation continue --notes "Beta issue #50: before-work / start-session governance checkpoint"`
+
+---
+
+### What Was Explicitly Deferred
+
+| Item | Issue | Status |
+|---|---|---|
+| Beta-exit proof/validation | #51 | Not started — explicitly out of scope |
+| Session state tracking / session management | — | Explicitly excluded |
+| Background reminders / daemon behavior | — | Explicitly excluded |
+| Hook installation redesign | — | Explicitly excluded |
+| Notifications, dashboards, webhooks | — | Explicitly excluded |
+| Broad `check` system redesign | — | Explicitly excluded |

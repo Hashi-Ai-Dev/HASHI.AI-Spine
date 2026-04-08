@@ -1,4 +1,4 @@
-"""CheckService — preflight checkpoint for before-PR governance checks."""
+"""CheckService — preflight checkpoints for before-work and before-PR governance."""
 
 from __future__ import annotations
 
@@ -43,6 +43,27 @@ class BeforePrResult:
         return self.result == "pass"
 
 
+@dataclass
+class BeforeWorkResult:
+    """Aggregated result of the before-work start-session preflight checks."""
+
+    repo: str
+    branch: str
+    items: list[CheckItem] = field(default_factory=list)
+
+    @property
+    def result(self) -> CheckResult:
+        """Return overall result: pass if no fails or warns, else review_recommended."""
+        for item in self.items:
+            if item.status in ("warn", "fail"):
+                return "review_recommended"
+        return "pass"
+
+    @property
+    def passed(self) -> bool:
+        return self.result == "pass"
+
+
 class CheckService:
     """
     Preflight checkpoint service for `spine check before-pr`.
@@ -54,6 +75,37 @@ class CheckService:
     def __init__(self, repo_root: Path, *, spine_root: Path | None = None) -> None:
         self.repo_root = repo_root
         self._spine_root = spine_root or repo_root / C.SPINE_DIR
+
+    def run_before_work(self, branch: str) -> BeforeWorkResult:
+        """
+        Run all before-work start-session preflight checks.
+
+        Checks (in order):
+        1. Mission presence/readability
+        2. Doctor-style repo health (no errors)
+        3. Branch/repo context (always passes — informational)
+        4. Recent brief orientation context
+
+        Focus: "is this repo in a state I can responsibly begin work in?"
+        Does NOT require evidence/decisions (those accumulate during work).
+        Does NOT block on drift (you may be starting work to fix it).
+
+        Returns a BeforeWorkResult with all individual check items and
+        the final aggregated result (pass | review_recommended).
+        """
+        result = BeforeWorkResult(repo=str(self.repo_root), branch=branch)
+
+        result.items.append(self._check_spine_dir())
+        if result.items[-1].status == "fail":
+            # Cannot proceed with further checks — .spine/ is missing
+            return result
+
+        result.items.append(self._check_mission())
+        result.items.extend(self._check_doctor_health())
+        result.items.append(self._check_branch_context(branch))
+        result.items.append(self._check_recent_brief())
+
+        return result
 
     def run_before_pr(self, branch: str) -> BeforePrResult:
         """
@@ -239,6 +291,49 @@ class CheckService:
             name="evidence",
             status="pass",
             message=f"{len(records)} evidence record(s) present",
+        )
+
+    def _check_branch_context(self, branch: str) -> CheckItem:
+        """Report current branch context — always passes (informational)."""
+        return CheckItem(
+            name="branch_context",
+            status="pass",
+            message=f"on branch: {branch}",
+        )
+
+    def _check_recent_brief(self) -> CheckItem:
+        """Check whether a recent brief exists for orientation context.
+
+        Looks for any brief files under .spine/briefs/. If none are found,
+        suggests running 'spine brief' for orientation context.
+        """
+        briefs_dir = self._spine_root / C.BRIEFS_DIR
+        if not briefs_dir.exists():
+            return CheckItem(
+                name="recent_brief",
+                status="warn",
+                message=(
+                    "no briefs found — run 'spine brief' to generate orientation context, "
+                    "or proceed if starting a fresh session"
+                ),
+            )
+        # Look for any latest.md or timestamped brief files across subdirs
+        brief_files = list(briefs_dir.rglob("*.md"))
+        if not brief_files:
+            return CheckItem(
+                name="recent_brief",
+                status="warn",
+                message=(
+                    "no briefs found — run 'spine brief' to generate orientation context, "
+                    "or proceed if starting a fresh session"
+                ),
+            )
+        # Use the most recently modified brief file as orientation signal
+        latest = max(brief_files, key=lambda p: p.stat().st_mtime)
+        return CheckItem(
+            name="recent_brief",
+            status="pass",
+            message=f"{len(brief_files)} brief file(s) available — most recent: {latest.name}",
         )
 
     def _check_decision_presence(self) -> CheckItem:

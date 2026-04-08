@@ -58,6 +58,15 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
+### ✅ Before-work / start-session governance checkpoint (#50)
+**Status:** DONE — branch claude/issue-50-checkpoint-2Aq80
+**Description:** `spine check before-work` — bounded pre-work checkpoint. Checks spine_dir, mission, doctor health, branch context, recent brief. Exit 0/1/2.
+
+### 📋 Beta-exit proof/validation (#51)
+**Status:** QUEUED — after #50
+
+---
+
 ## Phase 3B Candidates
 
 ### 🟡 Stronger local tool-consumption surfaces
