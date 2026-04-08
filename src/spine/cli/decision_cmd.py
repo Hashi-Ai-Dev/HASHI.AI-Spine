@@ -30,12 +30,19 @@ def decision_add(
     why: str = typer.Option(..., "--why", "-w", help="Why this decision was made (required)"),
     decision: str = typer.Option(..., "--decision", "-d", help="What was decided (required)"),
     alternatives: str | None = typer.Option(None, "--alternatives", help="Comma-separated alternative options considered"),
+    draft: bool = typer.Option(
+        False,
+        "--draft",
+        help="[Beta] Save as a draft under .spine/drafts/ instead of appending to decisions.jsonl. Use 'spine drafts confirm <id>' to promote.",
+    ),
 ) -> None:
     """
     Add a decision record to .spine/decisions.jsonl.
 
     Requires: title, why, decision. All are required.
     Optional: alternatives (comma-separated list).
+
+    Use --draft to save provisionally to .spine/drafts/ without touching canonical state.
     """
     try:
         repo_root, spine_root = resolve_roots(cwd)
@@ -50,18 +57,33 @@ def decision_add(
 
     service = DecisionService(repo_root, spine_root=spine_root)
     try:
-        decision_record = service.add(
-            title=title,
-            why=why,
-            decision=decision,
-            alternatives=parse_list(alternatives),
-        )
-        console.print(f"[bold green]Decision added:[/bold green] {decision_record.title}")
-        console.print(f"  Why: {decision_record.why}")
-        console.print(f"  Decision: {decision_record.decision}")
-        if decision_record.alternatives:
-            console.print(f"  Alternatives: {', '.join(decision_record.alternatives)}")
-        console.print(f"  Created at: {decision_record.created_at}")
+        if draft:
+            decision_record, draft_id = service.add_draft(
+                title=title,
+                why=why,
+                decision=decision,
+                alternatives=parse_list(alternatives),
+            )
+            console.print(f"[bold yellow]Decision draft saved:[/bold yellow] {decision_record.title}")
+            console.print(f"  Why: {decision_record.why}")
+            console.print(f"  Decision: {decision_record.decision}")
+            if decision_record.alternatives:
+                console.print(f"  Alternatives: {', '.join(decision_record.alternatives)}")
+            console.print(f"  Draft ID: {draft_id}")
+            console.print(f"  Promote with: spine drafts confirm {draft_id}")
+        else:
+            decision_record = service.add(
+                title=title,
+                why=why,
+                decision=decision,
+                alternatives=parse_list(alternatives),
+            )
+            console.print(f"[bold green]Decision added:[/bold green] {decision_record.title}")
+            console.print(f"  Why: {decision_record.why}")
+            console.print(f"  Decision: {decision_record.decision}")
+            if decision_record.alternatives:
+                console.print(f"  Alternatives: {', '.join(decision_record.alternatives)}")
+            console.print(f"  Created at: {decision_record.created_at}")
     except DecisionValidationError as exc:
         console.print(f"[bold red]Validation error:[/bold red] {exc}")
         raise typer.Exit(EXIT_VALIDATION)

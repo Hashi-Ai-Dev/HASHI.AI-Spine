@@ -77,10 +77,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** `spine review handoff` — generates human-readable governance summary for PR context.
 **Status:** DONE — implemented in PR #39 (2026-04-08)
 
-### 📋 Draftable governance records (#33)
-**Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
+### ✅ Draftable governance records (#33)
+**Description:** `--draft` flag on `evidence add` / `decision add`. Drafts stored under `.spine/drafts/`. Explicit `spine drafts confirm <id>` for promotion. Default exclusion from all canonical surfaces.
 **Why it matters:** Reduces governance friction — provisional entries without silently mutating truth.
-**Status:** QUEUED — after #32
+**Status:** DONE — implemented in PR #40 (2026-04-08)
 
 ### 📋 Local optional hook/checkpoint integration (#34)
 **Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
@@ -98,19 +98,6 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ### 📋 Deterministic validation fixtures (#38)
 **Description:** Fixture harness for repeatable command/file/contract validation.
 **Status:** QUEUED — Phase 3B candidate, after hook integration
-**Description:** `spine brief handoff` — generates human-readable governance summary for PR context.
-**Why it matters:** Next operator or reviewer can understand governance state without reading raw JSONL.
-**Status:** QUEUED — after #31
-
-### 📋 Draftable governance records (#33)
-**Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
-**Why it matters:** Reduces governance friction — provisional entries without silently mutating truth.
-**Status:** QUEUED — after #32
-
-### 📋 Local optional hook/checkpoint integration (#34)
-**Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
-**Why it matters:** Operators who want enforcement can opt in without daemon or cloud dependency.
-**Status:** QUEUED — after #33
 
 ### 🟡 Draftable governance records
 **Description:** Draft evidence, draft decisions, draft PR/handoff summaries.
@@ -142,4 +129,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
+*Last updated: 2026-04-08 by SPINE Repo Manager Agent*
