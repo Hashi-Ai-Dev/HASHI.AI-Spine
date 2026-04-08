@@ -26,6 +26,7 @@ BRIEFS_DIR = "briefs"
 SKILLS_DIR = "skills"
 CHECKS_DIR = "checks"
 DRAFTS_DIR = "drafts"
+MISSION_DRAFTS_DIR = "drafts/missions"
 
 # --- Artifact manifest ---
 ARTIFACT_MANIFEST_FILE = "artifact_manifest.json"

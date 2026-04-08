@@ -88,6 +88,9 @@ uv run spine doctor --cwd /path/to/your-project
 | `spine init` | Scaffold `.spine/` governance state in a git repo |
 | `spine mission show` | Display current mission (table or `--json`) |
 | `spine mission set` | Update mission fields |
+| `spine mission refine` | Create a mission draft (does not mutate canonical mission.yaml) |
+| `spine mission confirm <draft_id>` | Promote a mission draft to canonical |
+| `spine mission drafts` | List pending mission drafts |
 | `spine opportunity score` | Score an opportunity with a weighted 6-factor rubric |
 | `spine evidence add` | Append a typed evidence record |
 | `spine decision add` | Append a decision record with rationale |
