@@ -35,7 +35,7 @@
 | # | Issue | Status |
 |---|------|--------|
 | #31 | Beta: `spine check before-pr` — preflight checkpoint | ✅ Done — implemented in PR #35 |
-| #32 | Beta: handoff/PR-prep summary primitive | ✅ Done — implemented in PR #39 |
+| #32 | Beta: handoff/PR-prep summary primitive | 📋 Next |
 | #33 | Beta: draftable governance records | 📋 Queued |
 | #34 | Beta: local optional hook/checkpoint integration | 📋 Queued |
 | #36 | Beta: mission refine draft flow | 📋 Queued |
@@ -46,7 +46,7 @@
 
 ## Next Active Priority
 
-**Beta operating state.** Issues #31 and #32 complete. Next in queue: Issue #33 — draftable governance records. — draftable governance records.
+**Beta operating state.** Issue #31 complete. Next in queue: Issue #32 — handoff/PR-prep summary primitive.
 
 ---
 
