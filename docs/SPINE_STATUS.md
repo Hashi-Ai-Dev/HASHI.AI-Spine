@@ -34,7 +34,7 @@
 
 | # | Issue | Status |
 |---|------|--------|
-| #31 | Beta: `spine check before-pr` — preflight checkpoint | ✅ Implemented — branch `claude/issue31-check-before-pr-6z236` |
+| #31 | Beta: `spine check before-pr` — preflight checkpoint | ✅ Done — implemented in PR #35 |
 | #32 | Beta: handoff/PR-prep summary primitive | 📋 Queued |
 | #33 | Beta: draftable governance records | 📋 Queued |
 | #34 | Beta: local optional hook/checkpoint integration | 📋 Queued |rtial) |
@@ -43,7 +43,7 @@
 
 ## Next Active Priority
 
-**Beta operating state.** v0.2.0-beta released. Issue #31 implemented. Issues #32–#34 follow.
+**Beta operating state.** Issue #31 complete. Next in queue: Issue #32 — handoff/PR-prep summary primitive.
 
 ---
 
