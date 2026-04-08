@@ -1,8 +1,7 @@
 # SPINE Status
 
-**Last updated:** 2026-04-07 (post-beta-release normalization)
+**Last updated:** 2026-04-08 (blocker stabilization — Beta Bug Hunt complete)
 **Repo:** `Hashi-Ai-Dev/SPINE`
-**Agent:** SPINE Repo Manager
 
 ---
 
@@ -12,7 +11,7 @@
 |---|---|
 | **Version** | `v0.2.0-beta` |
 | **Status** | Published (2026-04-07) — pre-release |
-| **Target** | Beta
+| **Target** | Beta stabilization |
 
 ---
 
@@ -21,58 +20,61 @@
 | Phase | Status |
 |---|---|
 | Phase 1 + 2 | ✅ Complete |
-| v0.2 / Phase 3A | ✅ Complete — Alpha exit validated |
-| Alpha Exit → v0.2.0-beta | ✅ Released — v0.2.0-beta published (2026-04-07) |
-| Beta | 🔄 Active — v0.2.0-beta released |
-| v1.0.0 | 📋 Planned |
+| Alpha Exit → v0.2.0-beta | ✅ Released — v0.2.0-beta (2026-04-07) |
+| Beta blocker stabilization | 🔄 In Progress |
+| Beta feature queue | 📋 Queued |
 
 ---
 
 ## Current Milestone
 
-**`Beta`** — v0.2.0-beta released. Phase 3B work begins.
+**`Beta`** — v0.2.0-beta
+
+### ⚠️ BLOCKERS — 3 regression issues found in shipped Beta features
+
+> These regressions were found in the Beta Bug Hunt (PR #42). They must be fixed before more Beta features ship.
+
+| # | Issue | Priority |
+|---|---|---|
+| #43 | [BUG] `check before-pr` exits 1 on healthy repos due to doctor warnings | 🔴 FIX FIRST |
+| #44 | [BUG] Hook script uses `spine` instead of `uv run` — hook fails | 🔴 FIX SECOND |
+| #45 | [BUG] AGENTS.md template has invalid commands — shipped to users | 🔴 FIX THIRD |
+
+### Beta Feature Queue (after blockers resolved)
 
 | # | Issue | Status |
-|---|------|--------|
-| #31 | Beta: `spine check before-pr` — preflight checkpoint | ✅ Done — implemented in PR #35 |
-| #32 | Beta: handoff/PR-prep summary primitive | 📋 Next |
-| #33 | Beta: draftable governance records | 📋 Queued |
-| #34 | Beta: local optional hook/checkpoint integration | 📋 Queued |
-| #36 | Beta: mission refine draft flow | 📋 Queued |
-| #37 | Beta: compatibility/integration guide | 📋 Queued |
-| #38 | Beta: deterministic validation fixtures | 📋 Queued |rtial) |
+|---|---|---|
+| #36 | Mission refine draft flow | 📋 Queued |
+| #37 | Compatibility/integration guide | 📋 Queued |
+| #38 | Deterministic validation fixtures | 📋 Queued |
 
 ---
 
 ## Next Active Priority
 
-**Beta operating state.** Issue #31 complete. Next in queue: Issue #32 — handoff/PR-prep summary primitive.
+**Issue #43** — Fix `check before-pr` exit 1 regression. Blockers must be cleared before returning to Beta feature queue.
 
 ---
 
-## Milestones
+## What SPINE Is
 
-| Milestone | Scope | Status |
-|---|---|---|
-| `v0.1.2` | Stabilization | ✅ Released |
-| `Alpha Exit — v0.2.0-beta` | Phase 3A complete + validation gates | ✅ Released — v0.2.0-beta (2026-04-07) |
-| `Beta` | Repeated-use proof, discipline-tax reduction, agent-executable governance | 🔄 Active — v0.2.0-beta |
-| `v1.0.0` | Stable contracts, authority boundaries, automation surfaces | 📋 Planned |
+SPINE is a **repo-native mission governor** for AI coding agents. It sits above the agent and keeps it aligned to a defined mission — not by being smart, but by being explicit.
 
----
+**Core loop:** Mission → Scope → Proof → Decisions → Drift Check
 
-## Repo Health
+**Discipline rule:** SPINE should reduce discipline tax not by hiding governance, but by making governance easy for agents and tools to execute explicitly.
 
-| Check | Status |
-|-------|--------|
-| README | ✅ Clean |
-| LICENSE | ✅ MIT |
-| SECURITY.md | ✅ Contact + policy |
-| Branch protection | ✅ Protected + CI required |
-| CI pipeline | ✅ Active |
-| Dependabot alerts | ✅ Enabled |
-| Secret scanning | ✅ Enabled |
+**Authority rule:** Agents may execute governance mechanics. Operators retain governance authority.
 
 ---
 
-*Next status review: after first Beta milestone issues are defined*
+## Links
+
+- Repo: https://github.com/Hashi-Ai-Dev/SPINE
+- Releases: https://github.com/Hashi-Ai-Dev/SPINE/releases
+- Spec: `docs/SPINE_PHASE3A_v0.2_SPEC.md`
+- Tracking policy: `docs/SPINE_TRACKING_POLICY.md`
+
+---
+
+*Updated by: SPINE Repo Manager Agent*
