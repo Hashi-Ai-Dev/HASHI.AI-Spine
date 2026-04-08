@@ -7,74 +7,46 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ## v0.1.2 — Stabilization
 
 ### ✅ Add `--cwd` support to Phase 2 commands
-**Description:** Added `--cwd PATH` to all 9 Phase 2 commands.
-**Why it matters:** Blocks external-repo workflows.
-**Status:** DONE — merged in PR #11 (2026-04-07)
+**Status:** DONE — PR #11
 
-### ✅ Add minimal CI pipeline (lint + tests on push/PR)
-**Description:** `ci.yml` GitHub Actions workflow with ruff + pytest on every push/PR.
-**Why it matters:** Enables status checks on PRs.
-**Status:** DONE — merged in PR #12 (2026-04-07)
+### ✅ Add minimal CI pipeline
+**Status:** DONE — PR #12
 
 ### ✅ Clarify onboarding / quickstart docs
-**Description:** Added Installation section, rewrote Quickstart with `--cwd` as primary pattern.
-**Why it matters:** Public alpha with confusing onboarding loses users.
-**Status:** DONE — merged in PR #13 (2026-04-07)
+**Status:** DONE — PR #13
 
 ---
 
 ## Alpha Exit — v0.2.0-beta (Released 2026-04-07)
 
-### ✅ Explicit repo targeting contract (#15)
-**Status:** DONE — merged in PR #19 (2026-04-07)
-
-### ✅ Repo/branch context visibility (#16)
-**Status:** DONE — merged in PR #20 (2026-04-07)
-
-### ✅ Operator/CI output modes + stable exit codes (#17)
-**Status:** DONE — merged in PR #21 (2026-04-07)
-
-### ✅ Bootstrap polish + discipline-tax ergonomics (#18)
-**Status:** DONE — merged in PR #26 (2026-04-07)
-
-### ✅ Artifact ergonomics contract (#23)
-**Status:** DONE — implemented in PR #27 (2026-04-07)
-
-### ✅ External-repo onboarding docs (#24)
-**Status:** DONE — implemented in PR #28 (2026-04-07)
-
-### ✅ Alpha-exit validation gate matrix (#25)
-**Status:** DONE — implemented in PR #29 (2026-04-07)
+### ✅ All Phase 3A items (#15–#18, #23–#25)
+**Status:** DONE — PRs #19–#29
 
 ---
 
-## Beta — v0.2.0-beta Active Issues
+## Beta — v0.2.0-beta
 
-> Beta milestone. Execution order: **#34 → #36 → #37 → #38**
+> ⚠️ **BLOCKERS found in shipped Beta features (Beta Bug Hunt audit, PR #42):**
+> - **#43** — `check before-pr` exits 1 on healthy repos (A-01) — regression in #31
+> - **#44** — hook script missing `uv run` (A-02) — regression in #34
+> - **#45** — AGENTS.md template has invalid commands (A-06) — shipped to users
 >
-> Dependency rationale:
-> - **#34 first** — builds on #31 checkpoint; anticipates #33 draft confirmation
-> - **#36 second** — depends on #33's draft infrastructure
-> - **#37 third** — docs-only, can run parallel to implementation
-> - **#38 fourth** — hardens Beta surface once core mechanics are in place
+> Fix these regressions before shipping more Beta features.
 
-### ✅ `spine check before-pr` — preflight checkpoint (#31)
-**Status:** DONE — implemented in PR #35 (2026-04-08)
+### ✅ `spine check before-pr` preflight checkpoint (#31)
+**Status:** DONE — PR #35
 
 ### ✅ Handoff/PR-prep summary primitive (#32)
-**Status:** DONE — implemented in PR #39 (2026-04-08)
+**Status:** DONE — PR #39
 
 ### ✅ Draftable governance records (#33)
-**Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
-**Status:** DONE — implemented in PR #40 (2026-04-08)
+**Status:** DONE — PR #40
 
 ### ✅ Local optional hook/checkpoint integration (#34)
-**Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
-**Status:** DONE — implemented in PR #41 (2026-04-08)
+**Status:** DONE — PR #41
 
 ### 📋 Mission refine draft flow (#36)
-**Description:** `spine mission refine` — explicit operator-invoked refinement producing draft mission.
-**Status:** NEXT ACTIVE — fifth Beta slice
+**Status:** QUEUED — after blockers fixed
 
 ### 📋 Compatibility/integration guide (#37)
 **Description:** Public guide for SPINE + Claude Code / oh-my-claudecode / Superpowers layering.
@@ -88,23 +60,17 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ## Phase 3B Candidates
 
-> Preserved inputs. Not active work. These are potential Phase 3B directions — not all will become issues.
-
 ### 🟡 Stronger local tool-consumption surfaces
-**Description:** Stable command contracts, machine-readable outputs, richer local MCP surfaces.
 **Status:** CANDIDATE — Phase 3B
 
 ### 🟡 Optional governance profiles
-**Description:** Explicit opt-in workflow profiles. Visible rules, not hidden enforcement.
 **Status:** CANDIDATE — Phase 3B, optional
 
 ### 🚫 HUD / live observability mode
-**Description:** Dashboard or live monitoring.
-**Status:** REJECTED — dashboard creep
+**Status:** REJECTED
 
 ### 🚫 Notification / webhook systems
-**Description:** Ping operators when governance events occur.
-**Status:** REJECTED — not local-first
+**Status:** REJECTED
 
 ---
 
