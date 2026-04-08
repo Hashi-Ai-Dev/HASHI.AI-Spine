@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-08 (Issue #38 — deterministic validation fixtures and contract harness)
+**Last updated:** 2026-04-08 (Issue #38 — in review, PR #52)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -43,19 +43,20 @@
 | #45 | AGENTS.md template invalid commands | ✅ Fixed — PR #46 |
 | #36 | Mission refine draft flow | ✅ Done — PR #48 |
 | #37 | Compatibility/integration guide | ✅ Done — PR #48 |
-| #38 | Deterministic validation fixtures and contract harness | ✅ Done — branch in review |
+| #38 | Deterministic validation fixtures and contract harness | 📋 In review (PR #52) |
 
 ### Beta Feature Queue
 
 | # | Issue | Status |
 |---|---|---|
-| (all Beta issues complete) | — | — |
+| #38 | Deterministic validation fixtures | 📋 In review (PR #52) |
+| #49–#51 | Beta polish issues | 📋 Queued |
 
 ---
 
 ## Next Active Priority
 
-**Beta feature queue complete.** All scheduled Beta issues (#36, #37, #38) are done.
+**Issue #38 in review.** All scheduled Beta core issues done pending PR #52 merge. Beta polish issues (#49, #50, #51) queued.
 
 ---
 
