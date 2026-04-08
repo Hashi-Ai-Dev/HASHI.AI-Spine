@@ -56,9 +56,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Fixture harness for repeatable command/file/contract validation.
 **Status:** QUEUED — after #36
 
-### ✅ Write-flow machine-readable consistency (#49)
+### 📋 Write-flow machine-readable consistency (#49)
 **Description:** `--json` output for all write-oriented commands: `evidence add`, `decision add`, `drafts list`, `drafts confirm`, `mission refine`, `mission confirm`, `mission drafts`. Exit codes unchanged. 37 focused contract tests added.
-**Status:** DONE — branch beta/issue49-write-flow-machine-readable-consistency
+**Status:** IN REVIEW — PR #53
 
 ### 📋 Before-work / start-session checkpoint (#50)
 **Description:** Agent session start checkpoint to anchor context and confirm mission alignment.
