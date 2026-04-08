@@ -239,10 +239,133 @@ Tests cover:
 
 ### What was explicitly deferred
 
-- **Issue #34** — local optional hook/checkpoint integration: `spine hooks install/list/uninstall`
+- **Issue #34** — local optional hook/checkpoint integration: `spine hooks install/list/uninstall` *(now implemented — see below)*
 - **Issue #36** — mission refine draft flow: `spine mission refine`
 - **Issue #37** — compatibility/integration guide docs
 - **Issue #38** — deterministic validation fixtures
 - Draft mission refinement: not in scope for this slice
 - Bulk draft workflows or hidden auto-confirm flows: explicitly rejected
 - Any webhook, notification, or remote behavior: explicitly out of scope
+
+---
+
+## Issue #34 — Beta: local optional hook/checkpoint integration
+
+**Branch:** `beta/issue34-hook-checkpoint-integration`
+**Date:** 2026-04-08
+
+### Issue targeted
+
+GitHub Issue #34: "Beta: local optional hook/checkpoint integration"
+
+Fourth Beta implementation slice. Adds opt-in, local, explicit git hook
+management so operators can wire `spine check before-pr` into their git
+workflow without hidden runtime behavior, background services, or automatic
+enforcement.
+
+---
+
+### Hook model chosen
+
+**Hook type: `pre-push`**
+
+`pre-push` is the standard git hook that fires before `git push`. It is
+the nearest clean native hook to the "pre-PR" concept described in the
+issue — pushing is the step immediately before opening a PR.
+
+**Rationale:**
+- `pre-commit` fires before every commit — too frequent for a PR checkpoint.
+- `prepare-commit-msg` / `commit-msg` are unrelated.
+- `pre-push` fires once per push, which aligns with PR-opening frequency.
+- The hook is local-only, visible in `.git/hooks/pre-push`, not committed.
+
+No other hook types are managed in this slice.
+
+---
+
+### install / list / uninstall behavior
+
+**`spine hooks install [--hook pre-push] [--ignore-failure] [--cwd PATH]`**
+- Writes `.git/hooks/pre-push` containing a shell script that calls
+  `spine check before-pr`.
+- Marks the hook with a sentinel comment so SPINE can identify its own hooks.
+- If the hooks dir is missing or the target isn't a git repo: exit 2.
+- If a non-SPINE hook already exists: refuses to overwrite, exit 1.
+- If a SPINE hook already exists: replaces/updates it, exit 0.
+- Makes the hook file executable (owner+group+other).
+
+**`spine hooks list [--cwd PATH]`**
+- Scans `.git/hooks/` for SPINE-managed hooks (sentinel-detected).
+- Shows: hook name, mode (blocking / non-blocking), path.
+- Exits 0 even when no hooks are installed.
+
+**`spine hooks uninstall [--hook pre-push] [--cwd PATH]`**
+- Removes the SPINE-managed hook file.
+- Refuses to remove non-SPINE hooks.
+- Exits 1 if no hook found or hook is not SPINE-managed.
+
+---
+
+### Operator control / ignore-failure behavior
+
+`spine hooks install --ignore-failure` installs the hook with `exit 0`
+instead of `exit $?`. The checkpoint still runs and prints its result;
+only the exit code is suppressed. This preserves explicitness while letting
+operators opt into non-blocking enforcement.
+
+The installed script makes the mode visible in a comment (`--ignore-failure`
+appears in the file) so operators can inspect the file and understand its
+behavior without running SPINE.
+
+---
+
+### Files changed
+
+**New files:**
+- `src/spine/services/hooks_service.py` — `HooksService` with install/list/uninstall + result types
+- `src/spine/cli/hooks_cmd.py` — `spine hooks install/list/uninstall` CLI commands
+- `tests/test_hooks.py` — 50 focused tests
+
+**Modified files:**
+- `src/spine/main.py` — registered `hooks_cmd`
+- `docs/SPINE_STATUS.md` — marked #34 done, updated next priority
+- `docs/SPINE_FEATURE_BACKLOG.md` — marked #34 done
+- `docs/SPINE_BETA_IMPLEMENTATION_REPORT.md` — this section
+
+**Not changed:**
+- `README.md` — no public-facing mention warranted at this scope
+- Any existing service, check, or review logic — hooks are a new surface
+
+---
+
+### Test results
+
+50 new tests, all passing. Full suite: **347/347 passed**.
+
+Tests cover:
+- Command registration: hooks group, install/list/uninstall help text, flags
+- Install happy path: file created, sentinel present, checkpoint command present, executable, shebang
+- Default hook is pre-push
+- Blocking vs non-blocking mode (exit $? vs exit 0)
+- Update: re-installing over existing SPINE hook succeeds
+- Refused overwrite: non-SPINE hook left untouched, exit 1
+- Missing hooks dir / no git repo: exit 1 / exit 2
+- List: empty state, shows installed hooks, shows mode and path
+- List ignores non-SPINE hooks
+- Uninstall: removes file, confirms removal, not-found returns exit 1
+- Uninstall refuses non-SPINE hooks
+- `--cwd` support: no chdir, invalid path returns exit 2
+- HooksService unit tests: all result types, deterministic content, no .spine/ mutation
+
+---
+
+### What was explicitly deferred
+
+- **Issue #36** — mission refine draft flow: `spine mission refine`
+- **Issue #37** — compatibility/integration guide docs
+- **Issue #38** — deterministic validation fixtures
+- Generalized hook orchestration (multiple hook types, fleet management)
+- Notifications, webhooks, remote alerts
+- PR creation or posting
+- Auto-install during `spine init`
+- Hidden enforcement or background behavior

@@ -68,10 +68,10 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Draft evidence/decisions with explicit operator confirm before becoming canonical.
 **Status:** DONE — implemented in PR #40 (2026-04-08)
 
-### 📋 Local optional hook/checkpoint integration (#34)
-**Description:** `spine hooks install/list/uninstall` — opt-in pre-PR hook wiring.
+### ✅ Local optional hook/checkpoint integration (#34)
+**Description:** `spine hooks install/list/uninstall` — opt-in pre-push hook wiring.
 **Why it matters:** Operators who want enforcement can opt in without daemon or cloud dependency.
-**Status:** NEXT ACTIVE — fourth Beta slice
+**Status:** DONE — implemented in PR #41 (2026-04-08)
 
 ### 📋 Mission refine draft flow (#36)
 **Description:** `spine mission refine` — explicit operator-invoked refinement producing draft mission.
