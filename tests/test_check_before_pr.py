@@ -357,3 +357,71 @@ def test_human_output_shows_final_verdict(tmp_path: Path) -> None:
 
     _, output = run_before_pr(tmp_path)
     assert "Result:" in output
+
+
+# ---------------------------------------------------------------------------
+# Issue #43 regression: doctor warnings must not force exit 1
+# ---------------------------------------------------------------------------
+
+
+def test_doctor_warnings_do_not_cause_failure(tmp_path: Path) -> None:
+    """Doctor warnings (e.g. missing optional subdirs) must NOT cause exit 1.
+
+    Regression test for #43: benign/expected doctor warnings on a freshly-
+    cloned or partially-initialized repo were incorrectly treated as failures,
+    causing `check before-pr` to exit 1 on healthy repos.
+    """
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    # Add evidence and decisions so those checks pass
+    evidence_path = tmp_path / ".spine" / "evidence.jsonl"
+    decisions_path = tmp_path / ".spine" / "decisions.jsonl"
+    append_jsonl(evidence_path, {
+        "kind": "commit",
+        "description": "Implemented feature X",
+        "evidence_url": None,
+        "created_at": "2026-04-08T00:00:00+00:00",
+    })
+    append_jsonl(decisions_path, {
+        "title": "Use DriftService",
+        "why": "Reuses tested code",
+        "decision": "Compose DriftService",
+        "alternatives": [],
+        "created_at": "2026-04-08T00:00:00+00:00",
+    })
+
+    # Remove optional subdirectories to trigger doctor warnings
+    # (simulates a freshly cloned repo where empty dirs weren't git-tracked)
+    for subdir in ["reviews", "briefs", "skills", "checks"]:
+        d = tmp_path / ".spine" / subdir
+        if d.exists():
+            d.rmdir()
+
+    exit_code, output = run_before_pr(tmp_path)
+    assert exit_code == 0, (
+        f"Expected exit 0: doctor warnings are advisory, not failures.\n"
+        f"Output:\n{output}"
+    )
+    assert "PASS" in output or "pass" in output.lower()
+    # Doctor check must still appear in output (signal preserved)
+    assert "doctor" in output.lower()
+
+
+def test_doctor_errors_still_cause_failure(tmp_path: Path) -> None:
+    """Doctor errors (not warnings) must still cause exit 1.
+
+    Ensures the #43 fix only relaxes warnings, not genuine errors.
+    """
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    # Corrupt mission.yaml to trigger a doctor error
+    mission_path = tmp_path / ".spine" / "mission.yaml"
+    mission_path.write_text("INVALID YAML: [}\n  broken: ", encoding="utf-8")
+
+    exit_code, output = run_before_pr(tmp_path)
+    assert exit_code == 1, (
+        f"Expected exit 1: doctor errors must still block before-pr.\n"
+        f"Output:\n{output}"
+    )

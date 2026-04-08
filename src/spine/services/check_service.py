@@ -128,7 +128,12 @@ class CheckService:
         )
 
     def _check_doctor_health(self) -> list[CheckItem]:
-        """Run doctor checks and surface errors/warnings as check items."""
+        """Run doctor checks and surface errors as blocking failures.
+
+        Doctor *warnings* (e.g. missing optional subdirectories on a fresh or
+        cloned repo) are advisory only — they do not force review_recommended.
+        Only doctor *errors* block the check.
+        """
         service = DoctorService(self.repo_root, spine_root=self._spine_root)
         doctor_result = service.check()
 
@@ -137,7 +142,7 @@ class CheckService:
         warnings = [i for i in doctor_result.issues if i.severity == "warning"]
 
         if errors:
-            # Summarise errors into a single check item
+            # Errors are genuine repo-health failures — block the check
             msg = "; ".join(f"{i.file}: {i.message}" for i in errors[:3])
             if len(errors) > 3:
                 msg += f" (and {len(errors) - 3} more)"
@@ -146,21 +151,24 @@ class CheckService:
                 status="fail",
                 message=f"{len(errors)} doctor error(s): {msg}",
             ))
-        elif warnings:
-            msg = "; ".join(f"{i.file}: {i.message}" for i in warnings[:3])
-            if len(warnings) > 3:
-                msg += f" (and {len(warnings) - 3} more)"
-            items.append(CheckItem(
-                name="doctor",
-                status="warn",
-                message=f"{len(warnings)} doctor warning(s): {msg}",
-            ))
         else:
-            items.append(CheckItem(
-                name="doctor",
-                status="pass",
-                message="repo health OK",
-            ))
+            # No errors.  Warnings are benign/advisory (e.g. missing optional
+            # subdirectories on a freshly cloned repo) — show them but pass.
+            if warnings:
+                msg = "; ".join(f"{i.file}: {i.message}" for i in warnings[:3])
+                if len(warnings) > 3:
+                    msg += f" (and {len(warnings) - 3} more)"
+                items.append(CheckItem(
+                    name="doctor",
+                    status="pass",
+                    message=f"repo health OK ({len(warnings)} advisory warning(s): {msg})",
+                ))
+            else:
+                items.append(CheckItem(
+                    name="doctor",
+                    status="pass",
+                    message="repo health OK",
+                ))
 
         return items
 

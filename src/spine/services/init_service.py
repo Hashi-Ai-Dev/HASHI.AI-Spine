@@ -188,12 +188,12 @@ This repository uses `.spine/` as canonical governance state.
 ```bash
 uv run spine mission show          # view active mission
 uv run spine doctor                # validate .spine/ state
-uv run spine opportunity add ...   # log a candidate opportunity
-uv run spine evidence add ...      # log evidence
-uv run spine decision add ...      # record a decision
-uv run spine drift scan            # detect scope drift
-uv run spine review weekly ...     # generate weekly review
-uv run spine brief generate ...    # generate agent brief
+uv run spine opportunity score <title>  # score a candidate opportunity
+uv run spine evidence add ...          # log evidence
+uv run spine decision add ...          # record a decision
+uv run spine drift scan                # detect scope drift
+uv run spine review weekly ...         # generate weekly review
+uv run spine brief --target claude     # generate agent brief
 ```
 
 ## Governance files

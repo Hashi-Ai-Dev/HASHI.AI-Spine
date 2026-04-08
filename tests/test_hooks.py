@@ -107,12 +107,30 @@ def test_install_hook_contains_sentinel(tmp_path: Path) -> None:
 
 
 def test_install_hook_runs_checkpoint(tmp_path: Path) -> None:
-    """Installed hook script calls 'spine check before-pr'."""
+    """Installed hook script calls 'uv run spine check before-pr'."""
     make_git_repo(tmp_path)
     invoke_hooks("install", tmp_path)
 
     content = (tmp_path / ".git" / "hooks" / "pre-push").read_text()
     assert "spine check before-pr" in content
+
+
+def test_install_hook_uses_uv_run_spine(tmp_path: Path) -> None:
+    """Installed hook must invoke SPINE via 'uv run spine', not bare 'spine'.
+
+    Regression test for #44: the bare 'spine' command is not in PATH in
+    standard setups (SPINE is invoked via 'uv run spine'). The installed
+    pre-push hook was using the bare command and would fail with
+    'command not found' in a standard SPINE installation.
+    """
+    make_git_repo(tmp_path)
+    invoke_hooks("install", tmp_path)
+
+    content = (tmp_path / ".git" / "hooks" / "pre-push").read_text()
+    assert "uv run spine check before-pr" in content, (
+        "Hook must invoke SPINE via 'uv run spine check before-pr', "
+        f"not bare 'spine'. Hook content:\n{content}"
+    )
 
 
 def test_install_hook_is_executable(tmp_path: Path) -> None:

@@ -69,10 +69,10 @@ def _build_hook_script(ignore_failure: bool) -> str:
     lines = [
         "#!/bin/sh",
         SPINE_HOOK_SENTINEL,
-        "# To view: spine hooks list",
-        "# To remove: spine hooks uninstall",
+        "# To view: uv run spine hooks list",
+        "# To remove: uv run spine hooks uninstall",
         "",
-        "spine check before-pr",
+        "uv run spine check before-pr",
     ]
     if ignore_failure:
         lines += [
@@ -192,7 +192,7 @@ class HooksService:
             message=(
                 f"{action} SPINE {hook_name} hook at: {hook_path}\n"
                 f"  Mode: {mode_note}\n"
-                f"  The hook runs 'spine check before-pr' before each push.\n"
+                f"  The hook runs 'uv run spine check before-pr' before each push.\n"
                 f"  To remove: spine hooks uninstall"
             ),
             hook_path=hook_path,
