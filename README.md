@@ -2,13 +2,15 @@
 
 # SPINE
 
-**Repo-native mission governance for AI-native builders.**
+**Keep your AI coding agents on target — mission governance for AI-native builders.**
 
 *Define your mission. Bound your scope. Catch drift before it ships.*
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![uv](https://img.shields.io/badge/built%20with-uv-blueviolet)](https://github.com/astral-sh/uv)
 [![beta](https://img.shields.io/badge/status-beta-blue.svg)]()
+[![Stars](https://img.shields.io/github/stars/Hashi-Ai-Dev/SPINE?style=flat&logo=github)]()
+[![Forks](https://img.shields.io/github/forks/Hashi-Ai-Dev/SPINE?style=flat&logo=github)]()
 
 </div>
 
@@ -28,6 +30,18 @@ Solo developers and small teams building with AI coding agents (Claude Code, Cod
 - Generate mission briefs that ground agent sessions
 
 SPINE is strongest today with **Claude Code** and **Codex** — it generates briefing files those tools can load automatically.
+
+## Why SPINE?
+
+SPINE solves three problems AI coding agents create:
+
+- **Drift** — agents accumulate scope without you noticing until the codebase is a mess
+- **Black boxes** — you forget what you decided and why by the next session
+- **No ground truth** — agents work from memory, not from agreed-upon direction
+
+SPINE is the explicit layer that keeps you and your agents aligned.
+
+
 
 ## Installation
 
