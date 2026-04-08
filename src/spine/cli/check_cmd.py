@@ -11,7 +11,7 @@ from rich.console import Console
 from rich.table import Table
 
 from spine.cli.app import app, resolve_roots, EXIT_OK, EXIT_VALIDATION, EXIT_CONTEXT
-from spine.services.check_service import CheckService, BeforePrResult
+from spine.services.check_service import CheckService, BeforePrResult, BeforeWorkResult
 from spine.utils.paths import get_current_branch, get_default_branch, format_context_line
 
 console = Console()
@@ -90,6 +90,71 @@ def check_before_pr(
         raise typer.Exit(EXIT_VALIDATION)
 
 
+@check_app.command(
+    "before-work",
+    help=(
+        "Run a start-session governance checkpoint before beginning work.\n\n"
+        "Checks:\n"
+        "  - .spine/ directory present\n"
+        "  - mission.yaml present and readable\n"
+        "  - repo health (doctor-style: no errors)\n"
+        "  - branch/repo context (informational)\n"
+        "  - recent brief orientation context\n\n"
+        "Exit codes:\n"
+        "  0  All checks passed — clear to begin work\n"
+        "  1  Review recommended — one or more checks need attention\n"
+        "  2  Context failure   — cannot resolve repo or .spine/ root"
+    ),
+)
+def check_before_work(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
+    ),
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        help="Output results as JSON (machine-readable). Exit codes still apply.",
+    ),
+) -> None:
+    """
+    Run a start-session governance checkpoint before beginning work.
+
+    Evaluates mission, repo health, branch context, and brief orientation.
+    Reports what passed and what needs review. Does NOT mutate state.
+
+    Exit codes:
+      0  All checks passed — clear to begin work
+      1  Review recommended — one or more checks need attention
+      2  Context failure   — cannot resolve repo or .spine/ root
+    """
+    try:
+        repo_root, spine_root = resolve_roots(cwd)
+    except Exception as exc:
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
+
+    branch = get_current_branch(repo_root)
+    default_branch = get_default_branch(repo_root)
+
+    service = CheckService(repo_root, spine_root=spine_root)
+    result = service.run_before_work(branch=branch)
+
+    if json_output:
+        _output_before_work_json(result, branch, default_branch)
+    else:
+        _output_before_work_human(result, branch, default_branch)
+
+    if result.passed:
+        raise typer.Exit(EXIT_OK)
+    else:
+        raise typer.Exit(EXIT_VALIDATION)
+
+
 # ---------------------------------------------------------------------------
 # Output formatters
 # ---------------------------------------------------------------------------
@@ -140,4 +205,58 @@ def _output_human(result: BeforePrResult, branch: str, default_branch: str | Non
         console.print(
             "[bold yellow]Result: REVIEW RECOMMENDED[/bold yellow] — "
             "one or more checks need attention before opening a PR."
+        )
+
+
+def _output_before_work_json(
+    result: BeforeWorkResult, branch: str, default_branch: str | None
+) -> None:
+    data = {
+        "result": result.result,
+        "passed": result.passed,
+        "repo": result.repo,
+        "branch": branch,
+        "default_branch": default_branch,
+        "checked_at": datetime.now(timezone.utc).isoformat(),
+        "checks": [
+            {"name": item.name, "status": item.status, "message": item.message}
+            for item in result.items
+        ],
+    }
+    print(json.dumps(data, indent=2))
+
+
+def _output_before_work_human(
+    result: BeforeWorkResult, branch: str, default_branch: str | None
+) -> None:
+    context_line = format_context_line(result.repo, branch, default_branch)
+    console.print(f"[dim]{context_line}[/dim]")
+    console.print()
+
+    table = Table(title="spine check before-work", box=None, show_header=True)
+    table.add_column("Check", style="bold")
+    table.add_column("Status")
+    table.add_column("Detail")
+
+    status_styles = {
+        "pass": "[bold green]PASS[/bold green]",
+        "warn": "[bold yellow]WARN[/bold yellow]",
+        "fail": "[bold red]FAIL[/bold red]",
+    }
+
+    for item in result.items:
+        status_display = status_styles.get(item.status, item.status.upper())
+        table.add_row(item.name, status_display, item.message)
+
+    console.print(table)
+    console.print()
+
+    if result.passed:
+        console.print(
+            "[bold green]Result: PASS[/bold green] — all checks passed. Clear to begin work."
+        )
+    else:
+        console.print(
+            "[bold yellow]Result: REVIEW RECOMMENDED[/bold yellow] — "
+            "one or more checks need attention before starting work."
         )
