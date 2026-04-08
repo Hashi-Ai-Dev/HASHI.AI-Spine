@@ -52,9 +52,9 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Public guide for SPINE + Claude Code / oh-my-claudecode / Superpowers layering.
 **Status:** QUEUED — after #36
 
-### ✅ Deterministic validation fixtures (#38)
+### 📋 Deterministic validation fixtures (#38)
 **Description:** Fixture harness for repeatable command/file/contract validation.
-**Status:** DONE — PR #52 (2026-04-08)
+**Status:** QUEUED — after #36
 
 ---
 
