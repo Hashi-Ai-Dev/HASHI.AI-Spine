@@ -56,6 +56,18 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Fixture harness for repeatable command/file/contract validation.
 **Status:** QUEUED — after #36
 
+### 📋 Machine-readable consistency for write flows (#49)
+**Description:** Strengthen JSON/output/exit consistency on write-oriented governance commands.
+**Status:** QUEUED — after #38
+
+### 📋 Before-work / start-session governance checkpoint (#50)
+**Description:** Bounded pre-work checkpoint analogous to before-pr but for session start.
+**Status:** QUEUED — after #49
+
+### 📋 Beta-exit repeated-use proof / governed workflow validation (#51)
+**Description:** Validate beta-exit readiness through repeated governed workflow execution.
+**Status:** QUEUED — after #50
+
 ---
 
 ## Phase 3B Candidates
