@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-08 (Issue #33 draftable governance records implemented)
+**Last updated:** 2026-04-08 (Issue #33 complete — #34 next)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 **Agent:** SPINE Repo Manager
 
