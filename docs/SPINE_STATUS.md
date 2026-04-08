@@ -22,7 +22,7 @@
 | Phase 1 + 2 | ✅ Complete |
 | Alpha Exit → v0.2.0-beta | ✅ Released (2026-04-07) |
 | Beta blocker stabilization | ✅ Complete — PR #46 |
-| Beta feature queue | 📋 Active |
+| Beta feature queue | ✅ Complete — core issues done, polish queued |
 
 ---
 
@@ -45,7 +45,7 @@
 | #37 | Compatibility/integration guide | ✅ Done — PR #48 |
 | #38 | Deterministic validation fixtures and contract harness | ✅ Done — PR #52 |
 
-### Beta Feature Queue
+### Beta Polish Queue
 
 | # | Issue | Status |
 |---|---|---|
