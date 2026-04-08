@@ -56,18 +56,6 @@ Grouped by target milestone. Each item: title, short description, why it matters
 **Description:** Fixture harness for repeatable command/file/contract validation.
 **Status:** QUEUED — after #36
 
-### ✅ Write-flow machine-readable consistency (#49)
-**Description:** `--json` output for all write-oriented commands: `evidence add`, `decision add`, `drafts list`, `drafts confirm`, `mission refine`, `mission confirm`, `mission drafts`. Exit codes unchanged. 37 focused contract tests added.
-**Status:** DONE — PR #53 (2026-04-08)
-
-### 📋 Before-work / start-session checkpoint (#50)
-**Description:** Agent session start checkpoint to anchor context and confirm mission alignment.
-**Status:** QUEUED — after #49
-
-### 📋 Beta-exit repeated-use proof (#51)
-**Description:** Proof harness for repeated Beta use across multiple agent sessions.
-**Status:** QUEUED — after #49
-
 ---
 
 ## Phase 3B Candidates
@@ -86,4 +74,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-08 — Issue #49 done, #50 next in Beta polish*
+*Last updated: 2026-04-08 by SPINE Repo Manager Agent*
