@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #64 — evidence list + decision list implemented, 3 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (Issue #64 — in review, PR #68) blockers remain)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
