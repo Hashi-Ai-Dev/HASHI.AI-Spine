@@ -61,7 +61,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 | # | Issue | Priority | Status |
 |---|---|---|---|
-| #59 | `spine drift scan --json` missing | 🟡 Medium | ✅ Fixed — branch `claude/fix-drift-scan-json-GsPn6` |
+| #59 | `spine drift scan --json` missing | 🟡 Medium | 📋 In review (PR #67) |
 | #64 | `spine evidence list` + `spine decision list` | 🟡 Medium | Open |
 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | Open |
 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium | Open |
