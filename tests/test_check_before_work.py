@@ -170,20 +170,43 @@ def test_review_recommended_when_mission_yaml_corrupt(tmp_path: Path) -> None:
     assert "mission" in output.lower()
 
 
-def test_review_recommended_when_no_briefs(tmp_path: Path) -> None:
-    """No brief history causes review-recommended (exit 1)."""
+def test_no_brief_is_advisory_exit_0(tmp_path: Path) -> None:
+    """No brief history is advisory — exits 0, not 1 (fix for #66)."""
     make_git_repo(tmp_path)
     spine_init(tmp_path)
     # No briefs created
 
     exit_code, output = run_before_work(tmp_path)
-    assert exit_code == 1, f"Expected exit 1 (no briefs), got {exit_code}. Output:\n{output}"
+    assert exit_code == 0, (
+        f"Expected exit 0: no-brief is advisory, not a hard blocker (#66). "
+        f"Got {exit_code}.\nOutput:\n{output}"
+    )
     assert "recent_brief" in output
     assert "brief" in output.lower()
 
 
-def test_review_recommended_when_briefs_dir_empty(tmp_path: Path) -> None:
-    """Empty briefs dir (no .md files) still warns."""
+def test_no_brief_still_shows_warn_in_output(tmp_path: Path) -> None:
+    """No brief shows WARN in the table (visible advisory, not silent)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    exit_code, output = run_before_work(tmp_path)
+    assert exit_code == 0
+    assert "WARN" in output
+    assert "recent_brief" in output
+
+
+def test_no_brief_advisory_message_wording(tmp_path: Path) -> None:
+    """No-brief advisory message uses preferred wording from #66."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    _, output = run_before_work(tmp_path)
+    assert "spine brief --target claude" in output
+
+
+def test_briefs_dir_empty_is_advisory_exit_0(tmp_path: Path) -> None:
+    """Empty briefs dir (no .md files) is advisory — exits 0, not 1 (fix for #66)."""
     make_git_repo(tmp_path)
     spine_init(tmp_path)
 
@@ -191,7 +214,10 @@ def test_review_recommended_when_briefs_dir_empty(tmp_path: Path) -> None:
     (tmp_path / ".spine" / "briefs" / "claude").mkdir(parents=True, exist_ok=True)
 
     exit_code, output = run_before_work(tmp_path)
-    assert exit_code == 1, f"Expected exit 1 (empty briefs), got {exit_code}. Output:\n{output}"
+    assert exit_code == 0, (
+        f"Expected exit 0: empty briefs dir is advisory, not a hard blocker (#66). "
+        f"Got {exit_code}.\nOutput:\n{output}"
+    )
     assert "recent_brief" in output
 
 
@@ -201,12 +227,12 @@ def test_review_recommended_when_briefs_dir_empty(tmp_path: Path) -> None:
 
 
 def test_no_brief_message_suggests_action(tmp_path: Path) -> None:
-    """The no-brief warn message contains an actionable suggestion."""
+    """The no-brief advisory message contains an actionable suggestion."""
     make_git_repo(tmp_path)
     spine_init(tmp_path)
 
     _, output = run_before_work(tmp_path)
-    assert "spine brief" in output or "fresh" in output.lower()
+    assert "spine brief" in output
 
 
 # ---------------------------------------------------------------------------
@@ -509,3 +535,74 @@ def test_drift_does_not_block(tmp_path: Path) -> None:
     )
     # Also confirm drift check name is NOT in output
     assert "drift" not in output.lower() or "branch_context" in output
+
+
+# ---------------------------------------------------------------------------
+# Advisory path: no-brief exits 0, warns still surface (#66)
+# ---------------------------------------------------------------------------
+
+
+def test_no_brief_json_result_is_pass(tmp_path: Path) -> None:
+    """--json result field is 'pass' when only warns are present (no brief)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+    # No briefs created
+
+    result = runner.invoke(app, ["check", "before-work", "--cwd", str(tmp_path), "--json"])
+    assert result.exit_code == 0, f"Expected exit 0 (#66 advisory). Output:\n{result.output}"
+    data = json.loads(result.output)
+    assert data["result"] == "pass", f"Expected result='pass', got {data['result']!r}"
+    assert data["passed"] is True
+
+    # The recent_brief check should still appear with status='warn' in checks list
+    check = next(c for c in data["checks"] if c["name"] == "recent_brief")
+    assert check["status"] == "warn", f"Expected recent_brief status='warn', got {check['status']!r}"
+    assert "spine brief" in check["message"]
+
+
+def test_no_brief_json_advisory_message(tmp_path: Path) -> None:
+    """--json recent_brief message contains the recommended command."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    result = runner.invoke(app, ["check", "before-work", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+    check = next(c for c in data["checks"] if c["name"] == "recent_brief")
+    assert "spine brief --target claude" in check["message"]
+
+
+def test_real_blockers_still_cause_exit_1_after_advisory_fix(tmp_path: Path) -> None:
+    """After the #66 fix, hard failures (missing mission.yaml) still exit 1."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    # Remove mission.yaml — this is a hard failure, not advisory
+    (tmp_path / ".spine" / "mission.yaml").unlink()
+
+    exit_code, output = run_before_work(tmp_path)
+    assert exit_code == 1, (
+        f"Hard failures must still exit 1 after #66 advisory fix. "
+        f"Got {exit_code}.\nOutput:\n{output}"
+    )
+    assert "mission" in output.lower()
+
+
+def test_spine_dir_missing_still_causes_exit_1_after_advisory_fix(tmp_path: Path) -> None:
+    """After the #66 fix, missing .spine/ still exits 1 (hard failure)."""
+    make_git_repo(tmp_path)
+    # No spine init — .spine/ absent
+
+    exit_code, output = run_before_work(tmp_path)
+    assert exit_code == 1, (
+        f"Missing .spine/ must still exit 1 after #66 advisory fix. "
+        f"Got {exit_code}.\nOutput:\n{output}"
+    )
+
+
+def test_help_text_updated_for_advisory_behavior(tmp_path: Path) -> None:
+    """Help text reflects that no-brief is advisory (exit 0 for warns)."""
+    result = runner.invoke(app, ["check", "before-work", "--help"])
+    plain = _strip_ansi(result.output)
+    assert result.exit_code == 0
+    # Help should NOT claim exit 1 for all warns — only hard failures
+    assert "advisory" in plain.lower() or "hard fail" in plain.lower() or "critical" in plain.lower()

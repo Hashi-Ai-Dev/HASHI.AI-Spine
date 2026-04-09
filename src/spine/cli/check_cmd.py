@@ -99,10 +99,10 @@ def check_before_pr(
         "  - mission.yaml present and readable\n"
         "  - repo health (doctor-style: no errors)\n"
         "  - branch/repo context (informational)\n"
-        "  - recent brief orientation context\n\n"
+        "  - recent brief orientation context (advisory — no brief is not a blocker)\n\n"
         "Exit codes:\n"
-        "  0  All checks passed — clear to begin work\n"
-        "  1  Review recommended — one or more checks need attention\n"
+        "  0  Clear to begin work — no hard failures (advisory warnings may appear)\n"
+        "  1  Blocked — a critical check failed (missing .spine/, bad mission.yaml, doctor errors)\n"
         "  2  Context failure   — cannot resolve repo or .spine/ root"
     ),
 )
@@ -124,9 +124,13 @@ def check_before_work(
     Evaluates mission, repo health, branch context, and brief orientation.
     Reports what passed and what needs review. Does NOT mutate state.
 
+    Advisory warnings (e.g. no brief yet) surface guidance but do not block —
+    they exit 0.  Only hard failures (missing .spine/, bad mission.yaml, doctor
+    errors) produce exit 1.
+
     Exit codes:
-      0  All checks passed — clear to begin work
-      1  Review recommended — one or more checks need attention
+      0  Clear to begin work — no hard failures
+      1  Blocked — a critical check failed
       2  Context failure   — cannot resolve repo or .spine/ root
     """
     try:

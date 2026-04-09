@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #65 — check before-pr --json structured merged, 2 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (Issue #66 — check before-work no-brief advisory, 1 pre-beta-exit blocker remains)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -24,13 +24,13 @@
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
-| **Pre-Beta-Exit blockers** | ⚠️ **2 open — beta exit blocked** |
+| **Pre-Beta-Exit blockers** | ⚠️ **1 open — beta exit blocked** |
 
 ---
 
 ## ⚠️ Beta Exit Blocked
 
-Beta exit is NOT currently justified. 2 pre-beta-exit issues remain.
+Beta exit is NOT currently justified. 1 pre-beta-exit issue remains.
 
 **Agent-usability-first ordering.**
 
@@ -39,7 +39,7 @@ Beta exit is NOT currently justified. 2 pre-beta-exit issues remain.
 | Priority | # | Issue | Status |
 |---|---|---|---|
 | 1 | ~~#65~~ | ~~`check before-pr --json` structured doctor detail~~ | ✅ Fixed — PR #69 |
-| 2 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
+| 2 | ~~#66~~ | ~~`check before-work` no-brief advisory not exit 1~~ | ✅ Fixed — branch `beta/usability66-before-work-advisory` |
 | 3 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
 
 ### Fixed
@@ -51,6 +51,7 @@ Beta exit is NOT currently justified. 2 pre-beta-exit issues remain.
 | ~~#59~~ | ~~`spine drift scan --json` missing~~ | ✅ Fixed — PR #67 |
 | ~~#64~~ | ~~`spine evidence list` + `spine decision list`~~ | ✅ Fixed — PR #68 |
 | ~~#65~~ | ~~`check before-pr --json` structured doctor detail~~ | ✅ Fixed — PR #69 |
+| ~~#66~~ | ~~`check before-work` no-brief advisory not exit 1~~ | ✅ Fixed — branch `beta/usability66-before-work-advisory` |
 
 ---
 

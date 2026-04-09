@@ -55,9 +55,15 @@ class BeforeWorkResult:
 
     @property
     def result(self) -> CheckResult:
-        """Return overall result: pass if no fails or warns, else review_recommended."""
+        """Return overall result: pass if no hard failures, else review_recommended.
+
+        For before-work, warns are advisory — they surface guidance without
+        blocking.  Only hard failures (status="fail") trigger review_recommended
+        and exit 1.  This differs from before-pr, which treats warns as
+        blocking (review_recommended) as well.
+        """
         for item in self.items:
-            if item.status in ("warn", "fail"):
+            if item.status == "fail":
                 return "review_recommended"
         return "pass"
 
@@ -342,8 +348,7 @@ class CheckService:
                 name="recent_brief",
                 status="warn",
                 message=(
-                    "no briefs found — run 'spine brief' to generate orientation context, "
-                    "or proceed if starting a fresh session"
+                    "No brief found. Run `spine brief --target claude` to generate one."
                 ),
                 category="context",
             )
@@ -354,8 +359,7 @@ class CheckService:
                 name="recent_brief",
                 status="warn",
                 message=(
-                    "no briefs found — run 'spine brief' to generate orientation context, "
-                    "or proceed if starting a fresh session"
+                    "No brief found. Run `spine brief --target claude` to generate one."
                 ),
                 category="context",
             )
