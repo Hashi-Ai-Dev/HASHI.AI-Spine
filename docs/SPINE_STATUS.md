@@ -39,7 +39,7 @@ Beta exit is NOT currently justified. 2 pre-beta-exit issues remain.
 | Priority | # | Issue | Status |
 |---|---|---|---|
 | 1 | ~~#64~~ | ~~`spine evidence list` + `spine decision list`~~ | ✅ Fixed — PR #68 |
-| 2 | ~~#65~~ | ~~`check before-pr --json` structured doctor detail~~ | ✅ Fixed — branch `beta/usability65-before-pr-json-structure` |
+| 2 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | 📋 In review (PR #69) |
 | 3 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
 | 4 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
 
