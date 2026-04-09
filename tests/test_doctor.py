@@ -177,3 +177,61 @@ def test_doctor_contract_error_actionable(tmp_path: Path) -> None:
     assert exit_code == 1
     # Should suggest running spine init
     assert "spine init" in stdout
+
+
+# ---------------------------------------------------------------------------
+# Blank mission field warnings
+# ---------------------------------------------------------------------------
+
+
+def test_doctor_warns_on_blank_mission_fields(tmp_path: Path) -> None:
+    """doctor warns (but still passes) when critical mission fields are blank after init."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    exit_code, stdout, _ = run_doctor(tmp_path)
+    # Warnings do not fail doctor — exit code should still be 0
+    assert exit_code == 0, f"Expected exit 0 (warnings only), got {exit_code}. Output: {stdout}"
+    # Should mention the blank fields
+    assert "target_user" in stdout
+    assert "user_problem" in stdout
+    assert "one_sentence_promise" in stdout
+    # Should suggest how to fix
+    assert "spine mission set" in stdout
+
+
+def test_doctor_no_blank_field_warn_when_mission_complete(tmp_path: Path) -> None:
+    """doctor does not warn about blank fields when all critical mission fields are set."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    # Write a fully-populated mission.yaml
+    mission_path = tmp_path / ".spine" / "mission.yaml"
+    mission_path.write_text(
+        "version: 1\n"
+        "id: mission-0001\n"
+        "title: Test Mission\n"
+        "status: active\n"
+        "target_user: solo developers\n"
+        "user_problem: no governance layer for AI agents\n"
+        "one_sentence_promise: Keep agents on target\n"
+        "success_metric:\n"
+        "  type: milestone\n"
+        "  value: 100 users\n"
+        "deadline_window_days: 42\n"
+        "review_cadence: weekly\n"
+        "preferred_runtimes: []\n"
+        "preferred_models: {}\n"
+        "allowed_scope: []\n"
+        "forbidden_expansions: []\n"
+        "proof_requirements: []\n"
+        "kill_conditions: []\n"
+        "created_at: '2026-01-01T00:00:00+00:00'\n"
+        "updated_at: '2026-01-01T00:00:00+00:00'\n",
+        encoding="utf-8",
+    )
+
+    exit_code, stdout, _ = run_doctor(tmp_path)
+    assert exit_code == 0, f"Expected exit 0, got {exit_code}. Output: {stdout}"
+    # Should NOT warn about blank mission fields
+    assert "Mission fields are blank" not in stdout

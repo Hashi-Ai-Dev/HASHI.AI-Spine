@@ -97,19 +97,43 @@ class DoctorService:
 
         try:
             raw = path.read_text(encoding="utf-8")
-            MissionModel.from_yaml(raw)
+            mission = MissionModel.from_yaml(raw)
         except yaml.YAMLError as exc:
             issues.append(DoctorIssue(
                 severity="error",
                 file=path.relative_to(self.repo_root).as_posix(),
                 message=f"YAML parse error: {exc}",
             ))
+            return issues
         except Exception as exc:
             issues.append(DoctorIssue(
                 severity="error",
                 file=path.relative_to(self.repo_root).as_posix(),
                 message=f"Model validation error: {exc}",
             ))
+            return issues
+
+        # Warn when critical guidance fields are blank — brief output will be useless otherwise
+        rel_path = path.relative_to(self.repo_root).as_posix()
+        blank_fields = []
+        if not mission.target_user.strip():
+            blank_fields.append("target_user")
+        if not mission.user_problem.strip():
+            blank_fields.append("user_problem")
+        if not mission.one_sentence_promise.strip():
+            blank_fields.append("one_sentence_promise")
+        if not mission.success_metric.value.strip():
+            blank_fields.append("success_metric.value")
+        if blank_fields:
+            issues.append(DoctorIssue(
+                severity="warning",
+                file=rel_path,
+                message=(
+                    f"Mission fields are blank: {', '.join(blank_fields)}"
+                    " — run 'spine mission set' to define them"
+                ),
+            ))
+
         return issues
 
     def _check_constraints_yaml(self) -> list[DoctorIssue]:

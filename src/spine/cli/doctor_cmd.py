@@ -101,7 +101,7 @@ def doctor_cmd(
             console.print("SPINE state is valid and compliant.")
         return
 
-    if result.issues:
+    if result.issues and (not quiet or not result.passed):
         table = Table(title="Doctor Issues", box=None)
         table.add_column("Severity", style="bold")
         table.add_column("File")
