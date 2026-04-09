@@ -38,7 +38,7 @@ Beta exit is NOT currently justified. 5 pre-beta-exit issues remain.
 
 | Priority | # | Issue | Severity | Status |
 |---|---|---|---|---|
-| 1 | #59 | `drift scan --json` missing | 🟡 Medium | ✅ Fixed — branch `claude/fix-drift-scan-json-GsPn6` |
+| 1 | #59 | `drift scan --json` missing | 🟡 Medium | 📋 In review (PR #67) |
 | 2 | #64 | `spine evidence list` + `spine decision list` | 🟡 Medium | Open |
 | 3 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | Open |
 | 4 | #66 | `check before-work` no-brief → advisory not exit 1 | 🟡 Medium | Open |
@@ -50,7 +50,7 @@ Beta exit is NOT currently justified. 5 pre-beta-exit issues remain.
 |---|---|
 | ~~#57~~ | ~~MCP TextContent NameError~~ | ✅ Fixed — PR #61 |
 | ~~#58~~ | ~~README exit code + test count~~ | ✅ Fixed — PR #63 |
-| ~~#59~~ | ~~`drift scan --json` missing~~ | ✅ Fixed — branch `claude/fix-drift-scan-json-GsPn6` |
+| #59 | `drift scan --json` missing | 🟡 Medium | 📋 In review (PR #67) |
 
 ---
 
