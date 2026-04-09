@@ -46,6 +46,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 | #50 | Before-work / start-session governance checkpoint | PR #54 |
 | #57 | MCP TextContent NameError | PR #61 |
 | #58 | README exit code + test count | PR #63 |
+| #59 | `spine drift scan --json` | PR #67 |
 
 ### Beta Polish Queue
 
@@ -59,13 +60,13 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 > Agent-usability-first ordering (dogfood session 2026-04-09).
 
-| # | Issue | Priority | Status |
-|---|---|---|---|
-| #59 | `spine drift scan --json` missing | 🟡 Medium | 📋 In review (PR #67) |
-| #64 | `spine evidence list` + `spine decision list` | 🟡 Medium | Open |
-| #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | Open |
-| #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium | Open |
-| #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium | Open |
+| # | Issue | Status |
+|---|---|---|
+| ~~#59~~ | ~~`spine drift scan --json` missing~~ | ✅ Fixed — PR #67 |
+| #64 | `spine evidence list` + `spine decision list` | 🟡 Medium — Open |
+| #65 | `check before-pr --json` structured doctor detail | 🟡 Medium — Open |
+| #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
+| #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
 
 ---
 
@@ -85,4 +86,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-09 — Agent-usability-first pre-beta-exit queue*
+*Last updated: 2026-04-09 — 4 pre-beta-exit blockers remain (#64, #65, #66, #60)*
