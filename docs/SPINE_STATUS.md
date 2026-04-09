@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-08 (Issue #50 — before-work checkpoint merged, Beta polish one issue remaining)
+**Last updated:** 2026-04-09 (Pre-Beta-Exit blockers identified — audit #55)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -24,6 +24,29 @@
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete — all core issues done |
 | Beta polish queue | 🔄 Active — 1 issue remaining |
+| **Pre-Beta-Exit blockers** | ⚠️ **Open — 4 issues** |
+
+---
+
+## ⚠️ Beta Exit Blocked
+
+**Beta exit from the current `main` branch is NOT currently justified.**
+
+### Why
+
+1. **MCP is shipped but non-functional.** The MCP server starts but every tool call crashes with a `NameError`. No test catches this.
+2. **README exit codes are inaccurate.** The exit code table misrepresents command behavior.
+3. **Docs link drift.** Minor but present.
+4. **`drift scan --json` is missing.** Inconsistent with other commands.
+
+### Pre-Beta-Exit Blocker Issues (Milestone #5)
+
+| # | Issue | Severity | Status |
+|---|---|---|---|
+| #57 | MCP TextContent NameError — all tool calls crash | 🔴 Blocker | Open |
+| #58 | README exit code table wrong | 🟡 High | Open |
+| #59 | `drift scan --json` missing | 🟡 Medium | Open |
+| #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
 
 ---
 
@@ -33,32 +56,32 @@
 
 ### Completed Beta Issues
 
-| # | Issue | Status |
+| # | Issue | PR |
 |---|---|---|
-| #31 | `spine check before-pr` preflight checkpoint | ✅ Done — PR #35 |
-| #32 | Handoff/PR-prep summary primitive | ✅ Done — PR #39 |
-| #33 | Draftable governance records | ✅ Done — PR #40 |
-| #34 | Local optional hook/checkpoint integration | ✅ Done — PR #41 |
-| #36 | Mission refine draft flow | ✅ Done — PR #47 |
-| #37 | Compatibility/integration guide | ✅ Done — PR #48 |
-| #38 | Deterministic validation fixtures | ✅ Done — PR #52 |
-| #43 | `check before-pr` exit 1 on healthy repos | ✅ Fixed — PR #46 |
-| #44 | Hook script missing `uv run` | ✅ Fixed — PR #46 |
-| #45 | AGENTS.md template invalid commands | ✅ Fixed — PR #46 |
-| #49 | Write-flow machine-readable consistency | ✅ Done — PR #53 |
-| #50 | Before-work / start-session governance checkpoint | ✅ Done — PR #54 |
+| #31 | `spine check before-pr` preflight checkpoint | PR #35 |
+| #32 | Handoff/PR-prep summary primitive | PR #39 |
+| #33 | Draftable governance records | PR #40 |
+| #34 | Local optional hook/checkpoint integration | PR #41 |
+| #36 | Mission refine draft flow | PR #47 |
+| #37 | Compatibility/integration guide | PR #48 |
+| #38 | Deterministic validation fixtures | PR #52 |
+| #43 | `check before-pr` exit 1 on healthy repos | PR #46 |
+| #44 | Hook script missing `uv run` | PR #46 |
+| #45 | AGENTS.md template invalid commands | PR #46 |
+| #49 | Write-flow machine-readable consistency | PR #53 |
+| #50 | Before-work / start-session governance checkpoint | PR #54 |
 
 ### Beta Polish Queue
 
 | # | Issue | Status |
 |---|---|---|
-| #51 | Beta-exit proof/validation | 📋 Next — last Beta polish issue |
+| #51 | Beta-exit proof/validation | 📋 Active — last Beta issue |
 
 ---
 
 ## Next Active Priority
 
-**Issue #51** — Beta-exit proof/validation. Only one issue remains in the Beta polish queue.
+**Issue #51** — Beta-exit proof/validation (Beta polish). However, Beta exit is currently blocked by pre-beta-exit issues #57–#60.
 
 ---
 
