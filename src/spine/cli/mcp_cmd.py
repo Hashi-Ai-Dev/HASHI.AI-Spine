@@ -19,9 +19,11 @@ app.add_typer(mcp_app, name="mcp", help="SPINE MCP server.")
 def _get_mcp_modules():
     """Lazy import to avoid hard dependency until confirmed available."""
     try:
-        from mcp import Server as McpServer
-        from mcp.types import Resource, Tool, TextResourceContents, TextContent
-        return (McpServer, Resource, Tool, TextResourceContents, TextContent)
+        # Fix: Server lives at mcp.server, not the top-level mcp package.
+        from mcp.server import Server as McpServer
+        from mcp.server.lowlevel.helper_types import ReadResourceContents
+        from mcp.types import Resource, Tool, TextContent
+        return (McpServer, Resource, Tool, ReadResourceContents, TextContent)
     except ImportError:
         return None
 
@@ -45,7 +47,7 @@ def mcp_serve(
         print("ERROR: MCP package not installed. Run: uv add mcp", file=sys.stderr)
         raise typer.Exit(1)
 
-    McpServer, _Resource, _Tool, _TextResourceContents, TextContent = _mcp_modules
+    McpServer, _Resource, _Tool, _ReadResourceContents, TextContent = _mcp_modules
 
     try:
         repo_root, spine_root = resolve_roots(cwd)
@@ -73,12 +75,12 @@ def mcp_serve(
     server = McpServer(name="spine", version="0.1.0")
 
     @server.list_resources()
-    def list_resources():
+    async def list_resources():
         resources = []
         try:
             mission_result = mission_service.show()
             mission = mission_result.mission
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://mission",
                 name="Active Mission",
                 description=f"Current mission: {mission.title} ({mission.status})",
@@ -89,7 +91,7 @@ def mcp_serve(
 
         constraints_path = repo_root / C.SPINE_DIR / C.CONSTRAINTS_FILE
         if constraints_path.exists():
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://constraints",
                 name="Constraints",
                 description="Operational constraints and behavior rules",
@@ -98,7 +100,7 @@ def mcp_serve(
 
         evidence_path = repo_root / C.SPINE_DIR / C.EVIDENCE_FILE
         if evidence_path.exists():
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://evidence",
                 name="Recent Evidence",
                 description="Evidence records",
@@ -107,7 +109,7 @@ def mcp_serve(
 
         decisions_path = repo_root / C.SPINE_DIR / C.DECISIONS_FILE
         if decisions_path.exists():
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://decisions",
                 name="Recent Decisions",
                 description="Decision records",
@@ -116,7 +118,7 @@ def mcp_serve(
 
         drift_path = repo_root / C.SPINE_DIR / C.DRIFT_FILE
         if drift_path.exists():
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://drift",
                 name="Open Drift",
                 description="Drift detection events",
@@ -126,7 +128,7 @@ def mcp_serve(
         reviews_dir = repo_root / C.SPINE_DIR / C.REVIEWS_DIR
         latest_review = reviews_dir / "latest.md" if reviews_dir.exists() else None
         if latest_review and latest_review.exists():
-            resources.append(_mcp_modules[1](
+            resources.append(_Resource(
                 uri="spine://review/latest",
                 name="Latest Review",
                 description="Most recent weekly review",
@@ -136,60 +138,56 @@ def mcp_serve(
         return resources
 
     @server.read_resource()
-    def read_resource(uri: str):
+    async def read_resource(uri: str):
+        # AnyUrl objects are passed by MCP; normalise to plain string for comparison.
+        uri = str(uri)
         if uri == "spine://mission":
             mission_result = mission_service.show()
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="application/x-yaml",
-                text=mission_result.mission.to_yaml(),
-            )
+            return [_ReadResourceContents(
+                content=mission_result.mission.to_yaml(),
+                mime_type="application/x-yaml",
+            )]
         elif uri == "spine://constraints":
             path = repo_root / C.SPINE_DIR / C.CONSTRAINTS_FILE
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="application/x-yaml",
-                text=path.read_text(encoding="utf-8"),
-            )
+            return [_ReadResourceContents(
+                content=path.read_text(encoding="utf-8"),
+                mime_type="application/x-yaml",
+            )]
         elif uri == "spine://evidence":
             path = repo_root / C.SPINE_DIR / C.EVIDENCE_FILE
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="application/jsonl",
-                text=path.read_text(encoding="utf-8") if path.exists() else "",
-            )
+            return [_ReadResourceContents(
+                content=path.read_text(encoding="utf-8") if path.exists() else "",
+                mime_type="application/jsonl",
+            )]
         elif uri == "spine://decisions":
             path = repo_root / C.SPINE_DIR / C.DECISIONS_FILE
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="application/jsonl",
-                text=path.read_text(encoding="utf-8") if path.exists() else "",
-            )
+            return [_ReadResourceContents(
+                content=path.read_text(encoding="utf-8") if path.exists() else "",
+                mime_type="application/jsonl",
+            )]
         elif uri == "spine://drift":
             path = repo_root / C.SPINE_DIR / C.DRIFT_FILE
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="application/jsonl",
-                text=path.read_text(encoding="utf-8") if path.exists() else "",
-            )
+            return [_ReadResourceContents(
+                content=path.read_text(encoding="utf-8") if path.exists() else "",
+                mime_type="application/jsonl",
+            )]
         elif uri == "spine://review/latest":
             path = repo_root / C.SPINE_DIR / C.REVIEWS_DIR / "latest.md"
-            return _mcp_modules[3](
-                uri=uri,
-                mimeType="text/markdown",
-                text=path.read_text(encoding="utf-8") if path.exists() else "",
-            )
-        return None
+            return [_ReadResourceContents(
+                content=path.read_text(encoding="utf-8") if path.exists() else "",
+                mime_type="text/markdown",
+            )]
+        return []
 
     @server.list_tools()
-    def list_tools():
+    async def list_tools():
         return [
-            _mcp_modules[2](
+            _Tool(
                 name="mission_get",
                 description="Get the current mission",
                 inputSchema={"type": "object", "properties": {}},
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="mission_update",
                 description="Update mission fields",
                 inputSchema={
@@ -202,7 +200,7 @@ def mcp_serve(
                     },
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="brief_generate",
                 description="Generate a mission brief",
                 inputSchema={
@@ -211,7 +209,7 @@ def mcp_serve(
                     "required": ["target"],
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="evidence_add",
                 description="Add an evidence record",
                 inputSchema={
@@ -227,7 +225,7 @@ def mcp_serve(
                     "required": ["kind"],
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="decision_add",
                 description="Add a decision record",
                 inputSchema={
@@ -241,7 +239,7 @@ def mcp_serve(
                     "required": ["title", "why", "decision"],
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="drift_scan",
                 description="Scan for scope drift",
                 inputSchema={
@@ -249,7 +247,7 @@ def mcp_serve(
                     "properties": {"against_branch": {"type": "string"}},
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="review_generate",
                 description="Generate a weekly review",
                 inputSchema={
@@ -261,7 +259,7 @@ def mcp_serve(
                     },
                 },
             ),
-            _mcp_modules[2](
+            _Tool(
                 name="opportunity_score",
                 description="Score an opportunity",
                 inputSchema={
@@ -282,7 +280,7 @@ def mcp_serve(
         ]
 
     @server.call_tool()
-    def call_tool(name: str, arguments: dict):
+    async def call_tool(name: str, arguments: dict):
         if name == "mission_get":
             mission_result = mission_service.show()
             return [TextContent(
@@ -346,9 +344,10 @@ def mcp_serve(
         return []
 
     import asyncio
+    from mcp.server.stdio import stdio_server
 
     async def run_server():
-        async with server:
-            await server.run(sys.stdin, sys.stdout, server.create_initialization_options())
+        async with stdio_server() as (read_stream, write_stream):
+            await server.run(read_stream, write_stream, server.create_initialization_options())
 
     asyncio.run(run_server())
