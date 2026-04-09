@@ -60,7 +60,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 | # | Issue | Severity | Status |
 |---|---|---|---|
 | #57 | MCP TextContent NameError — all tool calls crash | 🔴 Blocker | ✅ Fixed — PR #61 |
-| #58 | README exit code table wrong | 🟡 High | Open |
+| #58 | README exit code table wrong | 🟡 High | ✅ Fixed — `beta/bug58-readme-exit-code-contract` |
 | #59 | `drift scan --json` missing | 🟡 Medium | Open |
 | #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
 
@@ -82,4 +82,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-09 — Pre-Beta-Exit blockers identified (milestone #5)*
+*Last updated: 2026-04-09 — Issue #58 fixed (README exit-code contract + stale test count)*

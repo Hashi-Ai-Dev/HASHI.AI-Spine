@@ -2,6 +2,90 @@
 
 ---
 
+## Issue #58 — README Exit Code Contract Fix
+
+**Date:** 2026-04-09
+**Branch:** `beta/bug58-readme-exit-code-contract`
+**Issue targeted:** #58 — [BUG] README exit code table implies code 2 is git-not-found for all commands — only init defines it
+
+---
+
+### Summary
+
+Corrects two public-facing contract errors in `README.md` and fixes stale test
+count. No CLI behavior was changed. Option A (docs-only fix) applied as
+recommended.
+
+---
+
+### Audit Findings
+
+**Exit code audit:**
+
+| Command module | Code for git-not-found | Code for missing .spine/ |
+|---|---|---|
+| `init_cmd.py` | 2 (`_EXIT_GIT_NOT_FOUND = 2`, local) | N/A |
+| All other commands | 2 (`EXIT_CONTEXT = 2`, from `app.py`) | 2 (`EXIT_CONTEXT = 2`) |
+
+All commands use `EXIT_CONTEXT = 2` from `app.py` for context failures. The
+issue description's claim that "other commands exit 1 for git-not-found" was
+incorrect. The README description of code 2 was broadly accurate.
+
+**What was actually wrong in the README:**
+1. Exit code `3` (`spine init` conflict — target files already exist) was not
+   documented at all.
+2. The code 2 row did not clarify that `--allow-no-git` is a `spine init`-only
+   flag.
+3. Test count was stale: "300+ passing (15 test files)" vs actual 505 tests in
+   23 test files.
+
+---
+
+### Changes Made
+
+| File | Change |
+|---|---|
+| `README.md` | Exit code table: added code 3 (init conflict), clarified code 2 with `--allow-no-git` note |
+| `README.md` | Validation section: fixed test count "300+ passing (15 files)" → "505 passing (23 test files)" |
+| `docs/SPINE_STATUS.md` | Narrow update — #58 marked fixed, blocker count 3 → 2 |
+| `docs/SPINE_FEATURE_BACKLOG.md` | Narrow update — #58 marked fixed |
+| `docs/SPINE_BETA_IMPLEMENTATION_REPORT.md` | This section |
+
+---
+
+### Test Results
+
+```
+505 passed (23 test files)
+0 failures
+```
+
+No new tests were needed — this was a pure docs contract fix. Existing exit
+code contract tests in `tests/test_fixture_contracts.py` already cover all
+scenarios including exit code 2 (init no-git, mission show no-.spine/, etc.)
+and exit code 3 (init already initialized).
+
+---
+
+### SPINE Governance
+
+- `spine decision add` — recorded rationale for Issue #58
+- `spine evidence add` — logged implementation work
+- `spine review weekly --recommendation continue --notes "Pre-beta-exit bugfix: Issue #58 README exit-code contract"`
+
+---
+
+### What Was Explicitly Deferred
+
+| Item | Issue | Status |
+|---|---|---|
+| Consistent exit code 2 across all commands for git-not-found | #58 Option B | Deferred — all commands already correctly emit exit 2; no code change needed |
+| `drift scan --json` | #59 | Out of scope for this PR |
+| SPINE_SECURITY_BASELINE.md wrong repo name | #60 | Out of scope for this PR |
+| Beta-exit proof/validation | #51 | Out of scope for this PR |
+
+---
+
 ## Issue #38 — Deterministic Validation Fixtures and Contract Harness
 
 **Date:** 2026-04-08
