@@ -16,6 +16,12 @@ This repository uses SPINE for local-first, repo-native mission governance.
 - Run `uv run spine doctor` to verify governance state is valid.
 - Run `uv run pytest` before finishing any change session. Fix all failures.
 
+## Governance State — What Is Durable vs Ephemeral
+
+Generated outputs (briefs, reviews) are ephemeral and gitignored. Run `spine brief generate` or `spine review weekly` to produce them. They are not committed to git.
+
+Canonical governance data is in durable JSONL files: decisions, evidence, drift, opportunities. These ARE committed to git and survive across sessions.
+
 ## Quick reference
 
 ```bash
