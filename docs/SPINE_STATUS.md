@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #64 — evidence list + decision list merged, 3 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (Issue #65 — `check before-pr --json` structured doctor detail implemented, 2 pre-beta-exit blockers remain)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -24,13 +24,13 @@
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
-| **Pre-Beta-Exit blockers** | ⚠️ **3 open — beta exit blocked** |
+| **Pre-Beta-Exit blockers** | ⚠️ **2 open — beta exit blocked** |
 
 ---
 
 ## ⚠️ Beta Exit Blocked
 
-Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
+Beta exit is NOT currently justified. 2 pre-beta-exit issues remain.
 
 **Agent-usability-first ordering.**
 
@@ -39,7 +39,7 @@ Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
 | Priority | # | Issue | Status |
 |---|---|---|---|
 | 1 | ~~#64~~ | ~~`spine evidence list` + `spine decision list`~~ | ✅ Fixed — PR #68 |
-| 2 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium — Open |
+| 2 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | 📋 In review (PR #69) |
 | 3 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
 | 4 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
 
@@ -51,6 +51,7 @@ Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
 | ~~#58~~ | ~~README exit code + test count~~ | ✅ Fixed — PR #63 |
 | ~~#59~~ | ~~`spine drift scan --json` missing~~ | ✅ Fixed — PR #67 |
 | ~~#64~~ | ~~`spine evidence list` + `spine decision list`~~ | ✅ Fixed — PR #68 |
+| ~~#65~~ | ~~`check before-pr --json` structured doctor detail~~ | ✅ Fixed — PR pending |
 
 ---
 
@@ -67,6 +68,7 @@ Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
 | #58 | README exit codes + test count | PR #63 |
 | #59 | `spine drift scan --json` | PR #67 |
 | #64 | `spine evidence list` + `spine decision list` | PR #68 |
+| #65 | `check before-pr --json` structured doctor detail | PR pending |
 
 ### Beta Polish Queue
 
@@ -78,7 +80,7 @@ Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
 
 ## Next Active Priority
 
-**Issue #65** — `check before-pr --json` structured doctor detail. Agent-usability-first ordering.
+**Issue #66** — `check before-work` no-brief advisory not exit 1. Agent-usability-first ordering.
 
 ---
 

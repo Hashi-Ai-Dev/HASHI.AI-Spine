@@ -48,6 +48,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 | #58 | README exit code + test count | PR #63 |
 | #59 | `spine drift scan --json` | PR #67 |
 | #64 | `spine evidence list` + `spine decision list` | PR #68 |
+| #65 | `check before-pr --json` structured doctor detail | PR pending |
 
 ### Beta Polish Queue
 
@@ -64,7 +65,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 | # | Issue | Status |
 |---|---|---|
 | ~~#64~~ | ~~`spine evidence list` + `spine decision list`~~ | ✅ Fixed — PR #68 |
-| #65 | `check before-pr --json` structured doctor detail | 🟡 Medium — Open |
+| ~~#65~~ | ~~`check before-pr --json` structured doctor detail~~ | ✅ Fixed — PR pending |
 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
 
@@ -86,4 +87,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-09 — 3 pre-beta-exit blockers remain (#65, #66, #60)*
+*Last updated: 2026-04-09 — 2 pre-beta-exit blockers remain (#66, #60)*

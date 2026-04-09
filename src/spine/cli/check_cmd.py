@@ -161,6 +161,17 @@ def check_before_work(
 
 
 def _output_json(result: BeforePrResult, branch: str, default_branch: str | None) -> None:
+    def _serialise_item(item) -> dict:
+        d: dict = {
+            "name": item.name,
+            "status": item.status,
+            "message": item.message,
+            "category": item.category,
+        }
+        if item.detail is not None:
+            d["detail"] = item.detail
+        return d
+
     data = {
         "result": result.result,
         "passed": result.passed,
@@ -168,10 +179,7 @@ def _output_json(result: BeforePrResult, branch: str, default_branch: str | None
         "branch": branch,
         "default_branch": default_branch,
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "checks": [
-            {"name": item.name, "status": item.status, "message": item.message}
-            for item in result.items
-        ],
+        "checks": [_serialise_item(item) for item in result.items],
     }
     print(json.dumps(data, indent=2))
 

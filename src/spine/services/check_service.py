@@ -20,6 +20,8 @@ class CheckItem:
     name: str
     status: Literal["pass", "warn", "fail"]
     message: str
+    category: str = ""
+    detail: list[dict] | None = field(default=None)
 
 
 @dataclass
@@ -147,11 +149,13 @@ class CheckService:
                 name="spine_dir",
                 status="fail",
                 message=".spine/ not found — run 'spine init' to bootstrap governance state",
+                category="structure",
             )
         return CheckItem(
             name="spine_dir",
             status="pass",
             message=".spine/ found",
+            category="structure",
         )
 
     def _check_mission(self) -> CheckItem:
@@ -162,6 +166,7 @@ class CheckService:
                 name="mission",
                 status="fail",
                 message="mission.yaml not found",
+                category="config",
             )
         try:
             from spine.models import MissionModel
@@ -172,11 +177,13 @@ class CheckService:
                 name="mission",
                 status="fail",
                 message=f"mission.yaml unreadable: {exc}",
+                category="config",
             )
         return CheckItem(
             name="mission",
             status="pass",
             message="mission.yaml present and readable",
+            category="config",
         )
 
     def _check_doctor_health(self) -> list[CheckItem]:
@@ -193,6 +200,14 @@ class CheckService:
         errors = [i for i in doctor_result.issues if i.severity == "error"]
         warnings = [i for i in doctor_result.issues if i.severity == "warning"]
 
+        # Build structured detail for all issues (errors + warnings)
+        detail: list[dict] | None = None
+        if doctor_result.issues:
+            detail = [
+                {"severity": i.severity, "file": i.file, "message": i.message}
+                for i in doctor_result.issues
+            ]
+
         if errors:
             # Errors are genuine repo-health failures — block the check
             msg = "; ".join(f"{i.file}: {i.message}" for i in errors[:3])
@@ -202,6 +217,8 @@ class CheckService:
                 name="doctor",
                 status="fail",
                 message=f"{len(errors)} doctor error(s): {msg}",
+                category="health",
+                detail=detail,
             ))
         else:
             # No errors.  Warnings are benign/advisory (e.g. missing optional
@@ -214,12 +231,15 @@ class CheckService:
                     name="doctor",
                     status="pass",
                     message=f"repo health OK ({len(warnings)} advisory warning(s): {msg})",
+                    category="health",
+                    detail=detail,
                 ))
             else:
                 items.append(CheckItem(
                     name="doctor",
                     status="pass",
                     message="repo health OK",
+                    category="health",
                 ))
 
         return items
@@ -232,6 +252,7 @@ class CheckService:
                 name="drift",
                 status="pass",
                 message="no drift log found (clean)",
+                category="history",
             )
         try:
             records = read_jsonl(drift_path)
@@ -240,6 +261,7 @@ class CheckService:
                 name="drift",
                 status="warn",
                 message="drift.jsonl unreadable — verify manually",
+                category="history",
             )
         if records:
             high = sum(1 for r in records if r.get("severity") == "high")
@@ -257,11 +279,13 @@ class CheckService:
                 name="drift",
                 status="warn",
                 message=f"{len(records)} drift event(s) logged ({severity_str}) — review before PR",
+                category="history",
             )
         return CheckItem(
             name="drift",
             status="pass",
             message="no drift events logged",
+            category="history",
         )
 
     def _check_evidence_presence(self) -> CheckItem:
@@ -272,6 +296,7 @@ class CheckService:
                 name="evidence",
                 status="warn",
                 message="evidence.jsonl not found — consider logging evidence before PR",
+                category="history",
             )
         try:
             records = read_jsonl(evidence_path)
@@ -280,17 +305,20 @@ class CheckService:
                 name="evidence",
                 status="warn",
                 message="evidence.jsonl unreadable",
+                category="history",
             )
         if not records:
             return CheckItem(
                 name="evidence",
                 status="warn",
                 message="no evidence recorded — consider 'spine evidence add' before PR",
+                category="history",
             )
         return CheckItem(
             name="evidence",
             status="pass",
             message=f"{len(records)} evidence record(s) present",
+            category="history",
         )
 
     def _check_branch_context(self, branch: str) -> CheckItem:
@@ -299,6 +327,7 @@ class CheckService:
             name="branch_context",
             status="pass",
             message=f"on branch: {branch}",
+            category="context",
         )
 
     def _check_recent_brief(self) -> CheckItem:
@@ -316,6 +345,7 @@ class CheckService:
                     "no briefs found — run 'spine brief' to generate orientation context, "
                     "or proceed if starting a fresh session"
                 ),
+                category="context",
             )
         # Look for any latest.md or timestamped brief files across subdirs
         brief_files = list(briefs_dir.rglob("*.md"))
@@ -327,6 +357,7 @@ class CheckService:
                     "no briefs found — run 'spine brief' to generate orientation context, "
                     "or proceed if starting a fresh session"
                 ),
+                category="context",
             )
         # Use the most recently modified brief file as orientation signal
         latest = max(brief_files, key=lambda p: p.stat().st_mtime)
@@ -334,6 +365,7 @@ class CheckService:
             name="recent_brief",
             status="pass",
             message=f"{len(brief_files)} brief file(s) available — most recent: {latest.name}",
+            category="context",
         )
 
     def _check_decision_presence(self) -> CheckItem:
@@ -344,6 +376,7 @@ class CheckService:
                 name="decisions",
                 status="warn",
                 message="decisions.jsonl not found — consider logging decisions before PR",
+                category="history",
             )
         try:
             records = read_jsonl(decisions_path)
@@ -352,15 +385,18 @@ class CheckService:
                 name="decisions",
                 status="warn",
                 message="decisions.jsonl unreadable",
+                category="history",
             )
         if not records:
             return CheckItem(
                 name="decisions",
                 status="warn",
                 message="no decisions recorded — consider 'spine decision add' before PR",
+                category="history",
             )
         return CheckItem(
             name="decisions",
             status="pass",
             message=f"{len(records)} decision record(s) present",
+            category="history",
         )

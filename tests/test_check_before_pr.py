@@ -425,3 +425,176 @@ def test_doctor_errors_still_cause_failure(tmp_path: Path) -> None:
         f"Expected exit 1: doctor errors must still block before-pr.\n"
         f"Output:\n{output}"
     )
+
+
+# ---------------------------------------------------------------------------
+# Issue #65 — structured JSON detail for check before-pr
+# ---------------------------------------------------------------------------
+
+
+def test_json_checks_include_category(tmp_path: Path) -> None:
+    """Every check item in --json output must include a 'category' field (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+
+    valid_categories = {"structure", "config", "health", "history", "context"}
+    for check in data["checks"]:
+        assert "category" in check, f"Missing 'category' in check item: {check}"
+        assert check["category"] in valid_categories, (
+            f"Unexpected category '{check['category']}' in check: {check}"
+        )
+
+
+def test_json_doctor_check_has_category_health(tmp_path: Path) -> None:
+    """The 'doctor' check item in --json output has category='health' (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+
+    doctor_checks = [c for c in data["checks"] if c["name"] == "doctor"]
+    assert doctor_checks, "Expected a 'doctor' check item in JSON output"
+    assert doctor_checks[0]["category"] == "health"
+
+
+def test_json_doctor_detail_present_on_errors(tmp_path: Path) -> None:
+    """When doctor finds errors, --json includes structured 'detail' list (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    # Corrupt mission.yaml to trigger a doctor error
+    mission_path = tmp_path / ".spine" / "mission.yaml"
+    mission_path.write_text("INVALID YAML: [}\n  broken: ", encoding="utf-8")
+
+    result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+
+    doctor_checks = [c for c in data["checks"] if c["name"] == "doctor"]
+    assert doctor_checks, "Expected a 'doctor' check item"
+    doc = doctor_checks[0]
+
+    assert doc["status"] == "fail"
+    assert "detail" in doc, "Expected 'detail' key when doctor has errors"
+    assert isinstance(doc["detail"], list)
+    assert len(doc["detail"]) > 0
+
+    for issue in doc["detail"]:
+        assert "severity" in issue
+        assert issue["severity"] in ("error", "warning")
+        assert "file" in issue
+        assert "message" in issue
+
+
+def test_json_doctor_detail_present_on_warnings(tmp_path: Path) -> None:
+    """When doctor has only warnings, --json includes 'detail' with warning items (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    # Add evidence and decisions so those pass; remove optional subdirs to get warnings
+    evidence_path = tmp_path / ".spine" / "evidence.jsonl"
+    decisions_path = tmp_path / ".spine" / "decisions.jsonl"
+    append_jsonl(evidence_path, {"kind": "commit", "description": "x", "evidence_url": None, "created_at": "2026-04-08T00:00:00+00:00"})
+    append_jsonl(decisions_path, {"title": "t", "why": "y", "decision": "d", "alternatives": [], "created_at": "2026-04-08T00:00:00+00:00"})
+
+    for subdir in ["reviews", "briefs", "skills", "checks"]:
+        d = tmp_path / ".spine" / subdir
+        if d.exists():
+            d.rmdir()
+
+    result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+
+    doctor_checks = [c for c in data["checks"] if c["name"] == "doctor"]
+    assert doctor_checks
+    doc = doctor_checks[0]
+
+    # Warnings do not cause failure but must appear in detail
+    assert doc["status"] == "pass"
+    assert "detail" in doc
+    assert isinstance(doc["detail"], list)
+    assert len(doc["detail"]) > 0
+    assert all(i["severity"] == "warning" for i in doc["detail"])
+
+
+def test_json_doctor_no_detail_when_truly_clean(tmp_path: Path) -> None:
+    """When doctor finds zero issues, 'detail' key is absent from the doctor check item (Issue #65).
+
+    Uses a mock to simulate a fully-clean doctor result, since a fresh spine init
+    always produces advisory warnings (blank mission fields) which also populate detail.
+    """
+    from unittest.mock import patch
+    from spine.services.doctor_service import DoctorResult, DoctorService
+
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    evidence_path = tmp_path / ".spine" / "evidence.jsonl"
+    decisions_path = tmp_path / ".spine" / "decisions.jsonl"
+    append_jsonl(evidence_path, {"kind": "commit", "description": "x", "evidence_url": None, "created_at": "2026-04-08T00:00:00+00:00"})
+    append_jsonl(decisions_path, {"title": "t", "why": "y", "decision": "d", "alternatives": [], "created_at": "2026-04-08T00:00:00+00:00"})
+
+    with patch.object(DoctorService, "check", return_value=DoctorResult(passed=True, issues=[])):
+        result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+
+    data = json.loads(result.output)
+    doctor_checks = [c for c in data["checks"] if c["name"] == "doctor"]
+    assert doctor_checks
+    doc = doctor_checks[0]
+
+    assert doc["status"] == "pass"
+    assert doc["message"] == "repo health OK"
+    # Zero issues → no detail key
+    assert "detail" not in doc
+
+
+def test_json_category_per_check_name(tmp_path: Path) -> None:
+    """Each well-known check name maps to the expected category (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    evidence_path = tmp_path / ".spine" / "evidence.jsonl"
+    decisions_path = tmp_path / ".spine" / "decisions.jsonl"
+    append_jsonl(evidence_path, {"kind": "commit", "description": "x", "evidence_url": None, "created_at": "2026-04-08T00:00:00+00:00"})
+    append_jsonl(decisions_path, {"title": "t", "why": "y", "decision": "d", "alternatives": [], "created_at": "2026-04-08T00:00:00+00:00"})
+
+    result = runner.invoke(app, ["check", "before-pr", "--cwd", str(tmp_path), "--json"])
+    data = json.loads(result.output)
+
+    checks_by_name = {c["name"]: c for c in data["checks"]}
+
+    expected = {
+        "spine_dir": "structure",
+        "mission": "config",
+        "doctor": "health",
+        "drift": "history",
+        "evidence": "history",
+        "decisions": "history",
+    }
+    for name, expected_category in expected.items():
+        assert name in checks_by_name, f"Missing check '{name}' in JSON output"
+        assert checks_by_name[name]["category"] == expected_category, (
+            f"Check '{name}': expected category '{expected_category}', "
+            f"got '{checks_by_name[name]['category']}'"
+        )
+
+
+def test_json_human_output_unchanged_with_new_fields(tmp_path: Path) -> None:
+    """Adding category/detail to JSON does not affect human-readable output (Issue #65)."""
+    make_git_repo(tmp_path)
+    spine_init(tmp_path)
+
+    evidence_path = tmp_path / ".spine" / "evidence.jsonl"
+    decisions_path = tmp_path / ".spine" / "decisions.jsonl"
+    append_jsonl(evidence_path, {"kind": "commit", "description": "x", "evidence_url": None, "created_at": "2026-04-08T00:00:00+00:00"})
+    append_jsonl(decisions_path, {"title": "t", "why": "y", "decision": "d", "alternatives": [], "created_at": "2026-04-08T00:00:00+00:00"})
+
+    exit_code, output = run_before_pr(tmp_path)
+    assert exit_code == 0
+    assert "Result: PASS" in output
+    # category/detail should NOT appear in human output
+    assert "category" not in output
+    assert '"detail"' not in output
