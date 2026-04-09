@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #58 — README exit codes + test count fixed, 2 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (agent-usability-first ordering: #59, #64, #65, #66, then #60, then #51)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -24,22 +24,32 @@
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
-| **Pre-Beta-Exit blockers** | ⚠️ **2 open — beta exit still blocked** |
+| **Pre-Beta-Exit blockers** | ⚠️ **5 open — beta exit blocked** |
 
 ---
 
 ## ⚠️ Beta Exit Blocked
 
-Beta exit is NOT currently justified. 2 blockers remain.
+Beta exit is NOT currently justified. 5 pre-beta-exit issues remain.
 
-### Remaining Pre-Beta-Exit Blockers (Milestone #5)
+**Agent-usability-first ordering** (from dogfood session): agent-usage issues before docs cleanup.
 
-| # | Issue | Severity | Status |
-|---|---|---|---|
-| ~~#57~~ | ~~MCP TextContent NameError~~ | ~~🔴 Blocker~~ | ✅ Fixed — PR #61 |
-| ~~#58~~ | ~~README exit code table wrong~~ | ~~🟡 High~~ | ✅ Fixed — PR #63 |
-| #59 | `drift scan --json` missing | 🟡 Medium | Open |
-| #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
+### Pre-Beta-Exit Queue (Milestone #5)
+
+| Priority | # | Issue | Severity | Status |
+|---|---|---|---|---|
+| 1 | #59 | `drift scan --json` missing | 🟡 Medium | Open |
+| 2 | #64 | `spine evidence list` + `spine decision list` | 🟡 Medium | Open |
+| 3 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium | Open |
+| 4 | #66 | `check before-work` no-brief → advisory not exit 1 | 🟡 Medium | Open |
+| 5 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium | Open |
+
+### Fixed
+
+| # | Issue | Status |
+|---|---|
+| ~~#57~~ | ~~MCP TextContent NameError~~ | ✅ Fixed — PR #61 |
+| ~~#58~~ | ~~README exit code + test count~~ | ✅ Fixed — PR #63 |
 
 ---
 
@@ -47,36 +57,25 @@ Beta exit is NOT currently justified. 2 blockers remain.
 
 **`Beta`** — v0.2.0-beta
 
-### Completed Beta Issues
+### Beta Complete
 
 | # | Issue | PR |
 |---|---|---|
-| #31 | `spine check before-pr` preflight checkpoint | PR #35 |
-| #32 | Handoff/PR-prep summary primitive | PR #39 |
-| #33 | Draftable governance records | PR #40 |
-| #34 | Local optional hook/checkpoint integration | PR #41 |
-| #36 | Mission refine draft flow | PR #47 |
-| #37 | Compatibility/integration guide | PR #48 |
-| #38 | Deterministic validation fixtures | PR #52 |
-| #43 | `check before-pr` exit 1 on healthy repos | PR #46 |
-| #44 | Hook script missing `uv run` | PR #46 |
-| #45 | AGENTS.md template invalid commands | PR #46 |
-| #49 | Write-flow machine-readable consistency | PR #53 |
-| #50 | Before-work / start-session governance checkpoint | PR #54 |
+| #31–#50 | All Beta core + polish issues | PRs #35–#54 |
 | #57 | MCP TextContent NameError | PR #61 |
-| #58 | README exit code + test count | PR #63 |
+| #58 | README exit codes + test count | PR #63 |
 
 ### Beta Polish Queue
 
 | # | Issue | Status |
 |---|---|---|
-| #51 | Beta-exit proof/validation | 📋 Queued — blocked until pre-beta-exit blockers cleared |
+| #51 | Beta-exit proof/validation | 📋 Last — blocked until pre-beta-exit issues cleared |
 
 ---
 
 ## Next Active Priority
 
-**Issue #59** — `drift scan --json` missing. Only 2 pre-beta-exit blockers remain.
+**Issue #59** — `spine drift scan --json`. Agent-usability-first ordering.
 
 ---
 
