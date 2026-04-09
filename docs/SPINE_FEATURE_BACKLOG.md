@@ -59,7 +59,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 | # | Issue | Severity | Status |
 |---|---|---|---|
-| #57 | MCP TextContent NameError — all tool calls crash | 🔴 Blocker | Open |
+| #57 | MCP TextContent NameError — all tool calls crash | 🔴 Blocker | ✅ Fixed — PR #61 |
 | #58 | README exit code table wrong | 🟡 High | Open |
 | #59 | `drift scan --json` missing | 🟡 Medium | Open |
 | #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
