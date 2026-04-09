@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Pre-Beta-Exit blockers identified — audit #55)
+**Last updated:** 2026-04-09 (Issue #57 — MCP fix merged, 3 pre-beta-exit blockers remain)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -23,27 +23,20 @@
 | Alpha Exit → v0.2.0-beta | ✅ Released (2026-04-07) |
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete — all core issues done |
-| Beta polish queue | 🔄 Active — 1 issue remaining |
-| **Pre-Beta-Exit blockers** | ⚠️ **Open — 4 issues** |
+| Beta polish queue | ✅ Complete |
+| **Pre-Beta-Exit blockers** | ⚠️ **3 open — beta exit still blocked** |
 
 ---
 
 ## ⚠️ Beta Exit Blocked
 
-**Beta exit from the current `main` branch is NOT currently justified.**
+Beta exit is NOT currently justified. MCP is now fixed (PR #61). Three blockers remain.
 
-### Why
-
-1. **MCP is shipped but non-functional.** The MCP server starts but every tool call crashes with a `NameError`. No test catches this.
-2. **README exit codes are inaccurate.** The exit code table misrepresents command behavior.
-3. **Docs link drift.** Minor but present.
-4. **`drift scan --json` is missing.** Inconsistent with other commands.
-
-### Pre-Beta-Exit Blocker Issues (Milestone #5)
+### Remaining Pre-Beta-Exit Blockers (Milestone #5)
 
 | # | Issue | Severity | Status |
 |---|---|---|---|
-| #57 | MCP TextContent NameError — all tool calls crash | 🔴 Blocker | Open |
+| ~~#57~~ | ~~MCP TextContent NameError~~ | ~~🔴 Blocker~~ | ✅ **Fixed — PR #61** |
 | #58 | README exit code table wrong | 🟡 High | Open |
 | #59 | `drift scan --json` missing | 🟡 Medium | Open |
 | #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
@@ -70,18 +63,19 @@
 | #45 | AGENTS.md template invalid commands | PR #46 |
 | #49 | Write-flow machine-readable consistency | PR #53 |
 | #50 | Before-work / start-session governance checkpoint | PR #54 |
+| #57 | MCP TextContent NameError | PR #61 |
 
 ### Beta Polish Queue
 
 | # | Issue | Status |
 |---|---|---|
-| #51 | Beta-exit proof/validation | 📋 Active — last Beta issue |
+| #51 | Beta-exit proof/validation | 📋 Queued — blocked until pre-beta-exit blockers cleared |
 
 ---
 
 ## Next Active Priority
 
-**Issue #51** — Beta-exit proof/validation (Beta polish). However, Beta exit is currently blocked by pre-beta-exit issues #57–#60.
+**Issue #58** — README exit code table fix (high). 3 blockers remain before beta-exit is unblocked.
 
 ---
 
