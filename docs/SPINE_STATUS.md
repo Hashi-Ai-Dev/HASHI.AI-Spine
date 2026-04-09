@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #58 — README exit-code contract fixed, 2 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (Issue #58 — README exit codes + test count fixed, 2 pre-beta-exit blockers remain)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -22,7 +22,7 @@
 | Phase 1 + 2 | ✅ Complete |
 | Alpha Exit → v0.2.0-beta | ✅ Released (2026-04-07) |
 | Beta blocker stabilization | ✅ Complete — PR #46 |
-| Beta core feature queue | ✅ Complete — all core issues done |
+| Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
 | **Pre-Beta-Exit blockers** | ⚠️ **2 open — beta exit still blocked** |
 
@@ -30,14 +30,14 @@
 
 ## ⚠️ Beta Exit Blocked
 
-Beta exit is NOT currently justified. MCP is now fixed (PR #61). Two blockers remain.
+Beta exit is NOT currently justified. 2 blockers remain.
 
 ### Remaining Pre-Beta-Exit Blockers (Milestone #5)
 
 | # | Issue | Severity | Status |
 |---|---|---|---|
-| ~~#57~~ | ~~MCP TextContent NameError~~ | ~~🔴 Blocker~~ | ✅ **Fixed — PR #61** |
-| ~~#58~~ | ~~README exit code table wrong~~ | ~~🟡 High~~ | ✅ **Fixed — `beta/bug58-readme-exit-code-contract`** |
+| ~~#57~~ | ~~MCP TextContent NameError~~ | ~~🔴 Blocker~~ | ✅ Fixed — PR #61 |
+| ~~#58~~ | ~~README exit code table wrong~~ | ~~🟡 High~~ | ✅ Fixed — PR #63 |
 | #59 | `drift scan --json` missing | 🟡 Medium | Open |
 | #60 | SPINE_SECURITY_BASELINE.md wrong repo name | 🟡 Medium | Open |
 
@@ -64,7 +64,7 @@ Beta exit is NOT currently justified. MCP is now fixed (PR #61). Two blockers re
 | #49 | Write-flow machine-readable consistency | PR #53 |
 | #50 | Before-work / start-session governance checkpoint | PR #54 |
 | #57 | MCP TextContent NameError | PR #61 |
-| #58 | README exit code contract fix | `beta/bug58-readme-exit-code-contract` |
+| #58 | README exit code + test count | PR #63 |
 
 ### Beta Polish Queue
 
@@ -76,7 +76,7 @@ Beta exit is NOT currently justified. MCP is now fixed (PR #61). Two blockers re
 
 ## Next Active Priority
 
-**Issue #59** — `drift scan --json` missing (medium). 2 blockers remain before beta-exit is unblocked.
+**Issue #59** — `drift scan --json` missing. Only 2 pre-beta-exit blockers remain.
 
 ---
 
