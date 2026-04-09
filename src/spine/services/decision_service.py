@@ -6,7 +6,7 @@ from pathlib import Path
 
 from spine import constants as C
 from spine.models import DecisionModel
-from spine.utils.jsonl import append_jsonl
+from spine.utils.jsonl import append_jsonl, read_jsonl
 
 
 class DecisionValidationError(Exception):
@@ -47,6 +47,13 @@ class DecisionService:
         )
         append_jsonl(self.jsonl_path, decision_record.to_json())
         return decision_record
+
+    def list(self) -> list[dict]:
+        """
+        Return all decision records sorted by created_at (ascending).
+        """
+        records = read_jsonl(self.jsonl_path)
+        return sorted(records, key=lambda r: r.get("created_at", ""))
 
     def add_draft(
         self,

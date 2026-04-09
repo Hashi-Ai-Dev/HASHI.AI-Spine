@@ -6,7 +6,7 @@ from pathlib import Path
 
 from spine import constants as C
 from spine.models import EvidenceModel, EVIDENCE_KINDS
-from spine.utils.jsonl import append_jsonl
+from spine.utils.jsonl import append_jsonl, read_jsonl
 
 
 class EvidenceValidationError(Exception):
@@ -37,6 +37,13 @@ class EvidenceService:
         )
         append_jsonl(self.jsonl_path, evidence.to_json())
         return evidence
+
+    def list(self) -> list[dict]:
+        """
+        Return all evidence records sorted by created_at (ascending).
+        """
+        records = read_jsonl(self.jsonl_path)
+        return sorted(records, key=lambda r: r.get("created_at", ""))
 
     def add_draft(
         self,

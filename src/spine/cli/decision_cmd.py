@@ -112,3 +112,54 @@ def decision_add(
         else:
             console.print(f"[bold red]Validation error:[/bold red] {exc}")
         raise typer.Exit(EXIT_VALIDATION)
+
+
+@decision_app.command("list", help="List decision records from .spine/decisions.jsonl.")
+def decision_list(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
+    ),
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        help="Output result as JSON (machine-readable).",
+    ),
+) -> None:
+    """
+    List all decision records from .spine/decisions.jsonl, sorted by created_at.
+
+    Exit codes:
+      0  Success (including empty list)
+      2  Context failure — repo not found or .spine/ missing
+    """
+    try:
+        repo_root, spine_root = resolve_roots(cwd)
+    except Exception as exc:
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
+
+    service = DecisionService(repo_root, spine_root=spine_root)
+    records = service.list()
+
+    if json_output:
+        print(json.dumps({"ok": True, "count": len(records), "records": records}, indent=2))
+        return
+
+    if not records:
+        console.print("[dim]No decision records found.[/dim]")
+        return
+
+    for rec in records:
+        title = rec.get("title", "")
+        decision = rec.get("decision", "")
+        created_at = rec.get("created_at", "")[:10]  # date portion only
+        alternatives = rec.get("alternatives", [])
+        console.print(f"[bold green]{title}[/bold green]  [dim]{created_at}[/dim]")
+        console.print(f"  Decision: {decision}")
+        if alternatives:
+            console.print(f"  Alternatives: {', '.join(alternatives)}")

@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #59 — drift scan --json merged, 4 pre-beta-exit blockers remain)
+**Last updated:** 2026-04-09 (Issue #64 — in review, PR #68) blockers remain)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -24,13 +24,13 @@
 | Beta blocker stabilization | ✅ Complete — PR #46 |
 | Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
-| **Pre-Beta-Exit blockers** | ⚠️ **4 open — beta exit blocked** |
+| **Pre-Beta-Exit blockers** | ⚠️ **3 open — beta exit blocked** |
 
 ---
 
 ## ⚠️ Beta Exit Blocked
 
-Beta exit is NOT currently justified. 4 pre-beta-exit issues remain.
+Beta exit is NOT currently justified. 3 pre-beta-exit issues remain.
 
 **Agent-usability-first ordering** (from dogfood session): agent-usage issues before docs cleanup.
 
@@ -39,7 +39,7 @@ Beta exit is NOT currently justified. 4 pre-beta-exit issues remain.
 | Priority | # | Issue | Status |
 |---|---|---|---|
 | 1 | ~~#59~~ | ~~`spine drift scan --json` missing~~ | ✅ Fixed — PR #67 |
-| 2 | #64 | `spine evidence list` + `spine decision list` | 🟡 Medium — Open |
+| 2 | #64 | `spine evidence list` + `spine decision list` | 🟡 Medium | 📋 In review (PR #68) |
 | 3 | #65 | `check before-pr --json` structured doctor detail | 🟡 Medium — Open |
 | 4 | #66 | `check before-work` no-brief advisory not exit 1 | 🟡 Medium — Open |
 | 5 | #60 | SECURITY_BASELINE wrong repo name | 🟡 Medium — Open |
@@ -77,7 +77,7 @@ Beta exit is NOT currently justified. 4 pre-beta-exit issues remain.
 
 ## Next Active Priority
 
-**Issue #64** — `spine evidence list` + `spine decision list`. Agent-usability-first ordering.
+**Issue #65** — `check before-pr --json` structured doctor detail. Agent-usability-first ordering.
 
 ---
 

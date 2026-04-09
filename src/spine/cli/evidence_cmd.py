@@ -89,3 +89,55 @@ def evidence_add(
         else:
             console.print(f"[bold red]Validation error:[/bold red] {exc}")
         raise typer.Exit(EXIT_VALIDATION)
+
+
+@evidence_app.command("list", help="List evidence records from .spine/evidence.jsonl.")
+def evidence_list(
+    cwd: Path | None = typer.Option(
+        None,
+        "--cwd",
+        help="Target repository path. Overrides SPINE_ROOT. Precedence: --cwd > SPINE_ROOT > cwd.",
+    ),
+    json_output: bool = typer.Option(
+        False,
+        "--json",
+        help="Output result as JSON (machine-readable).",
+    ),
+) -> None:
+    """
+    List all evidence records from .spine/evidence.jsonl, sorted by created_at.
+
+    Exit codes:
+      0  Success (including empty list)
+      2  Context failure — repo not found or .spine/ missing
+    """
+    try:
+        repo_root, spine_root = resolve_roots(cwd)
+    except Exception as exc:
+        if json_output:
+            print(json.dumps({"error": str(exc), "exit_code": EXIT_CONTEXT}, indent=2))
+        else:
+            console.print(f"[bold red]Error:[/bold red] {exc}")
+        raise typer.Exit(EXIT_CONTEXT)
+
+    service = EvidenceService(repo_root, spine_root=spine_root)
+    records = service.list()
+
+    if json_output:
+        print(json.dumps({"ok": True, "count": len(records), "records": records}, indent=2))
+        return
+
+    if not records:
+        console.print("[dim]No evidence records found.[/dim]")
+        return
+
+    for rec in records:
+        kind = rec.get("kind", "unknown")
+        description = rec.get("description", "")
+        created_at = rec.get("created_at", "")[:10]  # date portion only
+        url = rec.get("evidence_url", "")
+        line = f"[bold cyan]{kind}[/bold cyan]  {description}"
+        if url:
+            line += f"  [dim]{url}[/dim]"
+        line += f"  [dim]{created_at}[/dim]"
+        console.print(line)
