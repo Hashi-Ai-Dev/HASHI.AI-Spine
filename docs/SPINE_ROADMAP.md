@@ -1,6 +1,6 @@
 # SPINE Roadmap
 
-> **What SPINE is:** Local-first, repo-native mission governor for AI coding agents. Governance layer above coding agents (Claude Code, Codex, OpenClaw, OpenCode). Manages mission, scope, proof, decisions, drift, and reviews.
+> **What SPINE is:** Local-first, repo-native mission governor for AI coding agents. Governance layer above coding agents (Claude Code, Codex, OpenClaw, and similar). Manages mission, scope, proof, decisions, drift, and reviews.
 
 > **What SPINE is NOT:** A coding agent itself. A dashboard-first product. A cloud control plane. A swarm orchestration system.
 
@@ -8,15 +8,15 @@
 
 ## Project Stage
 
-**Public alpha.** v0.1.1-alpha published 2026-04-07. Core CLI is functional and externally validated.
+**Beta achieved.** v0.2.0-beta published 2026-04-07. Beta exit validation passed 2026-04-09. Core CLI is functional and governance-validated.
 
 ---
 
 ## Current Phase
 
-**Phase 2 Complete.** SPINE has a working Phase 1 (init) and Phase 2 (governance commands: brief, doctor, mission, proof, decision, drift) CLI suite.
+**Phase 3A Complete.** SPINE has a working Phase 1 (init), Phase 2 (governance commands), and Phase 3A (drift detection, MCP, review, check surfaces) CLI suite.
 
-Current stabilization target: **v0.1.2**
+Current target: **v0.2.0 — post-beta release**
 
 ---
 
@@ -24,65 +24,44 @@ Current stabilization target: **v0.1.2**
 
 | Milestone | Scope | Status |
 |-----------|-------|--------|
-| `v0.1.1-alpha` | Phase 1 + 2 core, public alpha launch | ✅ Published |
-| `v0.1.2` | Stabilization: CI, `--cwd` support, security settings, docs | 🔄 Next |
-| `v0.2 / Phase 3A` | CLI surface expansion, Phase 3 spec implementation | 📋 Planned |
+| `v0.1.1-alpha` | Phase 1 + 2 core, public alpha launch | ✅ Published 2026-04-07 |
+| `v0.2.0-beta` | Phase 3A full surface, beta stabilization, integrations | ✅ Beta achieved 2026-04-09 |
+| `v0.2.0` | Post-beta: bug fixes only, Phase 3B candidates deferred | 📋 Next |
 
 ---
 
-## v0.1.2 — Stabilization (Next)
+## v0.2.0 — Post-Beta Release (Next)
 
-**Goal:** Fix known gaps, add minimal CI, improve external-repo support, close security settings.
+**Goal:** Bug fixes only. No new features until v0.2.0 is stable. Phase 3B candidates remain deferred.
 
-### Planned items:
-- Enable Dependabot alerts + secret scanning (human action required in GitHub settings)
-- Add `--cwd` support to Phase 2 commands (only `spine init` accepts it currently)
-- Add minimal CI pipeline (lint + tests on push/PR)
-- Create org-level ruleset for `Hashi-Ai-Dev`
-- Clarify onboarding / quickstart docs
+### Post-beta policy:
+- Bug fixes and security issues only
+- No new feature work until v0.2.0 stabilizes
+- Phase 3B candidates tracked in `docs/SPINE_FEATURE_BACKLOG.md`
 
----
-
-## v0.2 / Phase 3A — CLI Expansion
-
-**Goal:** Expand command surface beyond Phase 2, implement Phase 3 architecture spec.
-
-### Planned items (see `docs/SPINE_FEATURE_BACKLOG.md` for full list):
-- CLI surface: additional governance commands
-- Phase 3 architecture decisions from planning spec
-- Further external-repo compatibility
-- CI/status check improvements
-
-**Phase 3A spec exists** at `docs/SPINE_PHASE3A_v0.2_SPEC.md`. Implementation requires human review + explicit approval.
+### Out of scope until Phase 3B:
+- New CLI surfaces beyond existing Phase 3A suite
+- Cloud dashboards or remote control planes
+- Agent orchestration or task decomposition
+- Universal agent framework positioning
 
 ---
 
-## Later Phases (Not Yet Planned)
+## Phase 3B — Growth (Deferred)
 
-- Phase 3B and beyond
-- Remote MCP server / networking layer
-- Multi-user / collaboration features
-- Web UI / dashboard
-- Auth, billing, cloud sync
-
----
-
-## Explicitly Out of Scope (v0.x)
-
-- Any cloud control plane or SaaS layer
-- Swarm orchestration or multi-agent coordination
-- Dashboard-first product thinking
-- Remote networking (until Phase 3+ explicitly approved)
-- Non-AI-coder use cases (this is a coder tool for coder tools)
+### Candidates:
+- Optional governance profiles (e.g., strict / relaxed / audit)
+- Stronger local tool-consumption surfaces
+- Deeper external-agent compatibility (OpenClaw first-class path)
+- Version story normalization across repo surfaces
 
 ---
 
-## Strategic Positioning
+## Getting Started
 
-SPINE sits **above** the coding agent layer. It does not code — it governs the agent that does. The product is the governance primitive: clear mission, enforced scope, proof of work, decision audit trail, drift detection.
-
-Solo builder advantage: no committee, no infinite scope. Ship fast, learn fast.
-
----
-
-*Last updated: 2026-04-07 by SPINE Repo Manager Agent*
+```bash
+pip install spine-cli
+spine init
+spine doctor
+uv run spine brief --target claude
+```
