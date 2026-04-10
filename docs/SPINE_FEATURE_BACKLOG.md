@@ -74,7 +74,7 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 | # | Issue | Status |
 |---|---|
-| #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | 🟡 Open — Phase 3B candidate |
+| #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | ✅ Done — `spine target` command added |
 | #74 | Discipline-tax reduction in repeated governance workflows | 🟡 Open — Phase 3B candidate |
 | #75 | OpenClaw first-class startup/skill path | 🟡 Open — Phase 3B candidate |
 
@@ -82,8 +82,8 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 ## Phase 3B Candidates
 
-### 🟡 SPINE_ROOT ergonomics (#73)
-**Status:** Active — Phase 3B candidate
+### ✅ SPINE_ROOT ergonomics (#73)
+**Status:** Done — `spine target` command added. Shows resolved target with source annotation. Documents one-shot `SPINE_ROOT=/path spine <cmd>` pattern. 15 new tests, all passing.
 
 ### 🟡 Discipline-tax reduction (#74)
 **Status:** Active — Phase 3B candidate

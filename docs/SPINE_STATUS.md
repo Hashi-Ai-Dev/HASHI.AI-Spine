@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-10 (Beta exit housekeeping complete; mission.yaml populated; v1.0 milestone created)
+**Last updated:** 2026-04-10 (Post-beta stabilization active; #73 SPINE_ROOT ergonomics resolved — `spine target` added)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -60,6 +60,17 @@ See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full evidence-backed judgment.
 **`v0.2.0`** — Post-beta release
 
 Next: operator cuts the v0.2.0 tag. See `docs/SPINE_ROADMAP.md`.
+
+---
+
+## v1.0 Stabilization Progress (Milestone #6)
+
+| # | Issue | Status |
+|---|---|---|
+| #73 | SPINE_ROOT ergonomics — `spine target` command | ✅ Done — branch `claude/spine-root-ergonomics-l2Vu3` |
+| #74 | Discipline-tax reduction | 🟡 Open |
+| #75 | OpenClaw first-class startup/skill path | 🟡 Open |
+| #76 | Remote MCP (strategic) | 🔵 Deferred |
 
 ---
 

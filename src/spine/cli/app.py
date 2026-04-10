@@ -34,6 +34,24 @@ def resolve_roots(cwd: Path | None = None) -> tuple[Path, Path]:
     - which source produced it (--cwd, SPINE_ROOT, or cwd)
     - what the operator should do to fix it
 
+    Ergonomic patterns for repeated and multi-repo use:
+
+    Long-running shell (session default)::
+
+        export SPINE_ROOT=/path/to/repo   # all commands in this shell use this repo
+        spine doctor
+        spine evidence add ...
+
+    One-shot multi-repo (no shell pollution)::
+
+        SPINE_ROOT=/path/to/repo_a spine doctor
+        SPINE_ROOT=/path/to/repo_b spine evidence add ...
+
+    Verify current target::
+
+        spine target            # shows resolved target + source
+        spine target --json     # machine-readable
+
     Returns (git_root, spine_root).
     """
     from spine.utils.paths import find_git_root, GitRepoNotFoundError
