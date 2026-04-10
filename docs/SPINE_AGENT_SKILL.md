@@ -19,6 +19,20 @@ Governance data lives in `.spine/*.jsonl` files (committed to git where repo pol
 
 **Cross-repo targeting:** SPINE can target a different repo via `--cwd /path/to/repo` or `SPINE_ROOT=/path/to/other/repo`. Use this when governing a sub-repo or a repo that is not the current working directory.
 
+Targeting resolution order: `--cwd` > `SPINE_ROOT` > current working directory.
+
+```bash
+# Long-running shell: set a session default once
+export SPINE_ROOT=/path/to/repo
+
+# One-shot: target a repo for a single command only (no shell pollution)
+SPINE_ROOT=/path/to/repo spine doctor
+
+# Verify what SPINE is currently targeting
+uv run spine target
+uv run spine target --json
+```
+
 ## When to Use This Skill
 
 Use SPINE when:
@@ -124,6 +138,8 @@ If a governance write fails because of `.gitignore`, repo policy, or workspace r
 | `uv run spine evidence list` | List recorded evidence |
 | `uv run spine drafts list` | List pending drafts |
 | `uv run spine drafts confirm <id>` | Promote a draft to canonical |
+| `uv run spine target` | Show currently resolved target repo + source |
+| `uv run spine target --json` | Machine-readable target info |
 
 ---
 

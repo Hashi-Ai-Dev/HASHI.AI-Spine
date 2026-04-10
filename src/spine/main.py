@@ -17,5 +17,6 @@ import spine.cli.mcp_cmd  # noqa: F401 — registers @app.command("mcp")
 import spine.cli.check_cmd  # noqa: F401 — registers @app.command("check"), "check before-pr"
 import spine.cli.drafts_cmd  # noqa: F401 — registers @app.command("drafts"), "drafts list", "drafts confirm"
 import spine.cli.hooks_cmd  # noqa: F401 — registers @app.command("hooks"), "hooks install", "hooks list", "hooks uninstall"
+import spine.cli.target_cmd  # noqa: F401 — registers @app.command("target")
 
 __all__ = ["app"]
