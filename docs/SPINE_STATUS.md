@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-10 (Post-beta stabilization active; #73 SPINE_ROOT ergonomics resolved — `spine target` added)
+**Last updated:** 2026-04-10 (Post-beta stabilization active; `spine target` command added via PR #77; #73 closed)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -9,9 +9,9 @@
 
 | | |
 |---|---|
-| **Version** | `v0.2.0-beta` |
-| **Status** | Beta exit achieved — ready for formal v0.2.0 tag |
-| **Target** | v0.2.0 |
+| **Version** | `v0.2.0` |
+| **Status** | Post-beta — stable |
+| **Target** | v1.0 — Post-Beta Stabilization |
 
 ---
 
@@ -25,7 +25,8 @@
 | Beta core feature queue | ✅ Complete |
 | Beta polish queue | ✅ Complete |
 | **Beta exit** | ✅ Achieved (2026-04-09) |
-| **Next** | v0.2.0 tag + post-beta stabilization |
+| **v0.2.0** | ✅ Released (2026-04-10) |
+| **v1.0 — Post-Beta Stabilization** | 🔄 Active — milestone #6 |
 
 ---
 
@@ -48,29 +49,15 @@ Beta exit gate cleared. All pre-beta-exit issues resolved.
 
 See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full evidence-backed judgment.
 
-### Post-Beta Housekeeping (2026-04-10)
-- `.spine/mission.yaml` populated with real self-governance values (commit `c0cf5d3c`) — beta-exit caveat resolved
-- `docs/SPINE_ROADMAP.md` updated for post-beta state
-- `milestone/6` created: "v1.0 — Post-Beta Stabilization"
-
----
-
-## Current Milestone
-
-**`v0.2.0`** — Post-beta release
-
-Next: operator cuts the v0.2.0 tag. See `docs/SPINE_ROADMAP.md`.
-
 ---
 
 ## v1.0 Stabilization Progress (Milestone #6)
 
 | # | Issue | Status |
 |---|---|---|
-| #73 | SPINE_ROOT ergonomics — `spine target` command | ✅ Done — branch `claude/spine-root-ergonomics-l2Vu3` |
-| #74 | Discipline-tax reduction | 🟡 Open |
+| ~~#73~~ | ~~SPINE_ROOT ergonomics — `spine target` command added~~ | ✅ Fixed — PR #77 |
+| #74 | Discipline-tax reduction in repeated governance workflows | 🟡 Open |
 | #75 | OpenClaw first-class startup/skill path | 🟡 Open |
-| #76 | Remote MCP (strategic) | 🔵 Deferred |
 
 ---
 
@@ -91,7 +78,6 @@ SPINE is a **repo-native mission governor** for AI coding agents. It sits above 
 - Repo: https://github.com/Hashi-Ai-Dev/SPINE
 - Releases: https://github.com/Hashi-Ai-Dev/SPINE/releases
 - Spec: `docs/SPINE_SPEC.md` (canonical post-beta)
-- Phase 3A planning history: `docs/SPINE_PHASE3A_v0.2_SPEC.md` (complete/historical)
 - Tracking policy: `docs/SPINE_TRACKING_POLICY.md`
 - Agent skill: `docs/SPINE_AGENT_SKILL.md`
 - Beta-exit validation: `docs/SPINE_BETA_EXIT_VALIDATION.md`
