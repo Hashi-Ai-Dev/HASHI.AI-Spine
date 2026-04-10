@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-09 (Issue #60 — SECURITY_BASELINE wrong repo name fixed on main, pre-beta-exit blockers cleared)
+**Last updated:** 2026-04-09 (Issue #51 — beta-exit proof harness + validation artifact landed on branch `beta/issue51-beta-exit-proof-validation`; pre-beta-exit blockers cleared; harness PASS)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -74,13 +74,13 @@ All pre-beta-exit blockers are resolved. Beta exit is now unblocked pending #51 
 
 | # | Issue | Status |
 |---|---|---|
-| #51 | Beta-exit proof/validation | 📋 Last — unblocked now that pre-beta-exit issues cleared |
+| #51 | Beta-exit proof/validation | ✅ Harness + artifact landed on branch `beta/issue51-beta-exit-proof-validation` (PASS, 29/29 steps). See [`docs/SPINE_BETA_EXIT_VALIDATION.md`](SPINE_BETA_EXIT_VALIDATION.md). |
 
 ---
 
 ## Next Active Priority
 
-**Issue #51** — Beta-exit proof/validation. All pre-beta-exit blockers cleared. This is the final step before beta exit.
+**Beta-exit tag + release gate.** Issue #51 is closed out in branch; all pre-beta-exit blockers cleared; harness-backed validation artifact recommends beta-exit with one operator-authority caveat (populate `.spine/mission.yaml` fields on `main`). See [`docs/SPINE_BETA_EXIT_VALIDATION.md`](SPINE_BETA_EXIT_VALIDATION.md) §10.
 
 ---
 

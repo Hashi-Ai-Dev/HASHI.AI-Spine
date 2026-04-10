@@ -1,0 +1,283 @@
+{
+  "spine_dir": "/home/user/SPINE",
+  "sandbox": "/tmp/spine_beta_exit_v2",
+  "total": 29,
+  "failures": 0,
+  "status": "PASS",
+  "records": [
+    {
+      "step": 1,
+      "iter": "setup",
+      "name": "init",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "          \u2502\n\u2502      \u2014 commit governance state to version control                            \u2502\n\u2502                                                                              \u2502\n\u2502 Run uv run spine --help to see all available commands.          "
+    },
+    {
+      "step": 2,
+      "iter": "setup",
+      "name": "doctor_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"passed\": true,\n  \"repo\": \"/tmp/spine_beta_exit_v2/target\",\n  \"branch\": \"master\",\n  \"default_branch\": \"master\",\n  \"checked_at\": \"2026-04-09T20:20:09.309226+00:00\",\n  \"error_count\": 0,\n  \"warning_count\": 1,\n  \"issues\": [\n    {\n      \"sev"
+    },
+    {
+      "step": 3,
+      "iter": "setup",
+      "name": "mission_set",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Mission updated: Harness mission\nStatus: active\nUpdated at: 2026-04-09T20:20:09.639991+00:00"
+    },
+    {
+      "step": 4,
+      "iter": "setup",
+      "name": "mission_show_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "te the full loop deterministically\",\n  \"success_metric\": {\n    \"type\": \"milestone\",\n    \"value\": \"harness validated\"\n  },\n  \"deadline_window_days\": 42,\n  \"review_cadence\": \"weekly\",\n  \"preferred_runtimes\": [],\n  \"preferred_models\": {},\n  \"a"
+    },
+    {
+      "step": 5,
+      "iter": "1",
+      "name": "brief_claude",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "repo: /tmp/spine_beta_exit_v2/target  branch: master  default: master\nBrief generated: \n/tmp/spine_beta_exit_v2/target/.spine/briefs/claude/20260409_202010.md\nLatest alias updated:  \n/tmp/spine_beta_exit_v2/target/.spine/briefs/claude/lates"
+    },
+    {
+      "step": 6,
+      "iter": "1",
+      "name": "brief_codex",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "repo: /tmp/spine_beta_exit_v2/target  branch: master  default: master\nBrief generated: \n/tmp/spine_beta_exit_v2/target/.spine/briefs/codex/20260409_202010.md\nLatest alias updated:  \n/tmp/spine_beta_exit_v2/target/.spine/briefs/codex/latest."
+    },
+    {
+      "step": 7,
+      "iter": "1",
+      "name": "before_work_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": " \"pass\",\n      \"message\": \".spine/ found\"\n    },\n    {\n      \"name\": \"mission\",\n      \"status\": \"pass\",\n      \"message\": \"mission.yaml present and readable\"\n    },\n    {\n      \"name\": \"doctor\",\n      \"status\": \"pass\",\n      \"message\": \"repo"
+    },
+    {
+      "step": 8,
+      "iter": "1",
+      "name": "evidence_add",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Evidence added:  harness iter 1 brief generated\n  Created at: 2026-04-09T20:20:11.308204+00:00"
+    },
+    {
+      "step": 9,
+      "iter": "1",
+      "name": "evidence_list",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "brief_generated  harness iter 1 brief generated  2026-04-09"
+    },
+    {
+      "step": 10,
+      "iter": "1",
+      "name": "decision_add",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Decision added: Harness iter 1 decision\n  Why: exercise decision surface\n  Decision: recorded deterministic harness decision\n  Created at: 2026-04-09T20:20:11.962874+00:00"
+    },
+    {
+      "step": 11,
+      "iter": "1",
+      "name": "decision_list",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Harness iter 1 decision  2026-04-09\n  Decision: recorded deterministic harness decision"
+    },
+    {
+      "step": 12,
+      "iter": "1",
+      "name": "drift_scan_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"clean\": true,\n  \"repo\": \"/tmp/spine_beta_exit_v2/target\",\n  \"branch\": \"master\",\n  \"default_branch\": \"master\",\n  \"scanned_at\": \"2026-04-09T20:20:12.650843+00:00\",\n  \"event_count\": 0,\n  \"severity_summary\": {\n    \"low\": 0,\n    \"medium\": 0"
+    },
+    {
+      "step": 13,
+      "iter": "1",
+      "name": "before_pr_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": ",\n      \"status\": \"pass\",\n      \"message\": \"repo health OK\",\n      \"category\": \"health\"\n    },\n    {\n      \"name\": \"drift\",\n      \"status\": \"pass\",\n      \"message\": \"no drift events logged\",\n      \"category\": \"history\"\n    },\n    {\n      \"n"
+    },
+    {
+      "step": 14,
+      "iter": "1",
+      "name": "review_weekly_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"canonical_path\": \"/tmp/spine_beta_exit_v2/target/.spine/reviews/2026-04-09.md\",\n  \"latest_path\": \"/tmp/spine_beta_exit_v2/target/.spine/reviews/latest.md\",\n  \"recommendation\": \"continue\",\n  \"period_days\": 7,\n  \"mission_title\": \"Harness"
+    },
+    {
+      "step": 0,
+      "iter": "1",
+      "name": "counts",
+      "evidence": 1,
+      "decisions": 1
+    },
+    {
+      "step": 15,
+      "iter": "2",
+      "name": "brief_claude",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "repo: /tmp/spine_beta_exit_v2/target  branch: master  default: master\nBrief generated: \n/tmp/spine_beta_exit_v2/target/.spine/briefs/claude/20260409_202013.md\nLatest alias updated:  \n/tmp/spine_beta_exit_v2/target/.spine/briefs/claude/lates"
+    },
+    {
+      "step": 16,
+      "iter": "2",
+      "name": "brief_codex",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "repo: /tmp/spine_beta_exit_v2/target  branch: master  default: master\nBrief generated: \n/tmp/spine_beta_exit_v2/target/.spine/briefs/codex/20260409_202014.md\nLatest alias updated:  \n/tmp/spine_beta_exit_v2/target/.spine/briefs/codex/latest."
+    },
+    {
+      "step": 17,
+      "iter": "2",
+      "name": "before_work_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": " \"pass\",\n      \"message\": \".spine/ found\"\n    },\n    {\n      \"name\": \"mission\",\n      \"status\": \"pass\",\n      \"message\": \"mission.yaml present and readable\"\n    },\n    {\n      \"name\": \"doctor\",\n      \"status\": \"pass\",\n      \"message\": \"repo"
+    },
+    {
+      "step": 18,
+      "iter": "2",
+      "name": "evidence_add",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Evidence added:  harness iter 2 brief generated\n  Created at: 2026-04-09T20:20:14.678159+00:00"
+    },
+    {
+      "step": 19,
+      "iter": "2",
+      "name": "evidence_list",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "brief_generated  harness iter 1 brief generated  2026-04-09\nbrief_generated  harness iter 2 brief generated  2026-04-09"
+    },
+    {
+      "step": 20,
+      "iter": "2",
+      "name": "decision_add",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Decision added: Harness iter 2 decision\n  Why: exercise decision surface\n  Decision: recorded deterministic harness decision\n  Created at: 2026-04-09T20:20:15.335655+00:00"
+    },
+    {
+      "step": 21,
+      "iter": "2",
+      "name": "decision_list",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "Harness iter 1 decision  2026-04-09\n  Decision: recorded deterministic harness decision\nHarness iter 2 decision  2026-04-09\n  Decision: recorded deterministic harness decision"
+    },
+    {
+      "step": 22,
+      "iter": "2",
+      "name": "drift_scan_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"clean\": true,\n  \"repo\": \"/tmp/spine_beta_exit_v2/target\",\n  \"branch\": \"master\",\n  \"default_branch\": \"master\",\n  \"scanned_at\": \"2026-04-09T20:20:16.038040+00:00\",\n  \"event_count\": 0,\n  \"severity_summary\": {\n    \"low\": 0,\n    \"medium\": 0"
+    },
+    {
+      "step": 23,
+      "iter": "2",
+      "name": "before_pr_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": ",\n      \"status\": \"pass\",\n      \"message\": \"repo health OK\",\n      \"category\": \"health\"\n    },\n    {\n      \"name\": \"drift\",\n      \"status\": \"pass\",\n      \"message\": \"no drift events logged\",\n      \"category\": \"history\"\n    },\n    {\n      \"n"
+    },
+    {
+      "step": 24,
+      "iter": "2",
+      "name": "review_weekly_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"canonical_path\": \"/tmp/spine_beta_exit_v2/target/.spine/reviews/2026-04-09.md\",\n  \"latest_path\": \"/tmp/spine_beta_exit_v2/target/.spine/reviews/latest.md\",\n  \"recommendation\": \"continue\",\n  \"period_days\": 7,\n  \"mission_title\": \"Harness"
+    },
+    {
+      "step": 0,
+      "iter": "2",
+      "name": "counts",
+      "evidence": 2,
+      "decisions": 2
+    },
+    {
+      "step": 25,
+      "iter": "probe",
+      "name": "drift_scan_dirty_json",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"clean\": false,\n  \"repo\": \"/tmp/spine_beta_exit_v2/target\",\n  \"branch\": \"master\",\n  \"default_branch\": \"master\",\n  \"scanned_at\": \"2026-04-09T20:20:17.087494+00:00\",\n  \"event_count\": 1,\n  \"severity_summary\": {\n    \"low\": 0,\n    \"medium\": "
+    },
+    {
+      "step": 26,
+      "iter": "probe",
+      "name": "drift_scan_flags_forbidden",
+      "exit": 0,
+      "expected": 0,
+      "status": "PASS",
+      "tail": "{\n  \"clean\": false,\n  \"repo\": \"/tmp/spine_beta_exit_v2/target\",\n  \"branch\": \"master\",\n  \"default_branch\": \"master\",\n  \"scanned_at\": \"2026-04-09T20:20:17.087494+00:00\",\n  \"event_count\": 1,\n  \"severity_summary\": {\n    \"low\": 0,\n    \"medium\": "
+    },
+    {
+      "step": 27,
+      "iter": "probe",
+      "name": "before_pr_json_blocked",
+      "exit": 1,
+      "expected": 1,
+      "status": "PASS",
+      "tail": "essage\": \"repo health OK\",\n      \"category\": \"health\"\n    },\n    {\n      \"name\": \"drift\",\n      \"status\": \"warn\",\n      \"message\": \"1 drift event(s) logged (1 high) \\u2014 review before PR\",\n      \"category\": \"history\"\n    },\n    {\n      \"n"
+    },
+    {
+      "step": 0,
+      "iter": "assert",
+      "name": "state_coherence",
+      "evidence": 2,
+      "decisions": 2,
+      "drift": 1,
+      "status": "PASS"
+    },
+    {
+      "step": 0,
+      "iter": "shape",
+      "name": "json_shape_check",
+      "exit": 0,
+      "status": "PASS"
+    }
+  ],
+  "_note": "Captured reference run. Re-generate with scripts/beta_exit_validation/run_harness.sh"
+}

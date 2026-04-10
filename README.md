@@ -161,7 +161,7 @@ Commands that require a git repo fail fast with a clear message when the resolve
 
 Validated against two repos before the v0.2.0-beta release:
 
-- **Self-governance:** Full governance loop on SPINE's own repo — mission set, evidence logged, decisions recorded, drift scanned, weekly review and agent briefs generated. Test suite: **505 passing** (23 test files, CI active on every push and PR).
+- **Self-governance:** Full governance loop on SPINE's own repo — evidence logged, decisions recorded, drift scanned, weekly review and agent briefs generated. Test suite: **544 passing** (25 test files, CI active on every push and PR).
 - **External repo (gsn-connector):** `--cwd` and `SPINE_ROOT` targeting verified end-to-end across all commands. Drift scan correctly read the external repo's git history. No state pollution between repos.
 
 ## Known Limitations

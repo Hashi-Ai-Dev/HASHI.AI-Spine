@@ -54,7 +54,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 | # | Issue | Status |
 |---|---|---|
-| #51 | Beta-exit proof/validation | 📋 Last — blocked until pre-beta-exit issues cleared |
+| #51 | Beta-exit proof/validation | ✅ Harness + artifact landed on branch `beta/issue51-beta-exit-proof-validation`. See [`SPINE_BETA_EXIT_VALIDATION.md`](SPINE_BETA_EXIT_VALIDATION.md). |
 
 ---
 
@@ -86,4 +86,4 @@ Grouped by target milestone. Each item: title, short description, why it matters
 
 ---
 
-*Last updated: 2026-04-09 — All pre-beta-exit blockers cleared. #51 remains as final step before beta exit.*
+*Last updated: 2026-04-09 — Issue #51 (beta-exit proof/validation) closed out on branch `beta/issue51-beta-exit-proof-validation`. Harness PASS. Beta-exit recommendation pending operator review of one mission-fields caveat.*
