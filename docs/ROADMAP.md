@@ -12,15 +12,14 @@ It sits above coding agents and helps keep work:
 This roadmap explains:
 
 - where SPINE is today
-- what must happen before it exits alpha
-- what beta is for
+- what each phase means and when it is complete
 - what "v1.0.0" should actually mean
 
 ---
 
 ## Current Status
 
-SPINE is currently in **public beta** (`v0.2.0-beta`).
+SPINE has exited beta. **v0.2.0** is the current stable release (2026-04-10).
 
 Alpha exit is complete. Phase 3A delivered:
 
@@ -31,11 +30,9 @@ Alpha exit is complete. Phase 3A delivered:
 - artifact ergonomics contract
 - external-repo onboarding docs
 
-The current active stage is:
+The current stage is:
 
-> **Beta — Repeated-use proof, discipline-tax reduction, agent-executable governance**
-
-Beta is focused on making SPINE sustainable in repeated real workflows — reducing governance overhead for agents and operators without hiding what happens.
+> **Post-Beta — v0.2.0 stabilization. Bug fixes only. Phase 3B candidates deferred.**d for agents and operators without hiding what happens.
 
 ---
 
@@ -76,11 +73,16 @@ All Phase 3A goals delivered:
 
 ---
 
-## Beta
+## Beta Exit
 
-### Goal
+**Complete (2026-04-09).** Beta exit validation passed. Beta exit criteria met:
+- 0 known blocker bugs on shipped core surface
+- 0 high-severity trust/usability bugs on core agent workflows
+- Docs, command examples, and CLI tell the same truth
+- SPINE's own repo is self-governed with real mission, evidence, decisions
+- Repeated governed workflows validated end-to-end (29-step harness, 2 iterations)
 
-Beta is where SPINE proves it can be used repeatedly in real workflows **without turning governance into exhausting ceremony**.
+v0.2.0 released 2026-04-10. Beta work focused on reducing discipline tax and making governance mechanics more executable for agents and tools.sting ceremony**.
 
 This is where SPINE should more seriously reduce **discipline tax**.
 
