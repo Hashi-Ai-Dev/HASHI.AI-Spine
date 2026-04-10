@@ -31,7 +31,7 @@ Grouped by target milestone. Each item: title, short description, why it matters
 ### Completed Beta Issues
 
 | # | Issue | PR |
-|---|---|---|
+|---|---|
 | #31 | `spine check before-pr` preflight checkpoint | PR #35 |
 | #32 | Handoff/PR-prep summary primitive | PR #39 |
 | #33 | Draftable governance records | PR #40 |
@@ -68,13 +68,28 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 ---
 
+## v1.0 — Post-Beta Stabilization (Active — Milestone #6)
+
+> Bug fixes and usability hardening only. No new features until v0.2.0 stabilizes.
+
+| # | Issue | Status |
+|---|---|
+| #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | 🟡 Open — Phase 3B candidate |
+| #74 | Discipline-tax reduction in repeated governance workflows | 🟡 Open — Phase 3B candidate |
+| #75 | OpenClaw first-class startup/skill path | 🟡 Open — Phase 3B candidate |
+
+---
+
 ## Phase 3B Candidates
 
-### 🟡 Stronger local tool-consumption surfaces
-**Status:** CANDIDATE — Phase 3B
+### 🟡 SPINE_ROOT ergonomics (#73)
+**Status:** Active — Phase 3B candidate
 
-### 🟡 Optional governance profiles
-**Status:** CANDIDATE — Phase 3B, optional
+### 🟡 Discipline-tax reduction (#74)
+**Status:** Active — Phase 3B candidate
+
+### 🟡 OpenClaw first-class startup/skill path (#75)
+**Status:** Active — Phase 3B candidate
 
 ### 🚫 HUD / live observability mode
 **Status:** REJECTED
@@ -82,6 +97,9 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 ### 🚫 Notification / webhook systems
 **Status:** REJECTED
 
+### 🚫 Remote MCP (strategic question — INTERNAL, not yet approved)
+**Status:** DEFERRED — Issue #76 — product decision pending
+
 ---
 
-*Last updated: 2026-04-09 — Beta exit achieved. All pre-beta-exit issues closed. Beta tag can be cut.*
+*Last updated: 2026-04-10 — v0.2.0 released. Post-beta stabilization active. Milestone #6 open.*
