@@ -1,20 +1,37 @@
 version: 1
 id: mission-0001
-title: Define active mission
+title: SPINE: Repo-Native Mission Governor for AI Agents
 status: active
-target_user: ''
-user_problem: ''
-one_sentence_promise: ''
+target_user: Developers and operators running AI coding agents (Claude Code, Codex, OpenClaw, and similar)
+user_problem: AI agents lose context, drift from stated goals, and accumulate undocumented decisions without explicit governance structures
+one_sentence_promise: SPINE keeps agents aligned to defined missions through scope enforcement, evidence trails, decision records, and drift detection
 success_metric:
   type: milestone
-  value: ''
+  value: Zero unauthorized scope expansions on governed repos; evidence and decision logs current and accurate after each session
 deadline_window_days: 42
 review_cadence: weekly
-preferred_runtimes: []
+preferred_runtimes:
+  - claude
+  - codex
+  - openclaw
 preferred_models: {}
-allowed_scope: []
-forbidden_expansions: []
-proof_requirements: []
-kill_conditions: []
+allowed_scope:
+  - governance
+  - cli
+  - tests
+  - docs
+  - integrations
+forbidden_expansions:
+  - dashboards
+  - cloud-remote
+  - orchestration
+  - platform
+proof_requirements:
+  - evidence logged on each significant decision
+  - decision rationale recorded before implementation
+  - drift events logged and resolved explicitly
+kill_conditions:
+  - Agent workflows become more complex than SPINE's governance model
+  - Scope drift becomes acceptable to operators
 created_at: '2026-04-06T02:49:20.288929+00:00'
-updated_at: '2026-04-06T02:49:20.289931+00:00'
+updated_at: '2026-04-10T10:56:04.944401+00:00'
