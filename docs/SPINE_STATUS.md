@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-10 (Post-beta stabilization active; `spine target` command added via PR #77; #73 closed)
+**Last updated:** 2026-04-10 (`spine log` short-form evidence add added — #74 done; `spine target` added — #73 done)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -56,7 +56,7 @@ See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full evidence-backed judgment.
 | # | Issue | Status |
 |---|---|---|
 | ~~#73~~ | ~~SPINE_ROOT ergonomics — `spine target` command added~~ | ✅ Fixed — PR #77 |
-| #74 | Discipline-tax reduction in repeated governance workflows | 🟡 Open |
+| ~~#74~~ | ~~Discipline-tax reduction — `spine log` short-form evidence add~~ | ✅ Done |
 | #75 | OpenClaw first-class startup/skill path | 🟡 Open |
 
 ---

@@ -64,8 +64,13 @@ uv run spine check before-work
 uv run spine brief --target claude   # generate context brief for this session
 
 # During work — record decisions and evidence
-uv run spine decision add --title "Chose X over Y" --rationale "..."
+uv run spine decision add --title "Chose X over Y" --why "..." --decision "..."
 uv run spine evidence add --kind commit --description "Implemented X"
+
+# Short-form evidence add (fewer flags, same canonical record)
+uv run spine log commit "Implemented X"
+uv run spine log test_pass "All tests green"
+uv run spine log pr "https://github.com/.../pull/42"
 
 # When unsure about scope
 uv run spine drift scan
@@ -132,9 +137,10 @@ If a governance write fails because of `.gitignore`, repo policy, or workspace r
 | `uv run spine check before-pr` | Pre-PR checkpoint |
 | `uv run spine drift scan` | Check for scope drift |
 | `uv run spine drift scan --json` | Machine-readable drift |
-| `uv run spine decision add --title "..." --rationale "..."` | Record a decision |
+| `uv run spine decision add --title "..." --why "..." --decision "..."` | Record a decision |
 | `uv run spine decision list` | List recorded decisions |
-| `uv run spine evidence add --kind commit --description "..."` | Record evidence |
+| `uv run spine log <kind> "<description>"` | Record evidence (short form) |
+| `uv run spine evidence add --kind <kind> --description "..."` | Record evidence (full form) |
 | `uv run spine evidence list` | List recorded evidence |
 | `uv run spine drafts list` | List pending drafts |
 | `uv run spine drafts confirm <id>` | Promote a draft to canonical |

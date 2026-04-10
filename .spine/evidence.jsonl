@@ -33,3 +33,7 @@
 {"kind": "commit", "description": "Implemented #65: added category+detail to CheckItem in check_service.py, updated _output_json in check_cmd.py, added 7 focused tests in test_check_before_pr.py (537 total pass)", "evidence_url": "", "created_at": "2026-04-09T16:17:30.472281+00:00"}
 {"kind": "commit", "description": "fix(#66): before-work no-brief is advisory (exit 0). Changed BeforeWorkResult.result to only block on fail (not warn). Added 8 focused tests. 544 tests passing.", "evidence_url": "", "created_at": "2026-04-09T16:33:41.259543+00:00"}
 {"kind": "commit", "description": "Implement spine target command (#73): 15 tests passing, 559 total, no breaking changes to --cwd/SPINE_ROOT contract", "evidence_url": "", "created_at": "2026-04-10T13:34:29.542937+00:00"}
+{"kind": "commit", "description": "Test evidence log", "evidence_url": "", "created_at": "2026-04-10T14:27:34.369476+00:00"}
+{"kind": "commit", "description": "Test evidence log", "evidence_url": "", "created_at": "2026-04-10T14:27:37.361368+00:00"}
+{"kind": "commit", "description": "Implement spine log short-form evidence command \u2014 #74 discipline-tax reduction", "evidence_url": "", "created_at": "2026-04-10T14:30:06.122772+00:00"}
+{"kind": "test_pass", "description": "570 tests passing \u2014 full suite green after spine log addition", "evidence_url": "", "created_at": "2026-04-10T14:30:06.422110+00:00"}

@@ -18,5 +18,6 @@ import spine.cli.check_cmd  # noqa: F401 — registers @app.command("check"), "c
 import spine.cli.drafts_cmd  # noqa: F401 — registers @app.command("drafts"), "drafts list", "drafts confirm"
 import spine.cli.hooks_cmd  # noqa: F401 — registers @app.command("hooks"), "hooks install", "hooks list", "hooks uninstall"
 import spine.cli.target_cmd  # noqa: F401 — registers @app.command("target")
+import spine.cli.log_cmd  # noqa: F401 — registers @app.command("log") — short-form evidence add (#74)
 
 __all__ = ["app"]
