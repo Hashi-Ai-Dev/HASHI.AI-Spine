@@ -161,7 +161,7 @@ def test_log_multiple_calls_append_multiple_records(tmp_path: Path) -> None:
     lines = evidence_file.read_text().splitlines()
     assert len(lines) == 3
 
-    kinds = [json.loads(l)["kind"] for l in lines]
+    kinds = [json.loads(line)["kind"] for line in lines]
     assert kinds == ["commit", "test_pass", "pr"]
 
 
