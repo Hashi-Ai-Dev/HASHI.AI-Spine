@@ -74,19 +74,19 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 | # | Issue | Status |
 |---|---|
-| #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | ✅ Done — `spine target` command added |
-| #74 | Discipline-tax reduction in repeated governance workflows | ✅ Done — `spine log` short-form evidence add |
+| #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | 🟡 Open — Phase 3B candidate |
+| ~~#74~~ | ~~Discipline-tax reduction — `spine log` short-form evidence add~~ | ✅ Fixed — PR #78 |
 | #75 | OpenClaw first-class startup/skill path | 🟡 Open — Phase 3B candidate |
 
 ---
 
 ## Phase 3B Candidates
 
-### ✅ SPINE_ROOT ergonomics (#73)
-**Status:** Done — `spine target` command added. Shows resolved target with source annotation. Documents one-shot `SPINE_ROOT=/path spine <cmd>` pattern. 15 new tests, all passing.
+### 🟡 SPINE_ROOT ergonomics (#73)
+**Status:** Active — Phase 3B candidate
 
-### ✅ Discipline-tax reduction (#74)
-**Status:** Done — `spine log <kind> "<description>"` short-form evidence add. Positional args replace verbose `--kind`/`--description` flags. Identical canonical record to `evidence add`. 11 new tests, all passing. Cheatsheet `--rationale` bug fixed.
+### 🟡 Discipline-tax reduction (#74)
+**Status:** Active — Phase 3B candidate
 
 ### 🟡 OpenClaw first-class startup/skill path (#75)
 **Status:** Active — Phase 3B candidate
@@ -102,4 +102,4 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 ---
 
-*Last updated: 2026-04-10 — v0.2.0 released. Post-beta stabilization active. Milestone #6: #73 and #74 done; #75 open.*
+*Last updated: 2026-04-10 — v0.2.0 released. Post-beta stabilization active. Milestone #6 open.*
