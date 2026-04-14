@@ -76,7 +76,7 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 |---|---|
 | #73 | SPINE_ROOT ergonomics for long-running shells / multi-repo use | 🟡 Open — Phase 3B candidate |
 | ~~#74~~ | ~~Discipline-tax reduction — `spine log` short-form evidence add~~ | ✅ Fixed — PR #78 |
-| #75 | OpenClaw first-class startup/skill path | 🟡 Open — Phase 3B candidate |
+| ~~#75~~ | ~~OpenClaw first-class startup/skill path~~ | ✅ Implemented — branch `stabilization/issue75-openclaw-first-class-path` |
 
 ---
 
@@ -88,8 +88,8 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 ### 🟡 Discipline-tax reduction (#74)
 **Status:** Active — Phase 3B candidate
 
-### 🟡 OpenClaw first-class startup/skill path (#75)
-**Status:** Active — Phase 3B candidate
+### ✅ OpenClaw first-class startup/skill path (#75)
+**Status:** Implemented — `spine brief --target openclaw`, `.openclaw/spine.yaml` via `spine init`, OpenClaw section in `SPINE_INTEGRATIONS.md`
 
 ### 🚫 HUD / live observability mode
 **Status:** REJECTED
@@ -102,4 +102,4 @@ Beta exit gate is open. See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full ev
 
 ---
 
-*Last updated: 2026-04-10 — v0.2.0 released. Post-beta stabilization active. Milestone #6 open.*
+*Last updated: 2026-04-14 — #75 OpenClaw first-class path implemented. Milestone #6: #73 open, #74 and #75 complete.*

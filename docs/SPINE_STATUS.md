@@ -1,6 +1,6 @@
 # SPINE Status
 
-**Last updated:** 2026-04-10 (`spine log` short-form evidence add — #74 done via PR #78; #73 done via PR #77)
+**Last updated:** 2026-04-14 (OpenClaw first-class startup/skill path — #75 implemented; #74 done via PR #78; #73 done via PR #77)
 **Repo:** `Hashi-Ai-Dev/SPINE`
 
 ---
@@ -57,7 +57,7 @@ See `docs/SPINE_BETA_EXIT_VALIDATION.md` for the full evidence-backed judgment.
 |---|---|---|
 | ~~#73~~ | ~~SPINE_ROOT ergonomics — `spine target` command added~~ | ✅ Fixed — PR #77 |
 | ~~#74~~ | ~~Discipline-tax reduction — `spine log` short-form evidence add~~ | ✅ Fixed — PR #78 |
-| #75 | OpenClaw first-class startup/skill path | 🟡 Open |
+| ~~#75~~ | ~~OpenClaw first-class startup/skill path~~ | ✅ Implemented — branch `stabilization/issue75-openclaw-first-class-path` |
 
 ---
 

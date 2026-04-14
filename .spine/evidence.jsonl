@@ -37,3 +37,4 @@
 {"kind": "commit", "description": "Test evidence log", "evidence_url": "", "created_at": "2026-04-10T14:27:37.361368+00:00"}
 {"kind": "commit", "description": "Implement spine log short-form evidence command \u2014 #74 discipline-tax reduction", "evidence_url": "", "created_at": "2026-04-10T14:30:06.122772+00:00"}
 {"kind": "test_pass", "description": "570 tests passing \u2014 full suite green after spine log addition", "evidence_url": "", "created_at": "2026-04-10T14:30:06.422110+00:00"}
+{"kind": "commit", "description": "Issue #75 \u2014 OpenClaw first-class startup/skill path: spine brief --target openclaw, .openclaw/spine.yaml init config, \u00a74.4 integration docs, 4 new tests, 574 tests pass", "evidence_url": "", "created_at": "2026-04-14T12:55:40.777554+00:00"}

@@ -180,15 +180,81 @@ def test_brief_codex_has_different_content(tmp_path: Path) -> None:
     assert "Evidence" in claude_latest
 
 
+def test_brief_target_openclaw_creates_file(tmp_path: Path) -> None:
+    """spine brief --target openclaw creates a file in .spine/briefs/openclaw/."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    exit_code, stdout, _ = run_brief(tmp_path, "--target", "openclaw")
+
+    assert exit_code == 0, stdout
+    briefs_dir = tmp_path / ".spine" / "briefs" / "openclaw"
+    assert briefs_dir.is_dir()
+    files = list(briefs_dir.glob("*.md"))
+    assert len(files) >= 1, f"Expected brief files in {briefs_dir}, got {files}"
+
+
+def test_brief_openclaw_has_startup_contract_section(tmp_path: Path) -> None:
+    """OpenClaw brief contains the OpenClaw Startup Contract section."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    run_brief(tmp_path, "--target", "openclaw")
+
+    latest_path = tmp_path / ".spine" / "briefs" / "openclaw" / "latest.md"
+    content = latest_path.read_text(encoding="utf-8")
+
+    assert "OpenClaw Startup Contract" in content
+    assert ".spine/briefs/openclaw/latest.md" in content
+    assert ".openclaw/spine.yaml" in content
+
+
+def test_brief_openclaw_has_governance_workflow(tmp_path: Path) -> None:
+    """OpenClaw brief contains the governance workflow section."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    run_brief(tmp_path, "--target", "openclaw")
+
+    latest_path = tmp_path / ".spine" / "briefs" / "openclaw" / "latest.md"
+    content = latest_path.read_text(encoding="utf-8")
+
+    assert "Governance Workflow" in content
+    assert "before-work" in content
+    assert "before-pr" in content
+
+
+def test_brief_openclaw_has_different_content_than_claude(tmp_path: Path) -> None:
+    """OpenClaw brief has different sections than the Claude brief."""
+    make_git_repo(tmp_path)
+    run_init(tmp_path)
+
+    run_brief(tmp_path, "--target", "claude")
+    run_brief(tmp_path, "--target", "openclaw")
+
+    claude_content = (
+        tmp_path / ".spine" / "briefs" / "claude" / "latest.md"
+    ).read_text(encoding="utf-8")
+    openclaw_content = (
+        tmp_path / ".spine" / "briefs" / "openclaw" / "latest.md"
+    ).read_text(encoding="utf-8")
+
+    assert "Mission Brief" in claude_content
+    assert "Mission Brief" in openclaw_content
+    assert "OpenClaw Startup Contract" in openclaw_content
+    assert "OpenClaw Startup Contract" not in claude_content
+    assert "Evidence Requirements" in claude_content
+
+
 def test_brief_invalid_target_rejected(tmp_path: Path) -> None:
-    """spine brief with invalid target (not claude or codex) is rejected."""
+    """spine brief with invalid target (not claude, codex, or openclaw) is rejected."""
     make_git_repo(tmp_path)
     run_init(tmp_path)
 
     exit_code, stdout, _ = run_brief(tmp_path, "--target", "invalid_agent")
 
     assert exit_code == 1
-    assert "claude" in stdout.lower() or "codex" in stdout.lower() or "error" in stdout.lower()
+    assert "claude" in stdout.lower() or "openclaw" in stdout.lower() or "error" in stdout.lower()
 
 
 def test_brief_requires_init(tmp_path: Path) -> None:

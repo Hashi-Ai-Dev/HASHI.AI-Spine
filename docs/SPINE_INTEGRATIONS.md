@@ -1,7 +1,7 @@
 # SPINE Integrations and Compatibility Guide
 
-**Status:** Public — Beta  
-**Last updated:** 2026-04-08
+**Status:** Public — Stable  
+**Last updated:** 2026-04-14
 
 ---
 
@@ -14,6 +14,7 @@
    - [Claude Code](#41-claude-code)
    - [oh-my-claudecode](#42-oh-my-claudecode)
    - [Superpowers](#43-superpowers)
+   - [OpenClaw](#44-openclaw)
 5. [Anti-drift guidance](#5-anti-drift-guidance)
 
 ---
@@ -22,7 +23,7 @@
 
 SPINE is a **repo-native governance layer**. It defines what you are building, bounds the scope, records decisions and evidence, and generates briefing artifacts that agents can load. All state is plain YAML and JSONL files committed alongside your code in `.spine/`.
 
-**Claude Code**, **oh-my-claudecode**, and **Superpowers** are **execution and workflow surfaces**. They manage how AI sessions run, how prompts are structured, how tool calls execute, and how agent sessions are configured and extended.
+**Claude Code**, **oh-my-claudecode**, **Superpowers**, and **OpenClaw** are **execution and workflow surfaces**. They manage how AI sessions run, how prompts are structured, how tool calls execute, and how agent sessions are configured and extended.
 
 These roles do not overlap. The correct layering is:
 
@@ -31,9 +32,9 @@ These roles do not overlap. The correct layering is:
 │         SPINE (.spine/)          │  ← governance layer (mission, scope, decisions, drift)
 └──────────────────────────────────┘
          ↓ briefing artifacts
-┌──────────────────────────────────┐
-│  Claude Code / OMC / Superpowers │  ← execution layer (sessions, tools, prompts)
-└──────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  Claude Code / OMC / Superpowers / OpenClaw │  ← execution layer (sessions, tools, prompts)
+└─────────────────────────────────────────────┘
          ↓ code changes, commits
 ┌──────────────────────────────────┐
 │            Your repo             │
@@ -104,7 +105,8 @@ Machine-readable output for CI scripts, hooks, and automated workflows.
 ├── drift.jsonl        ← drift scan results
 ├── briefs/            ← generated agent briefing files
 │   ├── claude/        ← Claude Code briefing
-│   └── codex/         ← Codex briefing
+│   ├── codex/         ← Codex briefing
+│   └── openclaw/      ← OpenClaw briefing
 └── reviews/           ← generated weekly review files
 ```
 
@@ -113,9 +115,11 @@ Any tool that can read files can consume SPINE's state directly. SPINE never loc
 ### Artifact files
 
 ```
-.spine/briefs/claude/latest.md      ← load in Claude Code with @.spine/briefs/claude/latest.md
-.spine/briefs/claude/YYYY-MM-DD.md  ← point-in-time brief
-.spine/reviews/YYYY-MM-DD.md        ← weekly governance review
+.spine/briefs/claude/latest.md        ← load in Claude Code with @.spine/briefs/claude/latest.md
+.spine/briefs/codex/latest.md         ← Codex brief
+.spine/briefs/openclaw/latest.md      ← load in OpenClaw at session start
+.spine/briefs/<target>/YYYY-MM-DD.md  ← point-in-time brief (any target)
+.spine/reviews/YYYY-MM-DD.md          ← weekly governance review
 ```
 
 Briefs are plain markdown. Load them directly into your agent session.
@@ -128,6 +132,7 @@ Briefs are plain markdown. Load them directly into your agent session.
 - `CLAUDE.md` — Claude Code-specific governance rules
 - `.claude/settings.json` — Claude Code settings
 - `.codex/config.toml` — Codex configuration
+- `.openclaw/spine.yaml` — OpenClaw startup and integration settings
 
 These files are how SPINE communicates governance rules to agents without requiring them to call SPINE directly.
 
@@ -302,6 +307,97 @@ The review file captures what happened and is version-controlled with the code.
 
 ---
 
+### 4.4 OpenClaw
+
+**What OpenClaw contributes:** AI agent sessions with structured skill loading, repo-aware startup, and file-based context management.
+
+**What SPINE contributes:** bounded mission definition, drift detection, decision and evidence logging, mission briefs that ground the session.
+
+OpenClaw reads `.spine/` state directly as files. SPINE does not require OpenClaw to call any API — all governance state is in plain YAML and JSONL.
+
+#### Setup
+
+```bash
+# Initialize SPINE governance on your project
+uv run spine init --cwd /path/to/your-project
+
+# Set a bounded mission
+uv run spine mission set --cwd /path/to/your-project \
+  --title "Auth service v1" \
+  --status active \
+  --scope "auth,jwt,middleware" \
+  --forbid "ui,billing,background-workers"
+
+# Generate an OpenClaw brief
+uv run spine brief --target openclaw --cwd /path/to/your-project
+```
+
+`spine init` writes `.openclaw/spine.yaml` to your repo root. This file tells OpenClaw:
+- where SPINE state lives (`.spine/`)
+- which brief to load at startup (`.spine/briefs/openclaw/latest.md`)
+- which startup commands to run
+
+#### Starting a session
+
+OpenClaw reads `.openclaw/spine.yaml` at startup. The config instructs it to:
+
+1. Run `uv run spine check before-work` — governance health check
+2. Run `uv run spine brief --target openclaw` — generate a fresh brief
+3. Load `.spine/briefs/openclaw/latest.md` — grounds the session in the mission
+
+You can also load the brief manually by pointing OpenClaw at the file:
+
+```
+.spine/briefs/openclaw/latest.md
+```
+
+#### During a session
+
+```bash
+# Log evidence after completing work
+uv run spine log commit "Implemented JWT verification middleware"
+
+# Check for scope drift
+uv run spine drift scan
+
+# Record a decision
+uv run spine decision add \
+  --title "Used HS256 over RS256" \
+  --why "Simpler for single-service deployment" \
+  --decision "HS256 for JWT signing"
+```
+
+#### Before PR
+
+```bash
+uv run spine check before-pr
+```
+
+This runs `spine doctor` and `spine drift scan` together. Resolve any drift before opening the PR.
+
+#### End of session
+
+```bash
+uv run spine review weekly --cwd /path/to/your-project \
+  --recommendation continue \
+  --notes "JWT middleware complete, token refresh next"
+```
+
+#### OpenClaw + SPINE compatibility summary
+
+| Capability | Status |
+|---|---|
+| Read `.spine/mission.yaml` directly | ✅ First-class |
+| `spine brief --target openclaw` | ✅ First-class |
+| `.openclaw/spine.yaml` startup config | ✅ First-class (written by `spine init`) |
+| `AGENTS.md` governance rules | ✅ First-class (runtime-agnostic) |
+| `spine check before-work` / `before-pr` | ✅ Works |
+| Drift detection, evidence, decisions | ✅ Works |
+
+SPINE remains runtime-agnostic. The OpenClaw startup path is explicit and file-based — no daemon, no cloud connection, no hidden behavior.
+
+---
+
 ## 5. Anti-drift guidance
 
 SPINE is not trying to become any of the following:
@@ -326,11 +422,12 @@ If SPINE starts accumulating execution, orchestration, or platform features, tha
 |-------|------|------|
 | Governance | SPINE | Mission, scope, drift, decisions, evidence, briefs |
 | Execution | Claude Code | Interactive coding sessions, tool calls |
+| Execution | OpenClaw | AI agent sessions with skill-based startup and repo awareness |
 | Configuration | oh-my-claudecode | Claude Code session setup, prompts, plugins |
 | Extension | Superpowers | Enhanced tool surfaces for Claude Code |
 | Code | Your repo | The work |
 
-SPINE connects to the execution layer through `.spine/briefs/`, `CLAUDE.md`, `AGENTS.md`, and `--json` outputs. The integration is file-based and requires no runtime coupling.
+SPINE connects to the execution layer through `.spine/briefs/`, `CLAUDE.md`, `AGENTS.md`, `.openclaw/spine.yaml`, and `--json` outputs. The integration is file-based and requires no runtime coupling.
 
 ---
 

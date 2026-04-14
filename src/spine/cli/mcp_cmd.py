@@ -205,7 +205,7 @@ def mcp_serve(
                 description="Generate a mission brief",
                 inputSchema={
                     "type": "object",
-                    "properties": {"target": {"type": "string", "enum": ["claude", "codex"]}},
+                    "properties": {"target": {"type": "string", "enum": ["claude", "codex", "openclaw"]}},
                     "required": ["target"],
                 },
             ),
@@ -298,6 +298,8 @@ def mcp_serve(
             mission_result = mission_service.show()
             if target == "claude":
                 path = brief_service.generate_claude(mission_result.mission)
+            elif target == "openclaw":
+                path = brief_service.generate_openclaw(mission_result.mission)
             else:
                 path = brief_service.generate_codex(mission_result.mission)
             return [TextContent(

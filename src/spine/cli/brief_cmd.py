@@ -28,7 +28,7 @@ def brief_cmd(
         ...,
         "--target",
         "-t",
-        help="Target agent: claude or codex",
+        help="Target agent: claude, codex, or openclaw",
     ),
     json_output: bool = typer.Option(
         False,
@@ -53,8 +53,8 @@ def brief_cmd(
       1  Validation failure — invalid --target value
       2  Context failure   — repo not found or mission.yaml missing
     """
-    if target not in ("claude", "codex"):
-        msg = f"target must be 'claude' or 'codex', got '{target}'"
+    if target not in ("claude", "codex", "openclaw"):
+        msg = f"target must be 'claude', 'codex', or 'openclaw', got '{target}'"
         if json_output:
             print(json.dumps({"error": msg, "exit_code": EXIT_VALIDATION}, indent=2))
         else:
@@ -84,8 +84,10 @@ def brief_cmd(
     brief_service = BriefService(repo_root, spine_root=spine_root)
     if target == "claude":
         canonical, latest = brief_service.generate_claude(mission_result.mission)
-    else:
+    elif target == "codex":
         canonical, latest = brief_service.generate_codex(mission_result.mission)
+    else:
+        canonical, latest = brief_service.generate_openclaw(mission_result.mission)
 
     if json_output:
         data = {

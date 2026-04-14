@@ -61,7 +61,9 @@ uv run spine mission set --title "..." --goal "..."
 ```bash
 # At start of session
 uv run spine check before-work
-uv run spine brief --target claude   # generate context brief for this session
+uv run spine brief --target claude      # generate context brief (Claude Code)
+# uv run spine brief --target openclaw  # or OpenClaw
+# uv run spine brief --target codex     # or Codex
 
 # During work — record decisions and evidence
 uv run spine decision add --title "Chose X over Y" --why "..." --decision "..."
@@ -132,7 +134,9 @@ If a governance write fails because of `.gitignore`, repo policy, or workspace r
 | `uv run spine mission show` | Read current mission |
 | `uv run spine mission show --json` | Machine-readable mission |
 | `uv run spine mission set --title "..." --goal "..."` | Set or update mission |
-| `uv run spine brief --target claude` | Generate agent context brief |
+| `uv run spine brief --target claude` | Generate agent context brief (Claude Code) |
+| `uv run spine brief --target openclaw` | Generate agent context brief (OpenClaw) |
+| `uv run spine brief --target codex` | Generate agent context brief (Codex) |
 | `uv run spine check before-work` | Start-session checkpoint |
 | `uv run spine check before-pr` | Pre-PR checkpoint |
 | `uv run spine drift scan` | Check for scope drift |
