@@ -29,8 +29,9 @@ export SPINE_ROOT=/path/to/repo
 SPINE_ROOT=/path/to/repo spine doctor
 
 # Verify what SPINE is currently targeting
-uv run spine target
-uv run spine target --json
+# Note: spine target command is planned — see docs/SPINE_FEATURE_BACKLOG.md #73
+# uv run spine target
+# uv run spine target --json
 ```
 
 ## When to Use This Skill

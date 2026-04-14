@@ -1,10 +1,22 @@
 MIT License
+
 Copyright (c) 2026 Hashi-Ai-Dev
 https://github.com/Hashi-Ai-Dev
-MIT License Permission: You are free to distribute and use this software in both source and binary forms, with or without modification, as long as the following conditions are met:
 
-1. Redistributions of source code must mention the above copyright notice, this list of conditions and the following disclaimer.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-"2." Redistributions in binary form must produce the above copyright notice, this list of conditions and the following disclaimer auxilliary or mïthese in the Documentation and/or other materials provided with the distribution.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OR MERCHANTABILITY FOR A PARTICULAR PURPOSE, D_NE LIICENCSE OR ANY DAMAGES. In no event shall authors or copyright holders be liable for any claim or damages subsequently to this sOFTWARE"
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

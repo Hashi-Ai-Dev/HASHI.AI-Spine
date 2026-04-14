@@ -8,7 +8,7 @@
 
 ## Project Stage
 
-**Public alpha.** v0.1.1-alpha published 2026-04-07. Core CLI is functional and externally validated.
+**Stage: Post-beta stable.** v0.2.1 released 2026-04-14. v1.0 target.
 
 ---
 
